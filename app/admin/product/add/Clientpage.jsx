@@ -107,6 +107,7 @@ function Clientpage() {
         maxSettings: "",
         fpsDrop: "",
         TempratureRaise: "",
+        batterydrain:"",
         AiFpsGeneration: "",
       },
     ],
@@ -122,7 +123,6 @@ function Clientpage() {
   const [data, setdata] = useState(initialData);
   const [selectedgroup, setselectedgroup] = useState("General");
   const [loading, setloading] = useState(false);
-  // console.log(data)
 
   const handlechange = (key, value) => {
     setdata({
@@ -1215,6 +1215,14 @@ function Clientpage() {
                 type="text"
                 onchange={(e) => {
                   handlenestedchange("gaming", i, "fpsDrop", e.target.value);
+                }}
+              />
+              <Standardinputfield
+                titlename="Battery Drain"
+                value={item.batterydrain}
+                type="text"
+                onchange={(e) => {
+                  handlenestedchange("gaming", i, "batterydrain", e.target.value);
                 }}
               />
               <Standardinputfield
