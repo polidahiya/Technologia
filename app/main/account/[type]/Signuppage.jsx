@@ -104,7 +104,7 @@ function Signuppage({ redirectLink = "/" }) {
         {/* Already signed up */}
         <p className="text-center text-sm mt-4">
           Already have an account?{" "}
-          <Link prefetch={false} href="/account/login" className="text-theme hover:underline">
+          <Link prefetch={false} href="/main/account/login" className="text-theme hover:underline">
             Login
           </Link>
         </p>
