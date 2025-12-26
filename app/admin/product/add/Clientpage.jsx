@@ -8,58 +8,283 @@ import Imageuploader from "@/app/_globalcomps/inputfields/Imageuploader";
 import { Saveproduct } from "./Serveraction";
 import { AppContextfn } from "@/app/Context";
 
+export const deviceType = ["Smartphone", "Tablet"];
+export const brands = [
+  "Apple",
+  "Samsung",
+  "Google",
+  "Realme",
+  "Huawei",
+  "Xiaomi",
+  "Oppo",
+  "Vivo",
+  "OnePlus",
+  "iQOO",
+  "Motorola",
+  "Nokia",
+  "Sony",
+  "Lenovo",
+  "Asus",
+  "Micromax",
+  "Asus",
+  "Nothing",
+];
+export const platforms = ["amazon", "flipkart"];
+export const currency = ["INR", "USD"];
+export const displayTypes = [
+  "LTPO AMOLED",
+  "Dynamic AMOLED 2X",
+  "Super AMOLED",
+  "AMOLED",
+  "OLED",
+  "Flexible AMOLED",
+  "Rigid AMOLED",
+  "P-OLED",
+  "Fluid AMOLED",
+  "IPS LCD",
+  "LTPS LCD",
+  "PLS LCD",
+  "Super LCD",
+  "TFT LCD",
+];
+export const cameraCutouts = [
+  "none",
+  "Under-Display Camera",
+  "Pop-Up Camera",
+  "Flip Camera",
+  "Punch-Hole Center",
+  "Punch-Hole Left",
+  "Punch-Hole Right",
+  "Dual Punch-Hole",
+  "Waterdrop Notch",
+  "U-Notch",
+  "V-Notch",
+  "Wide Notch",
+  "Pill Cutout",
+  "Dual Notch",
+];
+export const screenProtections = [
+  "Corning Gorilla Armor",
+  "Corning Gorilla Glass Ceramic",
+  "Corning Gorilla Glass Victus 2",
+  "Corning Gorilla Glass Victus",
+  "Corning Gorilla Glass 6",
+  "Corning Gorilla Glass 5",
+  "Corning Gorilla Glass 4",
+  "Corning Gorilla Glass 3",
+  "Apple Ceramic Shield",
+  "Asahi Dragontrail Pro",
+  "Asahi Dragontrail Star2",
+  "Schott Xensation Alpha",
+  "Schott Xensation Cover",
+  "Ultra Thin Glass (UTG)",
+  "Sapphire Glass",
+  "Tempered Glass",
+  "Scratch-Resistant Glass",
+  "Mineral Glass",
+  "Plastic Protection",
+  "None",
+];
+export const chipsets = [
+  "Apple M5 Max",
+  "Apple M5 Pro",
+  "Apple M5",
+  "Apple M4 Pro",
+  "Apple M4",
+  "Apple M3 Max",
+  "Apple M3 Pro",
+  "Apple M3",
+  "Apple M2 Ultra",
+  "Apple M2 Max",
+  "Apple M2 Pro",
+  "Apple M2",
+  "Apple M1 Ultra",
+  "Apple M1 Max",
+  "Apple M1 Pro",
+  "Apple M1",
+  "Snapdragon 8 Elite Gen 5",
+  "MediaTek Dimensity 9500",
+  "Snapdragon 8 Gen 5",
+  "Snapdragon 8 Elite (Gen 4)",
+  "MediaTek Dimensity 9400 Plus",
+  "MediaTek Dimensity 9400",
+  "Apple A19 Pro",
+  "Apple A19",
+  "Samsung Exynos 2600",
+  "Samsung Exynos 2500",
+  "Snapdragon 8s Gen 4",
+
+  "Dimensity 9300 Plus",
+  "Dimensity 9300",
+  "Snapdragon 8 Gen 3",
+
+  "Apple A18 Pro",
+  "Apple A18",
+
+  "Samsung Exynos 2400",
+  "Samsung Exynos 2400e",
+
+  "Dimensity 8450",
+  "Dimensity 8400 Ultra",
+  "Dimensity 8400",
+  "Snapdragon 7+ Gen 3",
+
+  "Exynos 2300",
+
+  "Dimensity 8300",
+  "Snapdragon 7s Gen 3",
+
+  "Dimensity 8200",
+  "Snapdragon 7 Gen 3",
+  "Exynos 2200",
+
+  "Snapdragon 6 Gen 4",
+  "Dimensity 7350",
+  "Dimensity 7300 Ultra",
+  "Dimensity 7300",
+  "Dimensity 7200 Ultra",
+  "Dimensity 7200",
+
+  "Exynos 1380",
+  "Exynos 1330",
+
+  "Snapdragon 695",
+  "Dimensity 7050",
+  "Exynos 1280",
+
+  "Dimensity 6100+",
+  "Helio G99",
+  "Snapdragon 680",
+  "Dimensity 6400",
+
+  "Snapdragon 4 Gen 4",
+  "Snapdragon 4 Gen 2",
+  "Snapdragon 6s 4G Gen 2",
+
+  "Helio G96",
+  "Helio G88",
+  "Snapdragon 460",
+  "Helio G85",
+  "Helio G80",
+  "Helio G70",
+];
+export const ramTypes = [
+  "LPDDR6",
+  "LPDDR5X",
+  "LPDDR5",
+  "LPDDR4X",
+  "LPDDR4",
+  "LPDDR3",
+  "LPDDR3L",
+  "LPDDR2",
+];
+
+export const storage = [
+  "4 Tb",
+  "2 Tb",
+  "1 Tb",
+  "512 Gb",
+  "256 Gb",
+  "128 Gb",
+  "64 Gb",
+  "32 Gb",
+  "16 Gb",
+  "8 Gb",
+  "4 Gb",
+  "2 Gb",
+  "1 Gb",
+];
+export const storageType = [
+  "UFS 5.0",
+  "UFS 4.0",
+  "UFS 3.1",
+  "UFS 3.0",
+  "UFS 2.2",
+  "UFS 2.1",
+];
+export const batteryType = [
+  "Silicon-Carbon Battery",
+  "Graphene Battery",
+  "Lithium-Polymer (Li-Po)",
+  "Lithium-Ion (Li-Ion)",
+  "Nickel-Metal Hydride (NiMH)",
+  "Nickel-Cadmium (NiCd)",
+];
+
+export const osTypes = [
+  "Android",
+  "iOS",
+  "Windows",
+  "Linux",
+  "ChromeOS",
+  "MacOS",
+];
+export const Fingerprints = [
+  "none",
+  "Side",
+  "Rear",
+  "Front",
+  "Under-display Optical",
+  "Under-display Ultrasonic",
+];
+
 function Clientpage() {
   const { setmessagefn } = AppContextfn();
+  const pricedata = {
+    platform: "",
+    variant: "",
+    mrp: "",
+    sp: "",
+    currency: "",
+    link: "",
+  };
+  const displaydata = {
+    size: "",
+    type: "",
+    cameraCutout: "none",
+    pixelx: "",
+    pixely: "",
+    ppi: "",
+    refreshRate: "",
+    hdr: false,
+    roundCorners: false,
+    screenToBodyRatio: "",
+    screenProtection: "",
+    curved: false,
+    Brightness: 0,
+    dustResistance: false,
+    antiReflection: false,
+    nanoTexture: false,
+  };
+
+  const gamedata = {
+    name: "",
+    maxSettings: "",
+    fpsDrop: "",
+    tempratureRaise: "",
+    batterydrain: "",
+    AiFpsGeneration: "",
+  };
   const initialData = {
     brand: "",
     model: "",
     deviceType: "",
     releaseDate: new Date(),
-    price: [
-      {
-        platform: "",
-        variant: "",
-        mrp: "",
-        sp: "",
-        currency: "",
-        link: "",
-      },
-    ],
+    price: [pricedata],
     images: [],
     //
-    display: [
-      {
-        size: "",
-        type: "",
-        cameraCutout: "none",
-        pixelx: "",
-        pixely: "",
-        ppi: "",
-        refreshRate: "",
-        hdr: false,
-        roundCorners: false,
-        screenToBodyRatio: "",
-        screenProtection: "",
-        curved: false,
-        Brightness: 0,
-        dustResistance: false,
-        antiReflection: false,
-        nanoTexture: false,
-      },
-    ],
+    display: [displaydata],
     //
     chipset: "",
     cpuClockSpeed: "",
     maxCpuClockSpeed: "",
-    npu: "",
     cpuCores: "",
-    cpuScore: "",
-    gpuScore: "",
     ram: "",
     ramType: "",
     storage: "",
     storageType: "",
     expandableStorage: false,
+    antutuscore: "",
     //
     RearCameramegapixels: "",
     RearCameramegapixelsDetails: "",
@@ -109,16 +334,7 @@ function Clientpage() {
     stereoSpeakers: false,
     headphoneJack: false,
     // gaming
-    gaming: [
-      {
-        name: "",
-        maxSettings: "",
-        fpsDrop: "",
-        TempratureRaise: "",
-        batterydrain: "",
-        AiFpsGeneration: "",
-      },
-    ],
+    gaming: [gamedata],
     //
     inBox: "",
     youtubeComparison: "",
@@ -239,7 +455,7 @@ function Clientpage() {
           onchange={(value) => {
             handlechange("deviceType", value);
           }}
-          options={["Smartphone", "Tablet"]}
+          options={deviceType}
         />
         <Dropdownmenu
           title="Brand"
@@ -247,26 +463,7 @@ function Clientpage() {
           onchange={(value) => {
             handlechange("brand", value);
           }}
-          options={[
-            "Apple",
-            "Samsung",
-            "Google",
-            "Realme",
-            "Huawei",
-            "Xiaomi",
-            "Oppo",
-            "Vivo",
-            "OnePlus",
-            "iQOO",
-            "Motorola",
-            "Nokia",
-            "Sony",
-            "Lenovo",
-            "Asus",
-            "Micromax",
-            "Asus",
-            "Nothing",
-          ]}
+          options={brands}
         />
         <Standardinputfield
           titlename="Model"
@@ -293,7 +490,7 @@ function Clientpage() {
                   onchange={(value) => {
                     handlenestedchange("price", i, "platform", value);
                   }}
-                  options={["amazon", "flipkart"]}
+                  options={platforms}
                 />
                 <Standardinputfield
                   titlename="Variant"
@@ -325,7 +522,7 @@ function Clientpage() {
                   onchange={(value) => {
                     handlenestedchange("price", i, "currency", value);
                   }}
-                  options={["INR", "USD"]}
+                  options={currency}
                 />
                 <Standardinputfield
                   titlename="Link"
@@ -354,9 +551,7 @@ function Clientpage() {
           type="button"
           className="px-5 py-2 rounded-2xl text-white bg-green-600 w-fit mx-auto mt-2"
           onClick={() => {
-            const newplatform = JSON.stringify(
-              data.price[data.price.length - 1]
-            );
+            const newplatform = JSON.stringify(pricedata);
             setdata({
               ...data,
               price: [...data.price, JSON.parse(newplatform)],
@@ -390,29 +585,7 @@ function Clientpage() {
                 onchange={(value) => {
                   handlenestedchange("display", i, "type", value);
                 }}
-                options={[
-                  // Premium / Flagship
-                  "LTPO AMOLED",
-                  "Dynamic AMOLED 2X",
-                  "Super AMOLED",
-                  "AMOLED",
-                  "OLED",
-
-                  // Upper Mid-range
-                  "Flexible AMOLED",
-                  "Rigid AMOLED",
-                  "P-OLED",
-                  "Fluid AMOLED",
-
-                  // LCD Category
-                  "IPS LCD",
-                  "LTPS LCD",
-                  "PLS LCD",
-                  "Super LCD",
-
-                  // Budget
-                  "TFT LCD",
-                ]}
+                options={displayTypes}
               />
               <Dropdownmenu
                 title="Camera Cutout"
@@ -420,22 +593,7 @@ function Clientpage() {
                 onchange={(value) => {
                   handlenestedchange("display", i, "cameraCutout", value);
                 }}
-                options={[
-                  "none",
-                  "Under-Display Camera",
-                  "Pop-Up Camera",
-                  "Flip Camera",
-                  "Punch-Hole Center",
-                  "Punch-Hole Left",
-                  "Punch-Hole Right",
-                  "Dual Punch-Hole",
-                  "Waterdrop Notch",
-                  "U-Notch",
-                  "V-Notch",
-                  "Wide Notch",
-                  "Pill Cutout",
-                  "Dual Notch",
-                ]}
+                options={cameraCutouts}
               />
 
               <Standardinputfield
@@ -520,37 +678,7 @@ function Clientpage() {
                 onchange={(value) => {
                   handlenestedchange("display", i, "screenProtection", value);
                 }}
-                options={[
-                  // Gorilla Glass (Corning)
-                  "Corning Gorilla Armor",
-                  "Corning Gorilla Glass Ceramic",
-                  "Corning Gorilla Glass Victus 2",
-                  "Corning Gorilla Glass Victus",
-                  "Corning Gorilla Glass 6",
-                  "Corning Gorilla Glass 5",
-                  "Corning Gorilla Glass 4",
-                  "Corning Gorilla Glass 3",
-
-                  // Other branded glass
-                  "Apple Ceramic Shield",
-                  "Asahi Dragontrail Pro",
-                  "Asahi Dragontrail Star2",
-                  "Schott Xensation Alpha",
-                  "Schott Xensation Cover",
-
-                  // Foldable / Flexible glass
-                  "Ultra Thin Glass (UTG)",
-
-                  // Sapphire
-                  "Sapphire Glass",
-
-                  // Unspecified / Basic
-                  "Tempered Glass",
-                  "Scratch-Resistant Glass",
-                  "Mineral Glass",
-                  "Plastic Protection",
-                  "None",
-                ]}
+                options={screenProtections}
               />
               <Togglebuttons
                 titlename="Curved Display"
@@ -633,9 +761,7 @@ function Clientpage() {
           type="button"
           className="px-5 py-2 rounded-2xl text-white bg-green-600 w-fit mx-auto"
           onClick={() => {
-            const newdisplay = JSON.stringify(
-              data.display[data.display.length - 1]
-            );
+            const newdisplay = JSON.stringify(displaydata);
             setdata({
               ...data,
               display: [...data.display, JSON.parse(newdisplay)],
@@ -657,75 +783,7 @@ function Clientpage() {
           onchange={(value) => {
             handlechange("chipset", value);
           }}
-          options={[
-            // Ultra High Performance (Laptop / Pro class)
-            "Apple M4 Pro",
-            "Apple M4",
-            "Apple M3 Max",
-            "Apple M3 Pro",
-            "Apple M3",
-            "Apple M2 Ultra",
-            "Apple M2 Max",
-            "Apple M2 Pro",
-            "Apple M2",
-            "Apple M1 Ultra",
-            "Apple M1 Max",
-            "Apple M1 Pro",
-            "Apple M1",
-
-            // Top Mobile Flagship (2025)
-            "Snapdragon 8 Elite Gen 5",
-            "Apple A19 Pro",
-            "MediaTek Dimensity 9500",
-            "Snapdragon 8 Elite (Gen 4)",
-            "Apple A19",
-            "Dimensity 9400 Plus",
-            "Dimensity 9400",
-            "Snapdragon 8 Gen 5",
-            "Apple A18 Pro",
-            "Apple A18",
-
-            // High / Upper Mid Range
-            "Snapdragon 8s Gen 4",
-            "Snapdragon 8 Gen 3",
-            "Dimensity 9300 Plus",
-            "Dimensity 9300",
-            "Snapdragon 8 Gen 2",
-            "Dimensity 8450",
-            "Dimensity 8400 Ultra",
-            "Dimensity 8400",
-            "Apple A17 Pro",
-            "Snapdragon 7+ Gen 3",
-            "Dimensity 8300",
-            "Snapdragon 7s Gen 3",
-            "Dimensity 8200",
-
-            // Mid Range
-            "Snapdragon 7 Gen 3",
-            "Snapdragon 6 Gen 4",
-            "Dimensity 7350",
-            "Dimensity 7300 Ultra",
-            "Dimensity 7300",
-            "Dimensity 7200 Ultra",
-            "Dimensity 7200",
-            "Snapdragon 695",
-            "Dimensity 7050",
-            "Dimensity 6100+",
-            "Helio G99",
-            "Snapdragon 680",
-            "Dimensity 6400",
-
-            // Budget / Entry Range
-            "Snapdragon 4 Gen 4",
-            "Snapdragon 4 Gen 2",
-            "Snapdragon 6s 4G Gen 2",
-            "Helio G96",
-            "Helio G88",
-            "Snapdragon 460",
-            "Helio G85",
-            "Helio G80",
-            "Helio G70",
-          ]}
+          options={chipsets}
         />
 
         <Standardinputfield
@@ -745,35 +803,11 @@ function Clientpage() {
           }}
         />
         <Standardinputfield
-          titlename="Npu"
-          value={data.npu}
-          type="number"
-          onchange={(e) => {
-            handlechange("npu", e.target.value);
-          }}
-        />
-        <Standardinputfield
           titlename="No of Cpu Cores"
           value={data.cpuCores}
           type="number"
           onchange={(e) => {
             handlechange("cpuCores", e.target.value);
-          }}
-        />
-        <Standardinputfield
-          titlename="Cpu Score"
-          value={data.cpuScore}
-          type="number"
-          onchange={(e) => {
-            handlechange("cpuScore", e.target.value);
-          }}
-        />
-        <Standardinputfield
-          titlename="Gpu Score"
-          value={data.gpuScore}
-          type="number"
-          onchange={(e) => {
-            handlechange("gpuScore", e.target.value);
           }}
         />
         <Dropdownmenu
@@ -782,15 +816,7 @@ function Clientpage() {
           onchange={(value) => {
             handlechange("ramType", value);
           }}
-          options={[
-            "LPDDR5X",
-            "LPDDR5",
-            "LPDDR4X",
-            "LPDDR4",
-            "LPDDR3",
-            "LPDDR3L",
-            "LPDDR2",
-          ]}
+          options={ramTypes}
         />
         <Standardinputfield
           titlename="Ram"
@@ -806,21 +832,7 @@ function Clientpage() {
           onchange={(value) => {
             handlechange("storage", value);
           }}
-          options={[
-            "4 Tb",
-            "2 Tb",
-            "1 Tb",
-            "512 Gb",
-            "256 Gb",
-            "128 Gb",
-            "64 Gb",
-            "32 Gb",
-            "16 Gb",
-            "8 Gb",
-            "4 Gb",
-            "2 Gb",
-            "1 Gb",
-          ]}
+          options={storage}
         />
         <Dropdownmenu
           title="Storage Type"
@@ -828,7 +840,7 @@ function Clientpage() {
           onchange={(value) => {
             handlechange("storageType", value);
           }}
-          options={["UFS 4.0", "UFS 3.1", "UFS 3.0", "UFS 2.2", "UFS 2.1"]}
+          options={storageType}
         />
         <Togglebuttons
           titlename="Expandable Storage"
@@ -837,6 +849,14 @@ function Clientpage() {
           negative={() => handlechange("expandableStorage", false)}
           positiveText="Yes"
           negativeText="No"
+        />
+        <Standardinputfield
+          titlename="Antutu Score"
+          value={data.antutuscore}
+          type="number"
+          onchange={(e) => {
+            handlechange("antutuscore", e.target.value);
+          }}
         />
       </Groupinputs>
       {/* camera */}
@@ -951,14 +971,7 @@ function Clientpage() {
           onchange={(value) => {
             handlechange("batteryType", value);
           }}
-          options={[
-            "Silicon-Carbon Battery",
-            "Graphene Battery",
-            "Lithium-Polymer (Li-Po)",
-            "Lithium-Ion (Li-Ion)",
-            "Nickel-Metal Hydride (NiMH)",
-            "Nickel-Cadmium (NiCd)",
-          ]}
+          options={batteryType}
         />
         <Standardinputfield
           titlename="Battery Capacity"
@@ -1021,7 +1034,7 @@ function Clientpage() {
           onchange={(value) => {
             handlechange("os", value);
           }}
-          options={["Android", "iOS", "Windows", "Linux", "ChromeOS", "MacOS"]}
+          options={osTypes}
         />
         <Standardinputfield
           titlename="Opperating System Version"
@@ -1202,14 +1215,7 @@ function Clientpage() {
           onchange={(value) => {
             handlechange("fingerprint", value);
           }}
-          options={[
-            "none",
-            "Side",
-            "Rear",
-            "Front",
-            "Under-display Optical",
-            "Under-display Ultrasonic",
-          ]}
+          options={Fingerprints}
         />
         <Togglebuttons
           titlename="Face Unlock"
@@ -1262,7 +1268,7 @@ function Clientpage() {
               setselectedgroup={setselectedgroup}
             >
               <Standardinputfield
-                titlename="Size"
+                titlename="Name"
                 value={item.name}
                 type="text"
                 onchange={(e) => {
@@ -1305,13 +1311,13 @@ function Clientpage() {
               />
               <Standardinputfield
                 titlename="Temprature Raise"
-                value={item.TempratureRaise}
+                value={item.tempratureRaise}
                 type="text"
                 onchange={(e) => {
                   handlenestedchange(
                     "gaming",
                     i,
-                    "TempratureRaise",
+                    "tempratureRaise",
                     e.target.value
                   );
                 }}
@@ -1346,7 +1352,7 @@ function Clientpage() {
           type="button"
           className="px-5 py-2 rounded-2xl text-white bg-green-600 w-fit mx-auto"
           onClick={() => {
-            const newgame = JSON.stringify(data.gaming[data.gaming.length - 1]);
+            const newgame = JSON.stringify(gamedata);
             setdata({
               ...data,
               gaming: [...data.gaming, JSON.parse(newgame)],
