@@ -15,8 +15,16 @@ function Clientpage() {
     model: "",
     deviceType: "",
     releaseDate: new Date(),
-    price: "",
-    offerPrice: "",
+    price: [
+      {
+        platform: "",
+        variant: "",
+        mrp: "",
+        sp: "",
+        currency: "",
+        link: "",
+      },
+    ],
     images: [],
     //
     display: [
@@ -107,7 +115,7 @@ function Clientpage() {
         maxSettings: "",
         fpsDrop: "",
         TempratureRaise: "",
-        batterydrain:"",
+        batterydrain: "",
         AiFpsGeneration: "",
       },
     ],
@@ -116,8 +124,6 @@ function Clientpage() {
     youtubeComparison: "",
     youtubeGamingReview: "",
     youtubeCameraReview: "",
-    amazonLink: "",
-    flipkartLink: "",
   };
 
   const [data, setdata] = useState(initialData);
@@ -245,11 +251,13 @@ function Clientpage() {
             "Apple",
             "Samsung",
             "Google",
+            "Realme",
             "Huawei",
             "Xiaomi",
             "Oppo",
             "Vivo",
             "OnePlus",
+            "iQOO",
             "Motorola",
             "Nokia",
             "Sony",
@@ -275,23 +283,88 @@ function Clientpage() {
             handlechange("releaseDate", isoDate);
           }}
         />
-        <Standardinputfield
-          titlename="Price"
-          value={data.price}
-          type="number"
-          onchange={(e) => {
-            handlechange("price", e.target.value);
+        <div className="space-y-2">
+          {data.price.map((item, i) => {
+            return (
+              <div key={i} className="border rounded-2xl p-2 space-y-2">
+                <Dropdownmenu
+                  title="Platform"
+                  state={item.platform}
+                  onchange={(value) => {
+                    handlenestedchange("price", i, "platform", value);
+                  }}
+                  options={["amazon", "flipkart"]}
+                />
+                <Standardinputfield
+                  titlename="Variant"
+                  value={item.variant}
+                  type="text"
+                  onchange={(e) => {
+                    handlenestedchange("price", i, "variant", e.target.value);
+                  }}
+                />
+                <Standardinputfield
+                  titlename="Mrp"
+                  value={item.mrp}
+                  type="number"
+                  onchange={(e) => {
+                    handlenestedchange("price", i, "mrp", e.target.value);
+                  }}
+                />
+                <Standardinputfield
+                  titlename="Sp"
+                  value={item.sp}
+                  type="number"
+                  onchange={(e) => {
+                    handlenestedchange("price", i, "sp", e.target.value);
+                  }}
+                />
+                <Dropdownmenu
+                  title="Currency"
+                  state={item.currency}
+                  onchange={(value) => {
+                    handlenestedchange("price", i, "currency", value);
+                  }}
+                  options={["INR", "USD"]}
+                />
+                <Standardinputfield
+                  titlename="Link"
+                  value={item.link}
+                  type="text"
+                  onchange={(e) => {
+                    handlenestedchange("price", i, "link", e.target.value);
+                  }}
+                />
+                {i != 0 && (
+                  <button
+                    className="px-5 py-2 rounded-md bg-red-600 text-white w-fit ml-auto"
+                    type="button"
+                    onClick={() =>
+                      handleArrayChange("price", "delete", { index: i })
+                    }
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <button
+          type="button"
+          className="px-5 py-2 rounded-2xl text-white bg-green-600 w-fit mx-auto mt-2"
+          onClick={() => {
+            const newplatform = JSON.stringify(
+              data.price[data.price.length - 1]
+            );
+            setdata({
+              ...data,
+              price: [...data.price, JSON.parse(newplatform)],
+            });
           }}
-        />
-        <Standardinputfield
-          titlename="Offer Price"
-          value={data.offerPrice}
-          isRequired={false}
-          type="number"
-          onchange={(e) => {
-            handlechange("offerPrice", e.target.value);
-          }}
-        />
+        >
+          + Add Platform
+        </button>
       </Groupinputs>
       {/* screens */}
       <div className="flex flex-col gap-2">
@@ -1222,7 +1295,12 @@ function Clientpage() {
                 value={item.batterydrain}
                 type="text"
                 onchange={(e) => {
-                  handlenestedchange("gaming", i, "batterydrain", e.target.value);
+                  handlenestedchange(
+                    "gaming",
+                    i,
+                    "batterydrain",
+                    e.target.value
+                  );
                 }}
               />
               <Standardinputfield
@@ -1314,22 +1392,6 @@ function Clientpage() {
           type="text"
           onchange={(e) => {
             handlechange("youtubeCameraReview", e.target.value);
-          }}
-        />
-        <Standardinputfield
-          titlename="Amazon Link"
-          value={data.amazonLink}
-          type="text"
-          onchange={(e) => {
-            handlechange("amazonLink", e.target.value);
-          }}
-        />
-        <Standardinputfield
-          titlename="Flipkart Link"
-          value={data.flipkartLink}
-          type="text"
-          onchange={(e) => {
-            handlechange("flipkartLink", e.target.value);
           }}
         />
       </Groupinputs>

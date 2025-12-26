@@ -22,7 +22,7 @@ function Navbar({ navitems, stickyat = "top-0" }) {
 
   return (
     <div
-      className={`flex gap-2 p-2 sticky ${stickyat} shadow bg-white rounded-2xl z-10
+      className={`flex gap-2 p-1 md:p-2 sticky ${stickyat} shadow bg-white rounded-2xl z-10
                     overflow-x-auto no-scrollbar`}
     >
       {navitems.map(({ label, icon: Icon }) => (
@@ -30,12 +30,12 @@ function Navbar({ navitems, stickyat = "top-0" }) {
           key={label}
           href={`#${label}`}
           ref={(el) => (itemRefs.current[label] = el)}
-          className="flex items-center gap-2 p-2 pr-5 rounded-full
-                     bg-gray-100 text-sm font-medium whitespace-nowrap
+          className="flex items-center gap-1 md:gap-2 p-1 md:p-2 pr-5 md:pr-5 rounded-full
+                     bg-gray-100 text-xs md:text-sm font-medium whitespace-nowrap
                      hover:bg-gray-200 transition scroll-ml-3"
         >
           <span
-            className={`w-8 h-8 p-2 rounded-full flex items-center justify-center
+            className={`w-6 h-6 md:w-8 md:h-8 p-1 md:p-2 rounded-full flex items-center justify-center
               ${active === label ? "bg-theme text-white" : "bg-white"}
             `}
           >

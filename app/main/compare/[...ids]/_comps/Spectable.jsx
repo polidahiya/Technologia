@@ -8,9 +8,9 @@ function CompareSpecTable({ title, Icon, rows, products, id }) {
   return (
     <section
       id={id}
-      className="relative bg-white rounded-2xl shadow overflow-hidden scroll-mt-32"
+      className="relative bg-white rounded-2xl shadow overflow-hidden scroll-mt-52"
     >
-      <h2 className="flex items-center gap-2 px-6 py-4 font-extrabold border-b bg-bg1 border-slate-200 font-tenor">
+      <h2 className="flex items-center gap-2 px-4 md:px-6 py-4 font-extrabold bg-bg1 border-b border-slate-300 font-tenor">
         {Icon}
         {title}
       </h2>
@@ -21,11 +21,11 @@ function CompareSpecTable({ title, Icon, rows, products, id }) {
             {rows.map((row, i) => (
               <tr
                 key={row.key}
-                className={`border-b border-bg1 flex ${
-                  i % 2 === 0 ? "bg-white" : "bg-slate-50"
-                }`}
+                className={`border-b border-bg1 flex even:bg-bg1`}
               >
-                <td className="flex-1 max-w-48 px-2 md:px-6 py-2 font-medium sticky left-0 bg-inherit">
+                <td
+                  className={`flex-1 max-w-48 px-2 md:px-6 py-2 font-medium sticky left-0 border-r border-slate-300`}
+                >
                   {row.label}
                 </td>
 
@@ -47,7 +47,10 @@ function CompareSpecTable({ title, Icon, rows, products, id }) {
                   }
 
                   return (
-                    <td key={j} className="flex-1 px-2 md:px-6 py-2 text-center">
+                    <td
+                      key={j}
+                      className="flex-1 px-2 md:px-6 py-2 text-center"
+                    >
                       {value}
                     </td>
                   );

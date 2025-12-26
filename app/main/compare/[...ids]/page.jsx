@@ -10,12 +10,14 @@ async function page({ params }) {
   const products = await Promise.all(
     ids.slice(0, 3).map((id) => CachedProduct(id))
   );
- 
+
   return (
     <div className="min-h-screen py-10">
       <div className="max-w-6xl mx-auto space-y-2">
-        <CompareHeader products={products} />
-        <Navbar navitems={navitems} stickyat="top-16" />
+        <div className="sticky -top-24 md:-top-32 p-2 bg-white rounded-2xl shadow z-10 space-y-2">
+          <CompareHeader products={products} />
+          <Navbar navitems={navitems} />
+        </div>
         <CompareSpecTable
           title={navitems[0].label}
           id={navitems[0].label}
