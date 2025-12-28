@@ -7,28 +7,12 @@ import Togglebuttons from "@/app/_globalcomps/inputfields/Togglebuttons";
 import Imageuploader from "@/app/_globalcomps/inputfields/Imageuploader";
 import { Saveproduct } from "./Serveraction";
 import { AppContextfn } from "@/app/Context";
+import { filters } from "@/app/main/all/_comps/Filtermenu";
 
 export const deviceType = ["Smartphone", "Tablet"];
-export const brands = [
-  "Apple",
-  "Samsung",
-  "Google",
-  "Realme",
-  "Huawei",
-  "Xiaomi",
-  "Oppo",
-  "Vivo",
-  "OnePlus",
-  "iQOO",
-  "Motorola",
-  "Nokia",
-  "Sony",
-  "Lenovo",
-  "Asus",
-  "Micromax",
-  "Asus",
-  "Nothing",
-];
+export const brands = filters
+  .find((item) => item.slug === "Brand")
+  .options.map((item) => item.name);
 export const platforms = ["amazon", "flipkart"];
 export const currency = ["INR", "USD"];
 export const displayTypes = [
@@ -228,7 +212,7 @@ export const Fingerprints = [
   "Under-display Ultrasonic",
 ];
 
-function Clientpage() {
+function Clientpage({ productdata }) {
   const { setmessagefn } = AppContextfn();
   const pricedata = {
     platform: "",
@@ -341,8 +325,15 @@ function Clientpage() {
     youtubeGamingReview: "",
     youtubeCameraReview: "",
   };
+  const createProductSchema = (data = {}) => ({
+    ...initialData,
+    ...data,
 
-  const [data, setdata] = useState(initialData);
+    price: (data?.price ?? [{}]).map((p) => ({ ...pricedata, ...p })),
+    display: (data?.display ?? [{}]).map((d) => ({ ...displaydata, ...d })),
+    gaming: (data?.gaming ?? [{}]).map((g) => ({ ...gamedata, ...g })),
+  });
+  const [data, setdata] = useState(() => createProductSchema(productdata));
   const [selectedgroup, setselectedgroup] = useState("General");
   const [loading, setloading] = useState(false);
 

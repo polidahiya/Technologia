@@ -3,7 +3,7 @@ import Navbar from "../_globalcomps/navbar/Navbar";
 
 function layout({ children }) {
   return (
-    <div>
+    <div className="bg-bg1">
       <Navbar />
       {children}
     </div>

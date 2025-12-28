@@ -39,6 +39,7 @@ async function page({ params }) {
             {
               label: "Screen to Body Ratio",
               key: "display.0.screenToBodyRatio",
+              unit:"%"
             },
             { label: "Protection", key: "display.0.screenProtection" },
             { label: "Camera Cutout", key: "display.0.cameraCutout" },
@@ -80,9 +81,6 @@ async function page({ params }) {
             { label: "CPU Cores", key: "cpuCores" },
             { label: "Base Clock", key: "cpuClockSpeed" },
             { label: "Max Clock", key: "maxCpuClockSpeed", unit: "GHz" },
-            { label: "NPU", key: "npu" },
-            { label: "CPU Score", key: "cpuScore" },
-            { label: "GPU Score", key: "gpuScore" },
             {
               label: "RAM",
               key: "ram",
@@ -98,6 +96,7 @@ async function page({ params }) {
               key: "expandableStorage",
               type: "boolean",
             },
+            { label: "Antutu Score", key: "antutuscore" },
           ]}
         />
         <CompareSpecTable

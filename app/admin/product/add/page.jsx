@@ -1,10 +1,25 @@
 import React from "react";
 import Clientpage from "./Clientpage";
+import { CachedProduct } from "@/app/_globalcomps/cachedata/cachedProducts";
 
-function page() {
+async function page({ searchParams }) {
+  const { edit, copy } = await searchParams;
+  let productdata = null;
+  if (edit || copy) {
+    const product = await CachedProduct(edit || copy);
+    if (edit) {
+      productdata = product;
+    }
+    if (copy) {
+      const data = product;
+      delete data._id;
+      productdata = data;
+    }
+  }
+
   return (
     <div>
-      <Clientpage />
+      <Clientpage productdata={productdata} />
     </div>
   );
 }

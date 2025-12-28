@@ -5,8 +5,11 @@ import Navbar from "./_comps/Navbar";
 import Herosection from "./_comps/Herosection";
 import SpecTable from "./_comps/Spectable";
 import { navitems } from "@/lib/data";
+import Verification from "@/lib/verification";
+import Link from "next/link";
 
 export default async function Page({ params }) {
+  const tokenRes = await Verification();
   const { id } = await params;
   const product = await CachedProduct(id);
   const d = product.display?.[0] || {};
@@ -31,7 +34,7 @@ export default async function Page({ params }) {
               ["Refresh Rate", `${d.refreshRate} Hz`],
               ["HDR", yesNo(d.hdr)],
               ["Brightness", `${d.Brightness} nits`],
-              ["Screen to Body Ratio", d.screenToBodyRatio],
+              ["Screen to Body Ratio", `${d.screenToBodyRatio} %`],
               ["Protection", d.screenProtection],
               ["Camera Cutout", d.cameraCutout],
               ["Curved Display", yesNo(d.curved)],
@@ -51,12 +54,10 @@ export default async function Page({ params }) {
               ["CPU Cores", product.cpuCores],
               ["Base Clock", product.cpuClockSpeed],
               ["Max Clock", `${product.maxCpuClockSpeed} GHz`],
-              ["NPU", product.npu],
-              ["CPU Score", product.cpuScore],
-              ["GPU Score", product.gpuScore],
               ["RAM", `${product.ram} Gb (${product.ramType})`],
               ["Storage", `${product.storage} (${product.storageType})`],
               ["Expandable Storage", yesNo(product.expandableStorage)],
+              ["Antutu Score", product.antutuscore],
             ]}
           />
 
@@ -187,6 +188,15 @@ export default async function Page({ params }) {
           </section>
         </div>
       </div>
+      {tokenRes?.verified && (
+        <Link
+          href={`/admin/product/add?edit=${product._id}`}
+          target="_blank"
+          className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-theme text-white px-5 py-2 rounded-2xl"
+        >
+          Edit
+        </Link>
+      )}
     </Pagectxwrapper>
   );
 }
