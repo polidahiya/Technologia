@@ -5,215 +5,32 @@ import Dropdownmenu from "@/app/_globalcomps/inputfields/Dropdownmenu";
 import Dateselector from "@/app/_globalcomps/inputfields/Dateselector";
 import Togglebuttons from "@/app/_globalcomps/inputfields/Togglebuttons";
 import Imageuploader from "@/app/_globalcomps/inputfields/Imageuploader";
+import Multiselectmenu from "@/app/_globalcomps/inputfields/Multiselectmenu";
 import { Saveproduct } from "./Serveraction";
 import { AppContextfn } from "@/app/Context";
-import { filters } from "@/app/main/all/_comps/Filtermenu";
-
-export const deviceType = ["Smartphone", "Tablet"];
-export const brands = filters
-  .find((item) => item.slug === "Brand")
-  .options.map((item) => item.name);
-export const platforms = ["amazon", "flipkart"];
-export const currency = ["INR", "USD"];
-export const displayTypes = [
-  "LTPO AMOLED",
-  "Dynamic AMOLED 2X",
-  "Super AMOLED",
-  "AMOLED",
-  "OLED",
-  "Flexible AMOLED",
-  "Rigid AMOLED",
-  "P-OLED",
-  "Fluid AMOLED",
-  "IPS LCD",
-  "LTPS LCD",
-  "PLS LCD",
-  "Super LCD",
-  "TFT LCD",
-];
-export const cameraCutouts = [
-  "none",
-  "Under-Display Camera",
-  "Pop-Up Camera",
-  "Flip Camera",
-  "Punch-Hole Center",
-  "Punch-Hole Left",
-  "Punch-Hole Right",
-  "Dual Punch-Hole",
-  "Waterdrop Notch",
-  "U-Notch",
-  "V-Notch",
-  "Wide Notch",
-  "Pill Cutout",
-  "Dual Notch",
-];
-export const screenProtections = [
-  "Corning Gorilla Armor",
-  "Corning Gorilla Glass Ceramic",
-  "Corning Gorilla Glass Victus 2",
-  "Corning Gorilla Glass Victus",
-  "Corning Gorilla Glass 6",
-  "Corning Gorilla Glass 5",
-  "Corning Gorilla Glass 4",
-  "Corning Gorilla Glass 3",
-  "Apple Ceramic Shield",
-  "Asahi Dragontrail Pro",
-  "Asahi Dragontrail Star2",
-  "Schott Xensation Alpha",
-  "Schott Xensation Cover",
-  "Ultra Thin Glass (UTG)",
-  "Sapphire Glass",
-  "Tempered Glass",
-  "Scratch-Resistant Glass",
-  "Mineral Glass",
-  "Plastic Protection",
-  "None",
-];
-export const chipsets = [
-  "Apple M5 Max",
-  "Apple M5 Pro",
-  "Apple M5",
-  "Apple M4 Pro",
-  "Apple M4",
-  "Apple M3 Max",
-  "Apple M3 Pro",
-  "Apple M3",
-  "Apple M2 Ultra",
-  "Apple M2 Max",
-  "Apple M2 Pro",
-  "Apple M2",
-  "Apple M1 Ultra",
-  "Apple M1 Max",
-  "Apple M1 Pro",
-  "Apple M1",
-  "Snapdragon 8 Elite Gen 5",
-  "MediaTek Dimensity 9500",
-  "Snapdragon 8 Gen 5",
-  "Snapdragon 8 Elite (Gen 4)",
-  "MediaTek Dimensity 9400 Plus",
-  "MediaTek Dimensity 9400",
-  "Apple A19 Pro",
-  "Apple A19",
-  "Samsung Exynos 2600",
-  "Samsung Exynos 2500",
-  "Snapdragon 8s Gen 4",
-
-  "Dimensity 9300 Plus",
-  "Dimensity 9300",
-  "Snapdragon 8 Gen 3",
-
-  "Apple A18 Pro",
-  "Apple A18",
-
-  "Samsung Exynos 2400",
-  "Samsung Exynos 2400e",
-
-  "Dimensity 8450",
-  "Dimensity 8400 Ultra",
-  "Dimensity 8400",
-  "Snapdragon 7+ Gen 3",
-
-  "Exynos 2300",
-
-  "Dimensity 8300",
-  "Snapdragon 7s Gen 3",
-
-  "Dimensity 8200",
-  "Snapdragon 7 Gen 3",
-  "Exynos 2200",
-
-  "Snapdragon 6 Gen 4",
-  "Dimensity 7350",
-  "Dimensity 7300 Ultra",
-  "Dimensity 7300",
-  "Dimensity 7200 Ultra",
-  "Dimensity 7200",
-
-  "Exynos 1380",
-  "Exynos 1330",
-
-  "Snapdragon 695",
-  "Dimensity 7050",
-  "Exynos 1280",
-
-  "Dimensity 6100+",
-  "Helio G99",
-  "Snapdragon 680",
-  "Dimensity 6400",
-
-  "Snapdragon 4 Gen 4",
-  "Snapdragon 4 Gen 2",
-  "Snapdragon 6s 4G Gen 2",
-
-  "Helio G96",
-  "Helio G88",
-  "Snapdragon 460",
-  "Helio G85",
-  "Helio G80",
-  "Helio G70",
-];
-export const ramTypes = [
-  "LPDDR6",
-  "LPDDR5X",
-  "LPDDR5",
-  "LPDDR4X",
-  "LPDDR4",
-  "LPDDR3",
-  "LPDDR3L",
-  "LPDDR2",
-];
-
-export const storage = [
-  "4 Tb",
-  "2 Tb",
-  "1 Tb",
-  "512 Gb",
-  "256 Gb",
-  "128 Gb",
-  "64 Gb",
-  "32 Gb",
-  "16 Gb",
-  "8 Gb",
-  "4 Gb",
-  "2 Gb",
-  "1 Gb",
-];
-export const storageType = [
-  "UFS 5.0",
-  "UFS 4.0",
-  "UFS 3.1",
-  "UFS 3.0",
-  "UFS 2.2",
-  "UFS 2.1",
-];
-export const batteryType = [
-  "Silicon-Carbon Battery",
-  "Graphene Battery",
-  "Lithium-Polymer (Li-Po)",
-  "Lithium-Ion (Li-Ion)",
-  "Nickel-Metal Hydride (NiMH)",
-  "Nickel-Cadmium (NiCd)",
-];
-
-export const osTypes = [
-  "Android",
-  "iOS",
-  "Windows",
-  "Linux",
-  "ChromeOS",
-  "MacOS",
-];
-export const Fingerprints = [
-  "none",
-  "Side",
-  "Rear",
-  "Front",
-  "Under-display Optical",
-  "Under-display Ultrasonic",
-];
+import {
+  deviceType,
+  platforms,
+  currency,
+  displayTypes,
+  cameraCutouts,
+  screenProtections,
+  chipsets,
+  ramTypes,
+  storage,
+  storageType,
+  batteryType,
+  osTypes,
+  Fingerprints,
+  filters,
+  smartphoneAwards,
+} from "@/lib/data";
 
 function Clientpage({ productdata }) {
   const { setmessagefn } = AppContextfn();
+  const brands = Object.values(filters.Brand.options).map(
+    (option) => option.name
+  );
   const pricedata = {
     platform: "",
     variant: "",
@@ -221,6 +38,7 @@ function Clientpage({ productdata }) {
     sp: "",
     currency: "",
     link: "",
+    status: "",
   };
   const displaydata = {
     size: "",
@@ -247,7 +65,6 @@ function Clientpage({ productdata }) {
     fpsDrop: "",
     tempratureRaise: "",
     batterydrain: "",
-    AiFpsGeneration: "",
   };
   const initialData = {
     brand: "",
@@ -318,9 +135,13 @@ function Clientpage({ productdata }) {
     stereoSpeakers: false,
     headphoneJack: false,
     // gaming
+    dedicatedCooling: false,
+    gamingTriggers: false,
+    AiFpsGeneration: false,
     gaming: [gamedata],
     //
     inBox: "",
+    awards: [],
     youtubeComparison: "",
     youtubeGamingReview: "",
     youtubeCameraReview: "",
@@ -328,7 +149,6 @@ function Clientpage({ productdata }) {
   const createProductSchema = (data = {}) => ({
     ...initialData,
     ...data,
-
     price: (data?.price ?? [{}]).map((p) => ({ ...pricedata, ...p })),
     display: (data?.display ?? [{}]).map((d) => ({ ...displaydata, ...d })),
     gaming: (data?.gaming ?? [{}]).map((g) => ({ ...gamedata, ...g })),
@@ -522,6 +342,14 @@ function Clientpage({ productdata }) {
                   onchange={(e) => {
                     handlenestedchange("price", i, "link", e.target.value);
                   }}
+                />
+                <Dropdownmenu
+                  title="Status"
+                  state={item.status}
+                  onchange={(value) => {
+                    handlenestedchange("price", i, "status", value);
+                  }}
+                  options={["Available", "Unavailable", "Upcoming"]}
                 />
                 {i != 0 && (
                   <button
@@ -1249,6 +1077,37 @@ function Clientpage({ productdata }) {
         />
       </Groupinputs>
       {/* Gaming */}
+      <Groupinputs
+        title="Gaming Features"
+        selectedgroup={selectedgroup}
+        setselectedgroup={setselectedgroup}
+      >
+        <Togglebuttons
+          titlename="Dedicated Cooling"
+          value={data.dedicatedCooling}
+          positive={() => handlechange("dedicatedCooling", true)}
+          negative={() => handlechange("dedicatedCooling", false)}
+          positiveText="Yes"
+          negativeText="No"
+        />
+        <Togglebuttons
+          titlename="Gaming Triggers"
+          value={data.gamingTriggers}
+          positive={() => handlechange("gamingTriggers", true)}
+          negative={() => handlechange("gamingTriggers", false)}
+          positiveText="Yes"
+          negativeText="No"
+        />
+        <Togglebuttons
+          titlename="Ai Fps Generation"
+          value={data.AiFpsGeneration}
+          positive={() => handlechange("AiFpsGeneration", true)}
+          negative={() => handlechange("AiFpsGeneration", false)}
+          positiveText="Yes"
+          negativeText="No"
+        />
+      </Groupinputs>
+      {/*games */}
       <div className="flex flex-col gap-2">
         {data.gaming.map((item, i) => {
           return (
@@ -1313,20 +1172,6 @@ function Clientpage({ productdata }) {
                   );
                 }}
               />
-              <Standardinputfield
-                titlename="Ai Fps Generation"
-                value={item.AiFpsGeneration}
-                type="text"
-                onchange={(e) => {
-                  handlenestedchange(
-                    "gaming",
-                    i,
-                    "AiFpsGeneration",
-                    e.target.value
-                  );
-                }}
-              />
-
               <button
                 className="px-5 py-2 rounded-md bg-red-600 text-white w-fit ml-auto"
                 type="button"
@@ -1366,6 +1211,13 @@ function Clientpage({ productdata }) {
           onchange={(e) => {
             handlechange("inBox", e.target.value);
           }}
+        />
+        <Multiselectmenu
+          state={data?.awards}
+          setState={setdata}
+          statename="awards"
+          options={smartphoneAwards}
+          title="Awards"
         />
         <Standardinputfield
           titlename="Youtube Comparison Link"

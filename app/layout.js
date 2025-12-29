@@ -18,10 +18,10 @@ const tenor = Tenor_Sans({
 });
 
 export const metadata = {
-  title: "A2Z Stores",
-  description: "Create your own store in minutes",
+  title: "Technologia",
+  description: "Search you next tech product",
   icons: {
-    icon: "/favicon.png",
+    icon: "/logo.png",
   },
 };
 
