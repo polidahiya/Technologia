@@ -44,13 +44,27 @@ button {
   border: 1px solid red;
 }
 
+/* loading blocks */
+@keyframes shimmer {
+  0% {
+    left: -100px;
+  }
+  100% {
+    left: calc(100% + 100px);
+  }
+}
+
+.shimmer {
+  animation: shimmer 1.5s infinite linear;
+}
+
 /* Headings */
 .text h1 {
   font-size: 30px;
   font-weight: normal;
   margin-bottom: 20px;
   text-align: center;
-  font-family: "Recline", sans-serif;
+  font-family: var(--font-tenor), sans-serif;
 }
 
 .text strong {
@@ -61,12 +75,12 @@ button {
   font-size: 18px;
   font-weight: 600;
   margin-top: 10px;
-  font-family: "Recline", sans-serif;
+  font-family: var(--font-tenor), sans-serif;
 }
 
 /* Paragraphs */
 .text p {
-  font-size: 12px;
+  font-size: 14px;
   margin: 5px 0;
 }
 

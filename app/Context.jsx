@@ -5,6 +5,7 @@ const AppContext = createContext({});
 
 export function Appwrapper({ children }) {
   const [messagearray, setmessagearray] = useState([]);
+  const [showsearchbar, setshowsearchbar] = useState(false);
 
   // messages
   const setmessagefn = (message) => {
@@ -17,6 +18,8 @@ export function Appwrapper({ children }) {
   return (
     <AppContext.Provider
       value={{
+        showsearchbar,
+        setshowsearchbar,
         messagearray,
         setmessagearray,
         setmessagefn,

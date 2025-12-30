@@ -5,11 +5,12 @@ import Herosection from "../product/[id]/_comps/Herosection";
 import Filtermenu from "./_comps/Filtermenu";
 import { filters } from "@/lib/data";
 import Header from "./_comps/Header";
+import Getdata from "@/app/_globalcomps/navbar/searchbar/Getdata";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
-  const { sort, ...appliedfilters } = await searchParams;
-  const products = await Cachedproducts();
+  const { sort, search = null, ...appliedfilters } = await searchParams;
+  const products = search ? await Getdata(search) : await Cachedproducts();
 
   const filteredProducts = products.filter((product) => {
     return Object.entries(appliedfilters).every(([filterSlug, value]) => {
@@ -27,10 +28,13 @@ async function page({ searchParams }) {
   });
 
   const filterArray = [];
+  //   if search
+  if (search) filterArray.push(["search", search, search]);
+  
   Object.entries(appliedfilters).forEach(([filterSlug, value]) => {
     const selectedSlugs = value.split(",");
     selectedSlugs.forEach((optionSlug) => {
-      const name = filters[filterSlug].options[optionSlug].name;
+      const name = filters[filterSlug]?.options[optionSlug]?.name;
       filterArray.push([filterSlug, optionSlug, name]);
     });
   });

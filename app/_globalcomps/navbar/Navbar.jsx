@@ -13,18 +13,18 @@ export default function Navbar() {
       <div className="mx-auto max-w-6xl px-4 lg:px-0">
         <div className="flex h-16 items-center gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/main" className="flex items-center gap-2">
             <div className="h-9 w-9 rounded bg-primary flex items-center justify-center bg-white">
               <Nextimage
                 src="/logo.png"
-                alt="Technologia logo"
+                alt="Tecknologia logo"
                 width={40}
                 height={40}
                 loading="lazy"
               />
             </div>
             <span className="text-lg font-semibold  text-white">
-              Technologia
+              Tecknologia
             </span>
           </Link>
 

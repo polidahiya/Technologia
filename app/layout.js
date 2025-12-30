@@ -18,7 +18,7 @@ const tenor = Tenor_Sans({
 });
 
 export const metadata = {
-  title: "Technologia",
+  title: "Tecknologia",
   description: "Search you next tech product",
   icons: {
     icon: "/logo.png",
