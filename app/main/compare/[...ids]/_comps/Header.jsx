@@ -19,7 +19,7 @@ function CompareHeader({ products }) {
 
   return (
     <div className={`bg-white  transition-all duration-300  h-60`}>
-      <div className="sticky top-2 rounded-2xl overflow-hidden shadow">
+      <div className="sticky top-18 rounded-2xl overflow-hidden shadow">
         <div className="flex transition-all duration-300">
           {/* Left column */}
           <div

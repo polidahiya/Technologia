@@ -17,10 +17,10 @@ export default async function Page({ params }) {
   return (
     <Pagectxwrapper>
       <div className="min-h-screen py-10">
-        <div className="max-w-6xl mx-auto space-y-2">
+        <div className="max-w-6xl mx-auto space-y-2 ">
           <Herosection product={product} />
 
-          <Navbar navitems={navitems} />
+          <Navbar navitems={navitems} stickyat="top-16" />
 
           <SpecTable
             title={navitems[0].label}
@@ -177,8 +177,9 @@ export default async function Page({ params }) {
             className="bg-white rounded-2xl shadow overflow-hidden"
             id={navitems[9].label}
           >
-            <h2 className="flex  items-center gap-2 px-6 py-4 font-extrabold border-b bg-bg1 border-slate-200 font-tenor">
+            <h2 className="relative flex  items-center gap-2 px-6 py-4 font-extrabold border-b border-slate-200 font-tenor tracking-wider">
               {navitems[9].icon} {navitems[9].label}
+              <span className="block absolute h-1/2 w-1 bg-theme rounded-r-full top-1/2 left-0 -translate-y-1/2 "></span>
             </h2>
             <div className="grid md:grid-cols-3 gap-4  p-6">
               <Video src={product.youtubeComparison} />
@@ -192,7 +193,7 @@ export default async function Page({ params }) {
         <Link
           href={`/admin/product/add?edit=${product._id}`}
           target="_blank"
-          className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-theme text-white px-5 py-2 rounded-2xl"
+          className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-theme text-white px-5 py-2 rounded-2xl z-10"
         >
           Edit
         </Link>

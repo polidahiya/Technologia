@@ -14,7 +14,7 @@ async function page({ params }) {
   return (
     <div className="min-h-screen py-10">
       <div className="max-w-6xl mx-auto space-y-2">
-        <div className="sticky -top-24 md:-top-32 p-2 bg-white rounded-2xl shadow z-10 space-y-2">
+        <div className="sticky -top-8 md:-top-16 p-2 bg-white rounded-2xl shadow z-10 space-y-2">
           <CompareHeader products={products} />
           <Navbar navitems={navitems} />
         </div>
@@ -39,7 +39,7 @@ async function page({ params }) {
             {
               label: "Screen to Body Ratio",
               key: "display.0.screenToBodyRatio",
-              unit:"%"
+              unit: "%",
             },
             { label: "Protection", key: "display.0.screenProtection" },
             { label: "Camera Cutout", key: "display.0.cameraCutout" },
@@ -253,8 +253,9 @@ async function page({ params }) {
           className="bg-white rounded-2xl shadow overflow-hidden"
           id={navitems[9].label}
         >
-          <h2 className="flex items-center gap-2 px-6 py-4 font-extrabold border-b bg-bg1 border-slate-200 font-tenor">
+          <h2 className="relative flex items-center gap-2 px-6 py-4 font-extrabold border-b border-slate-200 font-tenor tracking-wider text-theme">
             {navitems[9].icon} {navitems[9].label}
+            <span className="block absolute h-1/2 w-1 bg-theme rounded-r-full top-1/2 left-0 -translate-y-1/2 "></span>
           </h2>
 
           <div className="grid md:grid-cols-3 gap-4 p-6">
