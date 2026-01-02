@@ -1,14 +1,14 @@
-
-function Filterlinkhook(pathname,searchParams,name, value) {
- 
-
+function Filterlinkhook(
+  pathname,
+  searchParams,
+  name,
+  value,
+  multiple = true // 👈 new flag
+) {
   const params = new URLSearchParams(searchParams.toString());
 
   // Normalize incoming value to array
   const values = Array.isArray(value) ? value : [value];
-
-  // Current values from URL
-  const current = params.get(name)?.split(",").filter(Boolean) || [];
 
   // Handle "All"
   if (values.includes("All")) {
@@ -16,19 +16,24 @@ function Filterlinkhook(pathname,searchParams,name, value) {
     return `${pathname}?${params.toString()}`;
   }
 
+  // 🔹 SINGLE SELECT MODE
+  if (!multiple) {
+    params.set(name, values[0]);
+    return `${pathname}?${params.toString()}`;
+  }
+
+  // 🔹 MULTI SELECT MODE (existing logic)
+  const current = params.get(name)?.split(",").filter(Boolean) || [];
   let next = [...current];
 
   values.forEach((v) => {
     if (next.includes(v)) {
-      // Toggle off
       next = next.filter((x) => x !== v);
     } else {
-      // Add
       next.push(v);
     }
   });
 
-  // Set or delete param
   if (next.length) {
     params.set(name, next.join(","));
   } else {

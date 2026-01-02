@@ -6,6 +6,7 @@ import Filtermenu from "./_comps/Filtermenu";
 import { filters } from "@/lib/data";
 import Header from "./_comps/Header";
 import Getdata from "@/app/_globalcomps/navbar/searchbar/Getdata";
+import SortFn from "@/app/_hooks/Sortproducts";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
@@ -14,6 +15,14 @@ async function page({ searchParams }) {
 
   const filteredProducts = products.filter((product) => {
     return Object.entries(appliedfilters).every(([filterSlug, value]) => {
+      // for price
+      if (filterSlug == "Price") {
+        const [min, max] = value.split("-").map((a) => Number(a));
+        return product?.price.some(
+          (a) => (a.sp || a.mrp) >= min && (a.sp || a.mrp) <= max
+        );
+      }
+      //
       const selectedSlugs = value.split(",");
       const filter = filters[filterSlug];
       if (!filter) return true;
@@ -27,11 +36,19 @@ async function page({ searchParams }) {
     });
   });
 
+  const sortedproducts = await SortFn(filteredProducts, 0);
+
   const filterArray = [];
   //   if search
   if (search) filterArray.push(["search", search, search]);
-  
+
   Object.entries(appliedfilters).forEach(([filterSlug, value]) => {
+    // price
+    if (filterSlug == "Price") {
+      filterArray.push([filterSlug, value, value]);
+      return;
+    }
+    //
     const selectedSlugs = value.split(",");
     selectedSlugs.forEach((optionSlug) => {
       const name = filters[filterSlug]?.options[optionSlug]?.name;
@@ -46,7 +63,7 @@ async function page({ searchParams }) {
         <div className="space-y-2">
           <Header filterArray={filterArray} />
           <div className="space-y-2">
-            {filteredProducts.map((product, i) => {
+            {sortedproducts.map((product, i) => {
               return <Herosection key={i} product={product} />;
             })}
           </div>

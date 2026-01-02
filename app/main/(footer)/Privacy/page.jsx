@@ -1,12 +1,10 @@
 import React from "react";
+import { social } from "@/lib/data";
 
 const PrivacyPolicy = () => {
   return (
-    <div classname="text">
+    <div className="text">
       <h1>Privacy Policy</h1>
-      <p>
-        <strong>Last updated:</strong> [Add Date]
-      </p>
       <p>
         Welcome to <strong>Tecknologia</strong>. Your privacy is important to
         us. This Privacy Policy document explains how we collect, use, and
@@ -110,7 +108,7 @@ const PrivacyPolicy = () => {
         at:
       </p>
       <p>
-        <strong>Email:</strong> [your email address]
+        <strong>Email:</strong> {social?.contactmail}
       </p>
       <p>
         <strong>Website:</strong> https://tecknologia.in

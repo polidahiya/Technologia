@@ -1,12 +1,10 @@
 import React from "react";
+import { social } from "@/lib/data";
 
 const TermsAndConditions = () => {
   return (
     <div classname="text">
       <h1>Terms and Conditions</h1>
-      <p>
-        <strong>Last updated:</strong> [Add Date]
-      </p>
       <p>
         Welcome to <strong>Tecknologia</strong> (“we”, “our”, “us”). By
         accessing or using <strong>https://tecknologia.in</strong> (the
@@ -79,10 +77,7 @@ const TermsAndConditions = () => {
         contact us at:
       </p>
       <p>
-        <strong>Email:</strong> [your email address]
-      </p>
-      <p>
-        <strong>Website:</strong> https://tecknologia.in
+        <strong>Email:</strong>  {social?.contactmail}
       </p>
     </div>
   );

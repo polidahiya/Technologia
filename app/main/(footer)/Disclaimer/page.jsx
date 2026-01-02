@@ -1,12 +1,10 @@
 import React from "react";
+import { social } from "@/lib/data";
 
 const Disclaimer = () => {
   return (
-    <div classname="text">
+    <div className="text">
       <h1>Disclaimer</h1>
-      <p>
-        <strong>Last updated:</strong> [Add Date]
-      </p>
       <p>
         The information provided on <strong>Tecknologia</strong>(
         <strong>https://tecknologia.in</strong>) is for general informational
@@ -77,7 +75,7 @@ const Disclaimer = () => {
         If you have any questions about this Disclaimer, you may contact us at:
       </p>
       <p>
-        <strong>Email:</strong> [your email address]
+        <strong>Email:</strong> {social?.contactmail}
       </p>
       <p>
         <strong>Website:</strong> https://tecknologia.in

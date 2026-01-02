@@ -9,7 +9,7 @@ export default function Navbar() {
   const [dark, setDark] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#191919] border-b">
+    <header className="sticky top-0 z-50 bg-[#191918] border-b">
       <div className="mx-auto max-w-6xl px-4 lg:px-0">
         <div className="flex h-16 items-center gap-4">
           {/* Logo */}
@@ -35,10 +35,10 @@ export default function Navbar() {
           <div className="ml-auto flex items-center gap-2">
             {/* CTA */}
             <Link
-              href="/find-phone"
-              className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+              href="/main/all"
+              className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:text-theme hover:underline"
             >
-              Find a phone for me
+              Find a phone
             </Link>
             {/* Theme toggle */}
             <button

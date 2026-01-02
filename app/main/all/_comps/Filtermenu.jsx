@@ -35,6 +35,7 @@ function Filtermenu({ appliedfilters }) {
             <Listview
               name={slug}
               items={filter.options}
+              multipleMode={filter?.multipleMode}
               appliedfilters={appliedValues}
             />
           </Container>
@@ -55,7 +56,7 @@ const Container = ({ title, children }) => {
   );
 };
 
-const Listview = ({ items, name, appliedfilters = [] }) => {
+const Listview = ({ items, name, multipleMode, appliedfilters = [] }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   return (
@@ -66,7 +67,15 @@ const Listview = ({ items, name, appliedfilters = [] }) => {
         return (
           <Link
             key={slug}
-            href={Filterlinkhook(pathname, searchParams, name, slug) || "#"}
+            href={
+              Filterlinkhook(
+                pathname,
+                searchParams,
+                name,
+                slug,
+                multipleMode
+              ) || "#"
+            }
             className="group flex items-center gap-2 px-2 py-2 text-xs md:text-sm transition-colors"
           >
             {/* Checkbox indicator */}
