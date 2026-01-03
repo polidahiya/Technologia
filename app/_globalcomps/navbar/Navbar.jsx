@@ -29,7 +29,9 @@ export default function Navbar() {
           </Link>
 
           {/* Search */}
-          <Searchbar />
+          <div className="ml-6 flex-1">
+            <Searchbar />
+          </div>
 
           {/* Right actions */}
           <div className="ml-auto flex items-center gap-2">

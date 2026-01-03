@@ -15,7 +15,7 @@ async function page({ params }) {
     <div className="min-h-screen py-10">
       <div className="max-w-6xl mx-auto space-y-2">
         <div className="sticky -top-8 md:-top-16 p-2 bg-white rounded-2xl shadow z-10 space-y-2">
-          <CompareHeader products={products} />
+          <CompareHeader ids={ids} products={products} />
           <Navbar navitems={navitems} />
         </div>
         <CompareSpecTable

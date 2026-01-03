@@ -6,6 +6,7 @@ const AppContext = createContext({});
 export function Appwrapper({ children }) {
   const [messagearray, setmessagearray] = useState([]);
   const [showsearchbar, setshowsearchbar] = useState(false);
+  const [comparelist, setcomparelist] = useState([null, null, null]);
 
   // messages
   const setmessagefn = (message) => {
@@ -20,6 +21,8 @@ export function Appwrapper({ children }) {
       value={{
         showsearchbar,
         setshowsearchbar,
+        comparelist,
+        setcomparelist,
         messagearray,
         setmessagearray,
         setmessagefn,

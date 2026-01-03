@@ -3,22 +3,28 @@ import Link from "next/link";
 import Nextimage from "@/app/_globalcomps/Nextimage";
 import { icons } from "@/lib/data";
 import formatPrice from "@/app/_globalcomps/Formateprice";
+import Comparebutton from "./Comparebutton";
 
 export default function Herosection({ product }) {
   const pricedata = product?.price[0];
 
   return (
     <section className="bg-white rounded-2xl shadow p-6 grid md:grid-cols-2 gap-8">
-      <Link href={`/main/product/${product?._id}`}>
-        <Nextimage
-          src={product.images?.[0]}
-          alt={product.model}
-          height={420}
-          width={536}
-          loading="lazy"
-          className="w-full max-h-[420px] object-contain rounded-xl"
-        />
-      </Link>
+      <div className="">
+        <Link href={`/main/product/${product?._id}`}>
+          <Nextimage
+            src={product.images?.[0]}
+            alt={product.model}
+            height={420}
+            width={536}
+            loading="lazy"
+            className="w-full max-h-[420px] object-contain rounded-xl"
+          />
+        </Link>
+        <div className="flex item-center justify-center mt-5">
+          <Comparebutton product={product} />
+        </div>
+      </div>
 
       <div className="">
         <h1 className="text-3xl font-bold font-tenor">

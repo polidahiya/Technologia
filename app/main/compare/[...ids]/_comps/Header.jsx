@@ -4,8 +4,10 @@ import { icons } from "@/lib/data";
 import Link from "next/link";
 import Nextimage from "@/app/_globalcomps/Nextimage";
 import formatPrice from "@/app/_globalcomps/Formateprice";
+import { AppContextfn } from "@/app/Context";
 
-function CompareHeader({ products }) {
+function CompareHeader({ ids, products }) {
+  const { setcomparelist } = AppContextfn();
   const [compact, setCompact] = useState(false);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ function CompareHeader({ products }) {
               >
                 {/* flex container */}
                 <Link
-                href={`/main/product/${product?._id}`}
+                  href={`/main/product/${product?._id}`}
                   className={`flex flex-col items-center ${
                     compact ? "md:flex-row md:gap-2" : ""
                   }`}
@@ -62,7 +64,7 @@ function CompareHeader({ products }) {
                     }`}
                   >
                     <div className="font-semibold line-clamp-3 md:text-base">
-                      {product.model}
+                     {product?.brand} {product.model}
                     </div>
 
                     <div className="font-bold text-green-600">
@@ -127,10 +129,27 @@ function CompareHeader({ products }) {
                 </div>
                 {/* controls */}
                 <div className="flex-col gap-1 absolute top-1 right-1 hidden md:flex">
-                  <button className="w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center">
+                  <Link
+                    href={`/main/compare/${ids
+                      .slice(0, 3)
+                      .filter((_, j) => j != i)
+                      .join("/")}`}
+                    className="w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center"
+                  >
                     {icons.Cross}
-                  </button>
-                  <button className="w-5 h-5 rounded-full bg-blue-400 text-white flex items-center justify-center">
+                  </Link>
+                  <button
+                    className="w-5 h-5 rounded-full bg-blue-400 text-white flex items-center justify-center"
+                    onClick={() => {
+                      setcomparelist((pre) => {
+                        const updated = [...pre];
+                        products.forEach((item, j) => {
+                          updated[j] = i == j ? null : item;
+                        });
+                        return updated;
+                      });
+                    }}
+                  >
                     {icons.Replace}
                   </button>
                 </div>

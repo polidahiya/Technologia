@@ -12,13 +12,13 @@ const Getdata = async (searchQuery) => {
           ?.toLowerCase()
           .includes(word.toLowerCase());
 
+        const brandMatch = product?.brand
+          ?.toLowerCase()
+          .includes(word.toLowerCase());
+
         const keyfeaturesMatch = product?.keyfeatures?.some((descItem) =>
           descItem.toLowerCase().includes(word.toLowerCase())
         );
-
-        const keywordsMatch = product?.keywords
-          ?.toLowerCase()
-          .includes(word.toLowerCase());
 
         const categoryMatch = product?.category
           ?.toLowerCase()
@@ -34,8 +34,8 @@ const Getdata = async (searchQuery) => {
 
         return (
           modelMatch ||
+          brandMatch ||
           keyfeaturesMatch ||
-          keywordsMatch ||
           categoryMatch ||
           subcatMatch ||
           skuMatch

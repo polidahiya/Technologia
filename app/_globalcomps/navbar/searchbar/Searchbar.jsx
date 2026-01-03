@@ -9,8 +9,14 @@ import Nextimage from "../../Nextimage";
 // import { fbq } from "@/app/_connections/Fbpixel";
 // import { event } from "nextjs-google-analytics";
 import Loadingtile from "../../Loading/Loadingtile";
+import formatPrice from "../../Formateprice";
 
-function Searchbar({ autoFocus = false }) {
+function Searchbar({
+  autoFocus = false,
+  suggestionspostion = "top-full translate-y-1",
+  useaction = false,
+  action = () => {},
+}) {
   const router = useRouter();
   const { showsearchbar, setshowsearchbar } = AppContextfn();
   const [searchedproducts, setsearchedproducts] = useState([]);
@@ -53,11 +59,13 @@ function Searchbar({ autoFocus = false }) {
     e.preventDefault();
     setshowsearchbar(false);
     setisfocused(false);
+    if (useaction) return;
+    
     router.push(`/main/all?search=${searchtext}`);
   };
 
   return (
-    <div className="relative hidden md:flex flex-1 max-w-lg mx-6">
+    <div className="relative hidden md:flex flex-1 max-w-lg">
       <form
         onSubmit={handleSubmit}
         className="relative w-full bg-white rounded"
@@ -83,7 +91,9 @@ function Searchbar({ autoFocus = false }) {
         />
       </form>
       {isfocused && (
-        <div className="absolute top-full translate-y-1 flex flex-col w-full bg-white rounded shadow overflow-hidden">
+        <div
+          className={`absolute  flex flex-col w-full bg-white rounded shadow overflow-hidden ${suggestionspostion}`}
+        >
           {loading ? (
             <Skeletonloading />
           ) : (
@@ -93,9 +103,14 @@ function Searchbar({ autoFocus = false }) {
                   key={i}
                   href={`/main/product/${item?._id}`}
                   className="group flex gap-2 w-full h-12 px-2 py-1 border-b border-bg1 last:border-0 group hover:bg-bg1"
-                  // onClick={() => {
-                  //   setshowsearchbar(false);
-                  // }}
+                  onClick={(e) => {
+                    if (useaction) {
+                      e.preventDefault();
+                      action(item);
+                      return;
+                    }
+                    // setshowsearchbar(false);
+                  }}
                 >
                   <div className="h-full aspect-square">
                     <Nextimage
@@ -113,7 +128,9 @@ function Searchbar({ autoFocus = false }) {
                     <p className="text-xs text-gray-500 truncate">
                       From{" "}
                       <span className="font-semibold text-theme">
-                        ₹{item?.price?.[0]?.sp || item?.price?.[0]?.mrp}
+                        {formatPrice(
+                          item?.price?.[0]?.sp || item?.price?.[0]?.mrp
+                        )}
                       </span>
                       <span className="ml-1 text-[11px] text-gray-400">
                         • {item?.price?.[0]?.status}
