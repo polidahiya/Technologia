@@ -5,12 +5,12 @@ import Filterlinkhook from "./Filterlinkhook";
 import { usePathname, useSearchParams } from "next/navigation";
 import { icons } from "@/lib/data";
 
-function Header({ filterArray }) {
+export default function Appliedfilters({ filterArray }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   return (
-    <div className="flex rounded-2xl shadow bg-white p-2 sticky top-0">
-      <div className="flex gap-1">
+    <div className="flex rounded-2xl shadow bg-white p-2">
+      <div className="flex gap-1 overflow-x-auto">
         {filterArray.map((item, i) => {
           return (
             <div key={i} className="flex h-12 bg-bg1 rounded-xl p-1">
@@ -18,7 +18,7 @@ function Header({ filterArray }) {
                 <p className="font-semibold text-gray-400 text-[10px] ">
                   {item[0]}
                 </p>
-                <p className="">{item[2]}</p>
+                <p className="whitespace-nowrap">{item[2]}</p>
               </div>
               <Link
                 href={
@@ -33,9 +33,6 @@ function Header({ filterArray }) {
           );
         })}
       </div>
-      <div className="px-3 py-1 bg-bg1 ml-auto">Sort</div>
     </div>
   );
 }
-
-export default Header;
