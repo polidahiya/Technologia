@@ -3,7 +3,7 @@ import { social } from "@/lib/data";
 
 const TermsAndConditions = () => {
   return (
-    <div classname="text">
+    <div className="text">
       <h1>Terms and Conditions</h1>
       <p>
         Welcome to <strong>Tecknologia</strong> (“we”, “our”, “us”). By

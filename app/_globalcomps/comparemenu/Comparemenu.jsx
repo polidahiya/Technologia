@@ -10,9 +10,10 @@ import formatPrice from "../Formateprice";
 import Searchbar from "../navbar/searchbar/Searchbar";
 import { AiOutlineDelete } from "react-icons/ai";
 
-function Comparemenu() {
+function Comparemenu({ device }) {
   const { comparelist, setcomparelist } = AppContextfn();
   const [showmenu, setshowmenu] = useState(false);
+  const heightvalue = device == "mobile" ? 395 : 160;
 
   useEffect(() => {
     setshowmenu(true);
@@ -22,15 +23,15 @@ function Comparemenu() {
     <AnimatePresence>
       {!comparelist.every((item) => !item) && (
         <motion.div
-          initial={{ y: 160 }}
-          animate={{ y: showmenu ? 0 : 160 }}
+          initial={{ y: heightvalue }}
+          animate={{ y: showmenu ? 0 : heightvalue }}
           exit={{
-            y: 160,
+            y: heightvalue,
             opacity: 0,
           }}
-          className={`fixed -bottom-8 left-1/2 -translate-x-1/2 h-48 w-full max-w-6xl bg-white rounded-t-2xl z-10 border border-slate-300`}
+          className={`fixed -bottom-20 md:-bottom-8 left-1/2 -translate-x-1/2 md:h-48 w-full pt-2 md:pt-0 pb-28 md:pb-0 max-w-6xl bg-white rounded-t-2xl z-10 border border-slate-300`}
         >
-          <div className="h-40 w-full flex">
+          <div className="md:h-40 w-full flex flex-col md:flex-row">
             {comparelist.map((item, i) => (
               <Slote
                 key={i}
@@ -40,7 +41,7 @@ function Comparemenu() {
                 setcomparelist={setcomparelist}
               />
             ))}
-            <div className="flex-1 w-full px-2 flex flex-col items-center justify-center">
+            <div className="flex-1 w-full px-2 flex flex-row-reverse md:flex-col items-center justify-center mt-2 md:mt-0">
               <Link
                 href={`/main/compare/${comparelist
                   .filter(Boolean)
@@ -53,7 +54,7 @@ function Comparemenu() {
               </Link>
               <button
                 className="flex items-center gap-1 text-sm text-center py-2 px-10  text-red-500 rounded-md"
-                onClick={() => setcomparelist([])}
+                onClick={() => setcomparelist([null, null, null])}
               >
                 <AiOutlineDelete /> Clear all
               </button>
@@ -82,7 +83,7 @@ const Slote = ({ comparelist, setcomparelist, item, i }) => {
         <Emptyslote setcomparelist={setcomparelist} i={i} />
       )}
       {i != comparelist.length - 1 && (
-        <div className="h-full flex items-center justify-center">
+        <div className="h-8 md:h-full flex items-center justify-center">
           <Vsbox />
         </div>
       )}
@@ -91,7 +92,7 @@ const Slote = ({ comparelist, setcomparelist, item, i }) => {
 };
 const Showproduct = ({ setcomparelist, item, i }) => {
   return (
-    <div className="relative flex-1 w-full flex items-center gap-2 px-2">
+    <div className="relative flex-1 w-full flex items-center gap-2 px-2 min-h-20 md:min-h-auto">
       <div className="w-20 h-20 shrink-0">
         <Nextimage
           src={item?.images[0] || "/uiimages/404.jpg"}
@@ -134,8 +135,8 @@ const Showproduct = ({ setcomparelist, item, i }) => {
 
 const Emptyslote = ({ setcomparelist, i }) => {
   return (
-    <div className="relative flex-1 w-full px-2 flex flex-col items-center justify-center">
-      <div className="h-10 border border-gray-300 rounded-md">
+    <div className="relative flex-1 w-full px-2 flex flex-col items-center justify-center min-h-20 md:min-h-auto">
+      <div className="h-10 w-full border border-gray-300 rounded-md">
         <Searchbar
           suggestionspostion="bottom-full -translate-y-1"
           useaction={true}
@@ -155,8 +156,8 @@ const Vsbox = () => {
   return (
     <div className="relative h-8 w-8 bg-blue-100 border border-blue-300 rounded-full flex items-center justify-center text-sm">
       VS
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-full h-12 w-0.5 bg-gray-300"></div>
-      <div className="absolute left-1/2 -translate-x-1/2 top-full h-12 w-0.5 bg-gray-300"></div>
+      <div className="absolute left-0 -translate-x-full bottom-1/2 translate-y-1/2 md:left-1/2 md:-translate-x-1/2 md:bottom-full h-0.5 w-20 md:h-12 md:w-0.5 md:translate-y-0 bg-gray-300"></div>
+      <div className="absolute left-full top-1/2 -translate-y-1/2 md:left-1/2 md:-translate-x-1/2 md:top-full md:translate-y-0 h-0.5 w-20 md:h-12 md:w-0.5 bg-gray-300"></div>
     </div>
   );
 };

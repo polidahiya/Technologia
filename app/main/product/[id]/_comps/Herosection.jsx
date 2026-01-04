@@ -4,6 +4,7 @@ import Nextimage from "@/app/_globalcomps/Nextimage";
 import { icons } from "@/lib/data";
 import formatPrice from "@/app/_globalcomps/Formateprice";
 import Comparebutton from "./Comparebutton";
+import VariantPriceList from "./Variantpricelist";
 
 export default function Herosection({ product }) {
   const pricedata = product?.price[0];
@@ -93,125 +94,8 @@ export default function Herosection({ product }) {
         </div>
 
         {/* Buy buttons */}
-        <VariantPriceList prices={product.price} productMrp={product.mrp} />
+        <VariantPriceList prices={product.price} />
       </div>
     </section>
-  );
-}
-
-function VariantPriceList({ prices = [], productMrp }) {
-  const platformImageMap = {
-    amazon: "/stores/1519104223.avif",
-    flipkart: "/stores/1519104215.avif",
-  };
-  const parseVariant = (variant = "") => {
-    const match = variant.match(/(\d+)\s*GB\s*\+\s*(\d+)\s*GB/i);
-    if (!match) return { ram: 0, storage: 0 };
-
-    return {
-      ram: Number(match[1]),
-      storage: Number(match[2]),
-    };
-  };
-
-  const sortedPrices = [...prices].sort((a, b) => {
-    const va = parseVariant(a.variant);
-    const vb = parseVariant(b.variant);
-
-    if (va.ram !== vb.ram) return va.ram - vb.ram;
-    if (va.storage !== vb.storage) return va.storage - vb.storage;
-    return a.sp - b.sp;
-  });
-
-  const bestDealIndex = sortedPrices.reduce(
-    (best, item, i, arr) => (item.sp < arr[best].sp ? i : best),
-    0
-  );
-
-  return (
-    <div className="flex flex-col gap-3 pt-4">
-      {sortedPrices.map((item, i) => {
-        const isBestDeal = i === bestDealIndex;
-
-        const discount =
-          productMrp && item.sp
-            ? Math.round(((productMrp - item.sp) / productMrp) * 100)
-            : null;
-
-        return (
-          <Link
-            key={i}
-            href={item.link || "#"}
-            className={`group flex items-center justify-between gap-4 rounded-xl border px-5 py-4 transition-all
-              ${
-                isBestDeal
-                  ? "border-green-500 bg-green-50 shadow-md"
-                  : "border-slate-200 bg-white shadow-sm hover:shadow-md hover:border-theme"
-              }`}
-          >
-            {/* LEFT */}
-            <div className="flex flex-col gap-1">
-              {/* Variant */}
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-extrabold text-slate-900">
-                  {item.variant}
-                </span>
-
-                {isBestDeal && (
-                  <span className="rounded-full bg-green-600 px-2 py-0.5 text-xs font-bold text-white">
-                    Best Value
-                  </span>
-                )}
-              </div>
-
-              {/* Price */}
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-extrabold text-theme">
-                  {formatPrice(item.sp, item.currency)}
-                </span>
-
-                {productMrp && productMrp !== item.sp && (
-                  <span className="text-sm text-slate-400 line-through">
-                    {formatPrice(productMrp, item.currency)}
-                  </span>
-                )}
-
-                {discount > 0 && (
-                  <span className="text-xs font-bold text-red-600">
-                    {discount}% OFF
-                  </span>
-                )}
-              </div>
-
-              {/* Platform */}
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                {platformImageMap[item.platform] && (
-                  <Nextimage
-                    src={platformImageMap[item.platform]}
-                    height={16}
-                    width={16}
-                    alt={item.platform}
-                    className="rounded"
-                  />
-                )}
-                <span>Available on {item.platform}</span>
-              </div>
-            </div>
-
-            {/* CTA */}
-            <span
-              className={`shrink-0 rounded-full px-4 py-1 text-sm font-semibold transition-colors
-                ${
-                  isBestDeal
-                    ? "bg-green-600 text-white"
-                    : "bg-theme/10 text-theme group-hover:bg-theme group-hover:text-white"
-                }`}
-            >
-              View Deal →
-            </span>
-          </Link>
-        );
-      })}
-    </div>
   );
 }

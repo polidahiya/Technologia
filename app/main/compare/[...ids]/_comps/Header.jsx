@@ -5,19 +5,46 @@ import Link from "next/link";
 import Nextimage from "@/app/_globalcomps/Nextimage";
 import formatPrice from "@/app/_globalcomps/Formateprice";
 import { AppContextfn } from "@/app/Context";
+import { FiSave, FiShare2, FiEdit } from "react-icons/fi";
+import { PageContextfn } from "../Pagecontext";
 
 function CompareHeader({ ids, products }) {
   const { setcomparelist } = AppContextfn();
+  const { setshowstore, setselectedproduct } = PageContextfn();
+
   const [compact, setCompact] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
-      setCompact(window.scrollY > 220);
+      setCompact(window.scrollY > 150);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          text: "Check out this amazing page!",
+          url: window.location.href,
+        });
+        console.log("Shared successfully");
+      } catch (err) {
+        console.error("Share failed:", err);
+      }
+    } else {
+      // Fallback: copy to clipboard
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        alert("Link copied to clipboard!");
+      } catch {
+        alert("Cannot share this page.");
+      }
+    }
+  };
 
   return (
     <div className={`bg-white  transition-all duration-300  h-60`}>
@@ -25,10 +52,37 @@ function CompareHeader({ ids, products }) {
         <div className="flex transition-all duration-300">
           {/* Left column */}
           <div
-            className={`flex-1 max-w-48 flex items-center font-semibold bg-bg1 border-r border-slate-200 transition-all duration-300 ${
+            className={`flex-1 max-w-48 flex flex-col items-center justify-center text-sm bg-bg1 border-r border-slate-200  ${
               compact ? "h-36 md:h-28" : "h-60"
             }`}
-          ></div>
+          >
+            <button className="w-full py-2 flex items-center justify-center gap-1">
+              <FiSave />
+              Save
+            </button>
+            <button
+              className="w-full py-2 flex items-center justify-center gap-1"
+              onClick={handleShare}
+            >
+              <FiShare2 />
+              Share
+            </button>
+            <button
+              className="w-full py-2 flex items-center justify-center gap-1"
+              onClick={() => {
+                setcomparelist((pre) => {
+                  const updated = [...pre];
+                  products.forEach((item, j) => {
+                    updated[j] = item;
+                  });
+                  return updated;
+                });
+              }}
+            >
+              <FiEdit />
+              Edit
+            </button>
+          </div>
 
           {products.map((product, i) => {
             const pricedata = product?.price[0];
@@ -64,7 +118,7 @@ function CompareHeader({ ids, products }) {
                     }`}
                   >
                     <div className="font-semibold line-clamp-3 md:text-base">
-                     {product?.brand} {product.model}
+                      {product?.brand} {product.model}
                     </div>
 
                     <div className="font-bold text-green-600">
@@ -76,7 +130,13 @@ function CompareHeader({ ids, products }) {
                   </div>
                 </Link>
                 {/* store links */}
-                <button className="flex items-center justify-center gap-2 flex-wrap">
+                <button
+                  className="flex items-center justify-center gap-2 flex-wrap"
+                  onClick={() => {
+                    setshowstore(true);
+                    setselectedproduct(product);
+                  }}
+                >
                   <div className="flex items-center gap-2">
                     <Nextimage
                       src="/stores/1519104215.avif"
@@ -95,38 +155,6 @@ function CompareHeader({ ids, products }) {
                   </div>
                   <span className="text-blue-600">Visit Stores</span>
                 </button>
-                <div className="text-xs md:text-base flex items-center justify-center gap-5 mt-1 text-blue-600">
-                  {product?.flipkartLink && (
-                    <Link
-                      href={product?.flipkartLink}
-                      className="flex items-center gap-1"
-                    >
-                      <Nextimage
-                        src="/stores/1519104215.avif"
-                        height={20}
-                        width={20}
-                        alt="flipkart"
-                        className="w-5"
-                      ></Nextimage>
-                      <span className="hidden md:inline">flipkart</span>
-                    </Link>
-                  )}
-                  {product?.amazonLink && (
-                    <Link
-                      href={product?.amazonLink}
-                      className="flex items-center gap-1"
-                    >
-                      <Nextimage
-                        src="/stores/1519104223.avif"
-                        height={20}
-                        width={20}
-                        alt="amazon"
-                        className="w-5 translate-y-0.5"
-                      ></Nextimage>
-                      <span className="hidden md:inline">amazon</span>
-                    </Link>
-                  )}
-                </div>
                 {/* controls */}
                 <div className="flex-col gap-1 absolute top-1 right-1 hidden md:flex">
                   <Link

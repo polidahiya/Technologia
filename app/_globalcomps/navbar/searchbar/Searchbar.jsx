@@ -65,7 +65,7 @@ function Searchbar({
   };
 
   return (
-    <div className="relative hidden md:flex flex-1 max-w-lg">
+    <div className="relative flex flex-1 max-w-lg">
       <form
         onSubmit={handleSubmit}
         className="relative w-full bg-white rounded"
