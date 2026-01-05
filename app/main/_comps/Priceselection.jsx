@@ -1,74 +1,85 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { usePathname, useSearchParams } from "next/navigation";
+import Filterlinkhook from "../all/_comps/Filterlinkhook";
 
+function Priceselection({
+  showactionbutton = true,
+  minvalue = 1000,
+  maxvalue = 200000,
+  useaction = false,
+  MinChange = () => {},
+  MaxChange = () => {},
+}) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-function Priceselection() {
-  const [price, setPrice] = useState([1000, 200000]);
+  // local state only used when useaction === false
+  const [price, setPrice] = useState([minvalue, maxvalue]);
 
-  const handleMinChange = (e) => {
-    let value = Number(e.target.value);
+  // 🔑 sync when props change
+  useEffect(() => {
+    if (!useaction) {
+      setPrice([minvalue, maxvalue]);
+    }
+  }, [minvalue, maxvalue, useaction]);
 
-    // Clamp min: 0 → 100000
-    if (value < 0) value = 0;
-    if (value > 100000) value = 100000;
+  const min = useaction ? minvalue : price[0];
+  const max = useaction ? maxvalue : price[1];
 
-    // Ensure min <= max
-    if (value > price[1]) value = price[1];
-
-    setPrice([value, price[1]]);
+  const updateMin = (value) => {
+    let v = Math.max(0, Math.min(value, max));
+    useaction ? MinChange(v) : setPrice([v, max]);
   };
 
-  const handleMaxChange = (e) => {
-    let value = Number(e.target.value);
+  const updateMax = (value) => {
+    let v = Math.min(200000, Math.max(value, min));
+    useaction ? MaxChange(v) : setPrice([min, v]);
+  };
 
-    // Clamp max: 10000 → 200000
-    if (value < 10000) value = 10000;
-    if (value > 200000) value = 200000;
-
-    // Ensure max >= min
-    if (value < price[0]) value = price[0];
-
-    setPrice([price[0], value]);
+  const handleSliderChange = ([newMin, newMax]) => {
+    if (useaction) {
+      MinChange(newMin);
+      MaxChange(newMax);
+    } else {
+      setPrice([newMin, newMax]);
+    }
   };
 
   return (
-    <div className="bg-gray-100 rounded-xl p-5">
-      <h3 className="font-medium mb-3">Price</h3>
-
-      <div className="flex items-center gap-1">
-        <span>₹</span>
+    <div>
+      {/* Inputs */}
+      <div className="flex gap-1">
         <input
           type="number"
           min={0}
-          max={100000}
-          className="w-full px-2 py-1 rounded border border-slate-300 bg-white"
-          value={price[0]}
-          onChange={handleMinChange}
+          max={max}
+          value={min}
+          onChange={(e) => updateMin(Number(e.target.value))}
+          className="border border-slate-300 w-full px-2 py-1 rounded bg-white outline-none"
         />
-
-        <span className="px-4">to</span>
-        <span>₹</span>
 
         <input
           type="number"
-          min={10000}
+          min={min}
           max={200000}
-          className="w-full px-2 py-1 rounded border border-slate-300 bg-white"
-          value={price[1]}
-          onChange={handleMaxChange}
+          value={max}
+          onChange={(e) => updateMax(Number(e.target.value))}
+          className="border border-slate-300 w-full px-2 py-1 rounded bg-white outline-none"
         />
       </div>
 
+      {/* Slider */}
       <div className="bg-white pt-2 pb-8 px-5 mt-5 rounded-md">
         <Slider
-          range               
+          range
           min={1000}
           max={200000}
-          value={price}
           step={1000}
+          value={[min, max]}
           marks={{
             0: "₹0",
             50000: "₹50K",
@@ -76,16 +87,27 @@ function Priceselection() {
             150000: "₹1.5L",
             200000: "₹2L",
           }}
-          onChange={setPrice}
+          onChange={handleSliderChange}
         />
       </div>
 
-      <Link
-        href={`/main/all?Price=${price[0]}-${price[1]}`}
-        className="w-full bg-theme text-white py-3 rounded-xl font-semibold block text-center mt-5"
-      >
-        Find Mobiles
-      </Link>
+      {/* Action button */}
+      {showactionbutton && !useaction && (
+        <Link
+          href={
+            Filterlinkhook(
+              pathname,
+              searchParams,
+              "Price",
+              `${price[0]}-${price[1]}`,
+              false
+            ) || `/main/all?Price=${price[0]}-${price[1]}`
+          }
+          className="w-full bg-theme text-white py-2 rounded-md font-semibold block text-center my-2"
+        >
+          Go
+        </Link>
+      )}
     </div>
   );
 }

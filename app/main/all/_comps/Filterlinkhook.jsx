@@ -1,3 +1,4 @@
+"use client";
 function Filterlinkhook(
   pathname,
   searchParams,

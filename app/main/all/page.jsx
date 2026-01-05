@@ -65,13 +65,15 @@ async function page({ searchParams }) {
       <div className="w-full min-h-screen p-2">
         <div className="w-full flex gap-2 max-w-6xl mx-auto">
           <Filtermenu appliedfilters={appliedfilters} device={device} />
-          <div className="w-full space-y-2">
+          <div className="w-full lg:max-w-[864px] space-y-2">
             {device == "desktop" ? (
               <Appliedfilters filterArray={filterArray} device={device} />
             ) : (
               <div className="space-y-2">
                 <Mobilesortandfilterbtn />
-                <Appliedfilters filterArray={filterArray} device={device} />
+                {filterArray.length > 0 && (
+                  <Appliedfilters filterArray={filterArray} device={device} />
+                )}
               </div>
             )}
 

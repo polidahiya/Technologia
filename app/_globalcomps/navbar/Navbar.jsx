@@ -1,72 +1,112 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { Sun, Moon } from "lucide-react";
+import { Search } from "lucide-react";
 import Nextimage from "../Nextimage";
 import Searchbar from "./searchbar/Searchbar";
+import { icons } from "@/lib/data";
+import { TiUser } from "react-icons/ti";
 
-export default function Navbar() {
-  const [dark, setDark] = useState(false);
+export default function Navbar({ device }) {
+  const [showsearch, setshowsearch] = useState(false);
+  const [showLoginlinks, setshowLoginlinks] = useState(false);
+  const ismobile = device == "mobile";
 
   return (
     <header className="sticky top-0 z-50 bg-[#191918] border-b">
       <div className="mx-auto max-w-6xl px-4 lg:px-0">
         <div className="flex h-16 items-center gap-4">
           {/* Logo */}
-          <Link href="/main" className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded bg-primary flex items-center justify-center bg-white">
-              <Nextimage
-                src="/logo.png"
-                alt="Tecknologia logo"
-                width={40}
-                height={40}
-                loading="lazy"
-              />
-            </div>
-            <span className="text-lg font-semibold  text-white">
-              Tecknologia
-            </span>
-          </Link>
+          {!showsearch && (
+            <Link href="/main" className="flex items-center gap-2">
+              <div className="h-9 w-9 rounded bg-primary flex items-center justify-center bg-white">
+                <Nextimage
+                  src="/logo.png"
+                  alt="Tecknologia logo"
+                  width={40}
+                  height={40}
+                  loading="lazy"
+                />
+              </div>
+              <span className="text-lg font-semibold  text-white">
+                Tecknologia
+              </span>
+            </Link>
+          )}
 
           {/* Search */}
-          <div className="ml-6 flex-1">
-            <Searchbar />
-          </div>
+          {ismobile ? (
+            showsearch && (
+              <div className={`ml-6 flex-1`}>
+                <Searchbar autoFocus={true} />
+              </div>
+            )
+          ) : (
+            <div className={`ml-6 flex-1`}>
+              <Searchbar />
+            </div>
+          )}
 
           {/* Right actions */}
-          <div className="ml-auto flex items-center gap-2">
-            {/* CTA */}
-            <Link
-              href="/main/all"
-              className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:text-theme hover:underline"
-            >
-              Find a phone
-            </Link>
-            {/* Theme toggle */}
+          {!showsearch && (
+            <div className="ml-auto flex items-center gap-2">
+              {/* CTA */}
+              <Link
+                href="/main/all"
+                className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:text-theme hover:underline"
+              >
+                Find a phone
+              </Link>
+              {/* Auth */}
+              {ismobile ? (
+                showLoginlinks && (
+                  <div className="absolute top-full right-2 translate-y-2 bg-[#191918] p-5 flex items-center gap-5">
+                    <Loginlinks />
+                  </div>
+                )
+              ) : (
+                <Loginlinks />
+              )}
+            </div>
+          )}
+          {ismobile && (
             <button
-              onClick={() => setDark(!dark)}
-              className="h-9 w-9 rounded-xl border flex items-center justify-center bg-white"
+              className={`text-white ${showsearch ? "text-2xl" : "p-2"}`}
+              onClick={() => setshowsearch((pre) => !pre)}
             >
-              {dark ? <Sun size={18} /> : <Moon size={18} />}
+              {showsearch ? <>{icons.Cross}</> : <Search />}
             </button>
-
-            {/* Auth */}
-            <Link
-              href="/main/account/login"
-              className="hidden sm:block text-sm  text-gray-300 hover:text-primary"
+          )}
+          {!showsearch && ismobile && (
+            <button
+              className="text-2xl border rounded-full text-white"
+              onClick={() => setshowLoginlinks((pre) => !pre)}
             >
-              Login
-            </Link>
-
-            <Link
-              href="/main/account/signup"
-              className="hidden sm:block rounded px-3 py-1.5 text-sm bg-theme text-white"
-            >
-              Sign up
-            </Link>
-          </div>
+              {showLoginlinks ? icons.Cross : <TiUser />}
+            </button>
+          )}
         </div>
       </div>
     </header>
   );
 }
+
+const Loginlinks = () => {
+  return (
+    <div className="h-full flex items-center flex-col-reverse lg:flex-row gap-2">
+      <Link
+        href="/main/account/login"
+        className="text-sm  px-10 lg:px-3 py-1.5 text-gray-300 hover:text-primary"
+      >
+        Login
+      </Link>
+
+      <Link
+        href="/main/account/signup"
+        className="rounded px-10 lg:px-3 py-1.5 text-sm bg-theme text-white"
+      >
+        Sign up
+      </Link>
+    </div>
+  );
+};

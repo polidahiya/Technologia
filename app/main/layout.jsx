@@ -8,9 +8,9 @@ async function layout({ children }) {
   const device = await DeviceDetector();
   return (
     <div className="bg-bg1">
-      <Navbar />
+      <Navbar device={device} />
       {children}
-      <Comparemenu device={device}/>
+      <Comparemenu device={device} />
       <Footer />
     </div>
   );
