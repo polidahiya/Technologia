@@ -31,7 +31,6 @@ function CompareHeader({ ids, products }) {
           text: "Check out this amazing page!",
           url: window.location.href,
         });
-        console.log("Shared successfully");
       } catch (err) {
         console.error("Share failed:", err);
       }
@@ -94,7 +93,7 @@ function CompareHeader({ ids, products }) {
                 }`}
               >
                 {/* flex container */}
-                <Link
+                <Link prefetch={false} 
                   href={`/main/product/${product?._id}`}
                   className={`flex flex-col items-center ${
                     compact ? "md:flex-row md:gap-2" : ""
@@ -157,7 +156,7 @@ function CompareHeader({ ids, products }) {
                 </button>
                 {/* controls */}
                 <div className="flex-col gap-1 absolute top-1 right-1 hidden md:flex">
-                  <Link
+                  <Link prefetch={false} 
                     href={`/main/compare/${ids
                       .slice(0, 3)
                       .filter((_, j) => j != i)

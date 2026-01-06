@@ -26,7 +26,7 @@ function Navbar({ navitems, stickyat = "top-0" }) {
                     overflow-x-auto no-scrollbar`}
     >
       {navitems.map(({ label, icon: Icon }) => (
-        <Link
+        <Link prefetch={false} 
           key={label}
           href={`#${label}`}
           ref={(el) => (itemRefs.current[label] = el)}

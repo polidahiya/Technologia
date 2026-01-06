@@ -151,13 +151,13 @@ export default async function HomePage() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* Price Slider */}
-            <Priceselection />
+            <Priceselection usepath="/main/all"/>
 
             {/* Popular Features */}
             <div>
               <div className="grid grid-cols-1 gap-2 max-h-64 overflow-y-scroll">
                 {features.map((item, i) => (
-                  <Link
+                  <Link prefetch={false} 
                     key={i}
                     href={item.link}
                     className={`flex items-center gap-3 border rounded-xl p-2 hover:shadow cursor-pointer ${item.color}`}
@@ -197,7 +197,7 @@ export default async function HomePage() {
                   "bg-linear-to-r from-pink-100 to-white border border-pink-300",
               },
             ].map((item, i) => (
-              <Link
+              <Link prefetch={false} 
                 key={i}
                 href={item.link}
                 className={`flex items-center gap-3 border rounded-xl p-2 hover:shadow cursor-pointer ${item.color}`}
@@ -217,7 +217,7 @@ export default async function HomePage() {
           <h3 className="font-semibold mb-3">Mobiles by Price</h3>
           <div className="flex flex-wrap gap-2">
             {priceChips.map((p, i) => (
-              <Link
+              <Link prefetch={false} 
                 key={i}
                 href={`/main/all?Price=${p.value}`}
                 className="px-3 py-1 border border-slate-300 rounded-lg text-sm hover:bg-gray-100 cursor-pointer"
@@ -233,14 +233,14 @@ export default async function HomePage() {
       <div className="max-w-7xl mx-auto mt-2 bg-white rounded-2xl p-6 shadow">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold">Featured Mobile Brands</h3>
-          <Link href="/main/all" className="text-theme font-medium">
+          <Link prefetch={false}  href="/main/all" className="text-theme font-medium">
             View All →
           </Link>
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-8 gap-4">
           {brands.map((b, i) => (
-            <Link href={b.link} key={i}>
+            <Link prefetch={false}  href={b.link} key={i}>
               <div className=" rounded-xl p-4 hover:shadow cursor-pointer bg-gray-100 flex items-center justify-center">
                 <Nextimage
                   src={b.img}

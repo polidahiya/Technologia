@@ -13,7 +13,7 @@ function Laptoplistview({ items, name, multipleMode, appliedfilters = [] }) {
         const isApplied = appliedfilters.includes(slug);
 
         return (
-          <Link
+          <Link prefetch={false} 
             key={slug}
             href={
               Filterlinkhook(

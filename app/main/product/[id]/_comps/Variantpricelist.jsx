@@ -56,7 +56,7 @@ export default function VariantPriceList({ prices = [] }) {
         const platformKey = item.platform?.toLowerCase();
 
         return (
-          <Link
+          <Link prefetch={false} 
             key={i}
             href={item.link || "#"}
             target="_blank"

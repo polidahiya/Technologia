@@ -5,7 +5,7 @@ import { LuFilter } from "react-icons/lu";
 import { TbSortDescending } from "react-icons/tb";
 
 function Mobilesortandfilterbtn() {
-  const { setshowfilter } = PageContextfn();
+  const { setshowfilter, setshowsort } = PageContextfn();
 
   return (
     <div className="w-full flex gap-2 p-2 bg-white rounded-2xl shadow">
@@ -16,7 +16,10 @@ function Mobilesortandfilterbtn() {
         <LuFilter className="w-4 h-4" />
         Filter
       </button>
-      <button className="flex items-center justify-center gap-1 w-full py-2 rounded-xl bg-bg1">
+      <button
+        className="flex items-center justify-center gap-1 w-full py-2 rounded-xl bg-bg1"
+        onClick={() => setshowsort(true)}
+      >
         <TbSortDescending className="w-4 h-4" />
         Sort
       </button>

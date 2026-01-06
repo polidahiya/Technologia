@@ -83,7 +83,7 @@ function LoginPage({ redirectLink = "/" }) {
         {/* Already registered */}
         <p className="text-sm text-center mt-4">
           Don’t have an account?{" "}
-          <Link prefetch={false}
+          <Link prefetch={false}  prefetch={false}
             href="/main/account/signup"
             className="text-theme hover:underline"
           >

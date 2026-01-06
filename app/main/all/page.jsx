@@ -10,14 +10,22 @@ import SortFn from "@/app/_hooks/Sortproducts";
 import DeviceDetector from "@/app/_globalcomps/Devicedetector";
 import { Pagectxwrapper } from "./Pagecontext";
 import Mobilesortandfilterbtn from "./_comps/Mobilesortandfilterbtn";
+import Sortmenumobile from "./_comps/sortmenucomps/Sortmenumobile";
+import Sortmenulaptop from "./_comps/sortmenucomps/Sortmenulaptop";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
-  const { sort, search = null, ...appliedfilters } = await searchParams;
-  const products = search ? await Getdata(search) : await Cachedproducts();
+  const {
+    sort = "default",
+    search = null,
+    ...appliedfilters
+  } = await searchParams;
   const device = await DeviceDetector();
+  const products = search ? await Getdata(search) : await Cachedproducts();
 
-  const filteredProducts = products.filter((product) => {
+  const sortedproducts = (await SortFn(products, sort)) || [];
+
+  const filteredProducts = sortedproducts.filter((product) => {
     return Object.entries(appliedfilters).every(([filterSlug, value]) => {
       // for price
       if (filterSlug == "Price") {
@@ -40,7 +48,7 @@ async function page({ searchParams }) {
     });
   });
 
-  const sortedproducts = await SortFn(filteredProducts, 0);
+  const cutproducts=filteredProducts.slice(0, 10)
 
   const filterArray = [];
   //   if search
@@ -65,9 +73,13 @@ async function page({ searchParams }) {
       <div className="w-full min-h-screen p-2">
         <div className="w-full flex gap-2 max-w-6xl mx-auto">
           <Filtermenu appliedfilters={appliedfilters} device={device} />
+          {device != "desktop" && <Sortmenumobile appliedSort={sort} />}
           <div className="w-full lg:max-w-[864px] space-y-2">
             {device == "desktop" ? (
-              <Appliedfilters filterArray={filterArray} device={device} />
+              <div className="flex gap-2 ">
+                <Appliedfilters filterArray={filterArray} device={device} />
+                <Sortmenulaptop appliedSort={sort} />
+              </div>
             ) : (
               <div className="space-y-2">
                 <Mobilesortandfilterbtn />
@@ -78,7 +90,7 @@ async function page({ searchParams }) {
             )}
 
             <div className="w-full space-y-2">
-              {sortedproducts.map((product, i) => {
+              {cutproducts.map((product, i) => {
                 return <Herosection key={i} product={product} />;
               })}
             </div>

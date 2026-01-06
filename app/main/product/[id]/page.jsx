@@ -190,7 +190,7 @@ export default async function Page({ params }) {
         </div>
       </div>
       {tokenRes?.verified && (
-        <Link
+        <Link prefetch={false} 
           href={`/admin/product/add?edit=${product._id}`}
           target="_blank"
           className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-theme text-white px-5 py-2 rounded-2xl z-10"

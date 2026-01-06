@@ -12,7 +12,7 @@ export default function Herosection({ product }) {
   return (
     <section className="bg-white rounded-2xl shadow p-6 grid md:grid-cols-2 gap-8">
       <div className="">
-        <Link href={`/main/product/${product?._id}`}>
+        <Link prefetch={false}  href={`/main/product/${product?._id}`}>
           <Nextimage
             src={product.images?.[0]}
             alt={product.model}

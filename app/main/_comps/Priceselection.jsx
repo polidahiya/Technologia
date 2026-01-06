@@ -13,6 +13,7 @@ function Priceselection({
   useaction = false,
   MinChange = () => {},
   MaxChange = () => {},
+  usepath = "",
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -93,10 +94,10 @@ function Priceselection({
 
       {/* Action button */}
       {showactionbutton && !useaction && (
-        <Link
+        <Link prefetch={false} 
           href={
             Filterlinkhook(
-              pathname,
+              usepath ? usepath : pathname,
               searchParams,
               "Price",
               `${price[0]}-${price[1]}`,

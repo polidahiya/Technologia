@@ -9,7 +9,7 @@ export default function Appliedfilters({ filterArray }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   return (
-    <div className="flex rounded-2xl shadow bg-white p-2">
+    <div className="w-full flex rounded-2xl shadow bg-white p-2">
       <div className="flex gap-1 overflow-x-auto">
         {filterArray.map((item, i) => {
           return (
@@ -20,7 +20,7 @@ export default function Appliedfilters({ filterArray }) {
                 </p>
                 <p className="whitespace-nowrap">{item[2]}</p>
               </div>
-              <Link
+              <Link prefetch={false} 
                 href={
                   Filterlinkhook(pathname, searchParams, item[0], item[1]) ||
                   "#"
