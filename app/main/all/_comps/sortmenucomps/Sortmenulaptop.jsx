@@ -11,7 +11,7 @@ function Sortmenulaptop({ appliedSort = "default" }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   return (
-    <button className="group/menu relative flex items-center justify-center gap-1 rounded-2xl shadow bg-white px-10 z-10">
+    <button className="group/menu relative flex items-center justify-center gap-1 rounded-2xl shadow bg-white px-10 py-2 z-10">
       <TbSortDescending className="w-4 h-4" /> Sort
       <div className="hidden group-hover/menu:block absolute top-[calc(100%+8px)] right-0 w-60">
         <div className="absolute h-10 w-32 bottom-full right-0"></div>

@@ -12,11 +12,13 @@ import { Pagectxwrapper } from "./Pagecontext";
 import Mobilesortandfilterbtn from "./_comps/Mobilesortandfilterbtn";
 import Sortmenumobile from "./_comps/sortmenucomps/Sortmenumobile";
 import Sortmenulaptop from "./_comps/sortmenucomps/Sortmenulaptop";
+import Morebutton from "./_comps/Morebutton";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
   const {
     sort = "default",
+    pageno = 1,
     search = null,
     ...appliedfilters
   } = await searchParams;
@@ -48,7 +50,8 @@ async function page({ searchParams }) {
     });
   });
 
-  const cutproducts=filteredProducts.slice(0, 10)
+  const pagenationdata = paginateWithMeta(filteredProducts, Number(pageno), 10);
+  const cutproducts = pagenationdata?.data;
 
   const filterArray = [];
   //   if search
@@ -93,12 +96,27 @@ async function page({ searchParams }) {
               {cutproducts.map((product, i) => {
                 return <Herosection key={i} product={product} />;
               })}
+              {pagenationdata.hasNext && <Morebutton pageno={pageno} />}
             </div>
           </div>
         </div>
       </div>
     </Pagectxwrapper>
   );
+}
+
+function paginateWithMeta(products = [], page = 1, pageSize = 10) {
+  const totalItems = products.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
+
+  const start = (page - 1) * pageSize;
+  const data = products.slice(0, start + pageSize);
+
+  return {
+    data,
+    totalItems,
+    hasNext: page < totalPages,
+  };
 }
 
 export default page;
