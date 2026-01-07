@@ -1,57 +1,38 @@
 import React from "react";
 import Verification from "@/lib/verification";
-import { Cachedproducts } from "@/app/_globalcomps/cachedata/cachedProducts";
 import Herosection from "../product/[id]/_comps/Herosection";
 import Filtermenu from "./_comps/Filtermenu";
-import { filters } from "@/lib/data";
+import { filters, sortdata } from "@/lib/data";
 import Appliedfilters from "./_comps/Appliedfilters";
-import Getdata from "@/app/_globalcomps/navbar/searchbar/Getdata";
-import SortFn from "@/app/_hooks/Sortproducts";
 import DeviceDetector from "@/app/_globalcomps/Devicedetector";
 import { Pagectxwrapper } from "./Pagecontext";
 import Mobilesortandfilterbtn from "./_comps/Mobilesortandfilterbtn";
 import Sortmenumobile from "./_comps/sortmenucomps/Sortmenumobile";
 import Sortmenulaptop from "./_comps/sortmenucomps/Sortmenulaptop";
 import Morebutton from "./_comps/Morebutton";
+import { notFound } from "next/navigation";
+import Getproducts from "@/lib/Getproducts";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
-  const {
+  const device = await DeviceDetector();
+  let {
     sort = "default",
     pageno = 1,
     search = null,
     ...appliedfilters
   } = await searchParams;
-  const device = await DeviceDetector();
-  const products = search ? await Getdata(search) : await Cachedproducts();
+  pageno = Number(pageno);
+  // not found check
+  if (!Number.isInteger(pageno) || pageno < 1 || !sortdata[sort]) {
+    notFound();
+  }
+  //
+  const pageSize = 10;
+  const start = (Number(pageno) - 1) * pageSize;
+  const maxProducts = start + pageSize;
 
-  const sortedproducts = (await SortFn(products, sort)) || [];
-
-  const filteredProducts = sortedproducts.filter((product) => {
-    return Object.entries(appliedfilters).every(([filterSlug, value]) => {
-      // for price
-      if (filterSlug == "Price") {
-        const [min, max] = value.split("-").map((a) => Number(a));
-        return product?.price.some(
-          (a) => (a.sp || a.mrp) >= min && (a.sp || a.mrp) <= max
-        );
-      }
-      //
-      const selectedSlugs = value.split(",");
-      const filter = filters[filterSlug];
-      if (!filter) return true;
-      // OR logic inside same filter group
-      return selectedSlugs.some((optionSlug) => {
-        const option = filter.options[optionSlug];
-        if (!option?.operation) return false;
-
-        return option.operation(product);
-      });
-    });
-  });
-
-  const pagenationdata = paginateWithMeta(filteredProducts, Number(pageno), 10);
-  const cutproducts = pagenationdata?.data;
+  const data = await Getproducts(search, appliedfilters, sort, maxProducts);
 
   const filterArray = [];
   //   if search
@@ -93,30 +74,16 @@ async function page({ searchParams }) {
             )}
 
             <div className="w-full space-y-2">
-              {cutproducts.map((product, i) => {
+              {(data.products || []).map((product, i) => {
                 return <Herosection key={i} product={product} />;
               })}
-              {pagenationdata.hasNext && <Morebutton pageno={pageno} />}
+              {data.hasNext && <Morebutton pageno={Number(pageno)} />}
             </div>
           </div>
         </div>
       </div>
     </Pagectxwrapper>
   );
-}
-
-function paginateWithMeta(products = [], page = 1, pageSize = 10) {
-  const totalItems = products.length;
-  const totalPages = Math.ceil(totalItems / pageSize);
-
-  const start = (page - 1) * pageSize;
-  const data = products.slice(0, start + pageSize);
-
-  return {
-    data,
-    totalItems,
-    hasNext: page < totalPages,
-  };
 }
 
 export default page;

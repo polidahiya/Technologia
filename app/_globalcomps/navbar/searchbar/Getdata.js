@@ -1,63 +1,45 @@
 "use server";
-import { Cachedproducts } from "../../cachedata/cachedProducts";
-const Getdata = async (searchQuery) => {
-  let allproducts = await Cachedproducts();
-  const words = searchQuery?.split(" ") || [];
+import SortFn from "@/app/_hooks/Sortproducts";
 
-  // Filtering products based on the search query
-  words.forEach((word) => {
-    if (word.trim() !== "") {
-      allproducts = allproducts.filter((product) => {
-        const modelMatch = product?.model
-          ?.toLowerCase()
-          .includes(word.toLowerCase());
+const Getdata = async (
+  searchQuery = "",
+  sort = "default",
+  maxProducts = 10
+) => {
+  let allproducts = await SortFn(sort);
 
-        const brandMatch = product?.brand
-          ?.toLowerCase()
-          .includes(word.toLowerCase());
+  const lowerQuery = searchQuery.toLowerCase();
+  const words = lowerQuery.split(" ").filter(Boolean);
 
-        const keyfeaturesMatch = product?.keyfeatures?.some((descItem) =>
-          descItem.toLowerCase().includes(word.toLowerCase())
-        );
+  // 1️⃣ Sort by relevance (query match first)
+  allproducts.sort((a, b) => {
+    const aMatch = a?.model?.toLowerCase().includes(lowerQuery);
+    const bMatch = b?.model?.toLowerCase().includes(lowerQuery);
 
-        const categoryMatch = product?.category
-          ?.toLowerCase()
-          .includes(word.toLowerCase());
-
-        const subcatMatch = product?.subcat
-          ?.toLowerCase()
-          .includes(word.toLowerCase());
-
-        const skuMatch = product?.sku
-          ?.toLowerCase()
-          .includes(word.toLowerCase());
-
-        return (
-          modelMatch ||
-          brandMatch ||
-          keyfeaturesMatch ||
-          categoryMatch ||
-          subcatMatch ||
-          skuMatch
-        );
-      });
-    }
+    if (aMatch && !bMatch) return -1;
+    if (!aMatch && bMatch) return 1;
+    return 0;
   });
 
-  // Sorting the filtered products
-  return allproducts.sort((a, b) => {
-    const nameA = a?.model?.toLowerCase();
-    const nameB = b?.model?.toLowerCase();
-    const lowerQuery = searchQuery?.toLowerCase();
+  // 2️⃣ Collect results with early exit
+  const results = [];
 
-    if (nameA.includes(lowerQuery) && !nameB.includes(lowerQuery)) {
-      return -1;
-    } else if (!nameA.includes(lowerQuery) && nameB.includes(lowerQuery)) {
-      return 1;
-    } else {
-      return 0;
+  for (const product of allproducts) {
+    if (results.length >= maxProducts) break;
+
+    const model = product?.model?.toLowerCase() || "";
+    const brand = product?.brand?.toLowerCase() || "";
+
+    const matchesAllWords = words.every(
+      (word) => model.includes(word) || brand.includes(word)
+    );
+
+    if (matchesAllWords) {
+      results.push(product);
     }
-  });
+  }
+
+  return results;
 };
 
 export default Getdata;

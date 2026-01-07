@@ -19,6 +19,7 @@ export const Saveproduct = async (data) => {
         { $set: { ...updateFields, lastupdated: date } }
       );
       revalidateTag(`product-${_id}`);
+      revalidateTag(`productsIds`);
       return { status: 200, message: "Updated successfully" };
     } else {
       await Productscollection.insertOne({ ...data, lastupdated: date });

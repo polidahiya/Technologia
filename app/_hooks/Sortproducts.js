@@ -1,7 +1,10 @@
 "use server";
 import { unstable_cache } from "next/cache";
 import { CACHE_TIME } from "@/lib/data";
-export default async function SortFn(products, type = "default") {
+import { Cachedproducts } from "../_globalcomps/cachedata/cachedProducts";
+
+export default async function SortFn(type = "default") {
+  const products = await Cachedproducts();
   return unstable_cache(
     async () => {
       if (type == "default") {
