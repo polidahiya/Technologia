@@ -1,7 +1,13 @@
 import Link from "next/link";
 import Nextimage from "../_globalcomps/Nextimage";
 import Priceselection from "./_comps/Priceselection";
+import Latestphones from "./_comps/Latestphones";
+import Getproducts from "@/lib/Getproducts";
+import Homepagedesc from "./_comps/Homepagedesc";
+
 export default async function HomePage() {
+  const latestproducts = await Getproducts();
+
   const priceChips = [
     { label: "Below ₹10,000", value: "0-10000" },
     { label: "₹15,000", value: "0-15000" },
@@ -140,9 +146,9 @@ export default async function HomePage() {
   const newsdata = await res.json();
 
   return (
-    <main className="min-h-screen bg-gray-100 p-2">
+    <main className="min-h-screen p-2 max-w-7xl mx-auto space-y-2">
       {/* Top Section */}
-      <div className="grid lg:grid-cols-3 gap-2 max-w-7xl mx-auto">
+      <div className="grid lg:grid-cols-3 gap-2 ">
         {/* Finder */}
         <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow">
           <h2 className="text-xl font-semibold mb-4">
@@ -151,13 +157,14 @@ export default async function HomePage() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* Price Slider */}
-            <Priceselection usepath="/main/all"/>
+            <Priceselection usepath="/main/all" />
 
             {/* Popular Features */}
             <div>
               <div className="grid grid-cols-1 gap-2 max-h-64 overflow-y-scroll">
                 {features.map((item, i) => (
-                  <Link prefetch={false} 
+                  <Link
+                    prefetch={false}
                     key={i}
                     href={item.link}
                     className={`flex items-center gap-3 border rounded-xl p-2 hover:shadow cursor-pointer ${item.color}`}
@@ -197,7 +204,8 @@ export default async function HomePage() {
                   "bg-linear-to-r from-pink-100 to-white border border-pink-300",
               },
             ].map((item, i) => (
-              <Link prefetch={false} 
+              <Link
+                prefetch={false}
                 key={i}
                 href={item.link}
                 className={`flex items-center gap-3 border rounded-xl p-2 hover:shadow cursor-pointer ${item.color}`}
@@ -217,7 +225,8 @@ export default async function HomePage() {
           <h3 className="font-semibold mb-3">Mobiles by Price</h3>
           <div className="flex flex-wrap gap-2">
             {priceChips.map((p, i) => (
-              <Link prefetch={false} 
+              <Link
+                prefetch={false}
                 key={i}
                 href={`/main/all?Price=${p.value}`}
                 className="px-3 py-1 border border-slate-300 rounded-lg text-sm hover:bg-gray-100 cursor-pointer"
@@ -230,17 +239,21 @@ export default async function HomePage() {
       </div>
 
       {/* Brands */}
-      <div className="max-w-7xl mx-auto mt-2 bg-white rounded-2xl p-6 shadow">
+      <div className="bg-white rounded-2xl p-6 shadow">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold">Featured Mobile Brands</h3>
-          <Link prefetch={false}  href="/main/all" className="text-theme font-medium">
-            View All →
+          <Link
+            prefetch={false}
+            href="/main/all"
+            className="text-theme font-medium px-5"
+          >
+            View All
           </Link>
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-8 gap-4">
           {brands.map((b, i) => (
-            <Link prefetch={false}  href={b.link} key={i}>
+            <Link prefetch={false} href={b.link} key={i}>
               <div className=" rounded-xl p-4 hover:shadow cursor-pointer bg-gray-100 flex items-center justify-center">
                 <Nextimage
                   src={b.img}
@@ -257,12 +270,15 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* latest */}
+      <Latestphones products={latestproducts.products} />
+
       {/* Tech News */}
-      <section className="max-w-7xl mx-auto mt-2 bg-white rounded-2xl p-6 shadow">
+      <section className="bg-white rounded-2xl p-6 shadow">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold">Latest Tech News</h3>
-          <a href="/tech-news" className="text-theme font-medium">
-            View All →
+          <a href="/tech-news" className="text-theme font-medium px-5">
+            View All
           </a>
         </div>
 
@@ -315,6 +331,7 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+      <Homepagedesc />
     </main>
   );
 }

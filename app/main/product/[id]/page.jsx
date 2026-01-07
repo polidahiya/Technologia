@@ -7,6 +7,7 @@ import SpecTable from "./_comps/Spectable";
 import { navitems } from "@/lib/data";
 import Verification from "@/lib/verification";
 import Link from "next/link";
+import Comparewith from "./_comps/Comparewith";
 
 export default async function Page({ params }) {
   const tokenRes = await Verification();
@@ -16,7 +17,7 @@ export default async function Page({ params }) {
 
   return (
     <Pagectxwrapper>
-      <div className="min-h-screen py-10">
+      <div className="min-h-screen py-2 px-2 md:py-10 md:px-0">
         <div className="max-w-6xl mx-auto space-y-2 ">
           <Herosection product={product} />
 
@@ -187,10 +188,12 @@ export default async function Page({ params }) {
               <Video src={product.youtubeGamingReview} />
             </div>
           </section>
+          <Comparewith product={product} />
         </div>
       </div>
       {tokenRes?.verified && (
-        <Link prefetch={false} 
+        <Link
+          prefetch={false}
           href={`/admin/product/add?edit=${product._id}`}
           target="_blank"
           className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-theme text-white px-5 py-2 rounded-2xl z-10"

@@ -12,10 +12,10 @@ export default function Herosection({ product }) {
   return (
     <section className="bg-white rounded-2xl shadow p-6 grid md:grid-cols-2 gap-8">
       <div className="">
-        <Link prefetch={false}  href={`/main/product/${product?._id}`}>
+        <Link prefetch={false} href={`/main/product/${product?._id}`}>
           <Nextimage
-            src={product.images?.[0]}
-            alt={product.model}
+            src={product?.images?.[0]}
+            alt={product?.model}
             height={420}
             width={536}
             loading="lazy"
@@ -38,7 +38,7 @@ export default function Herosection({ product }) {
           <span className="text-3xl font-bold text-theme">
             {formatPrice(pricedata?.sp, pricedata?.currency)}
           </span>
-          {product.mrp != pricedata?.sp && (
+          {product?.mrp != pricedata?.sp && (
             <span className="line-through text-slate-400">
               {formatPrice(pricedata?.mrp)}
             </span>
