@@ -911,6 +911,14 @@ function Clientpage({ productdata }) {
           }}
         />
         <Standardinputfield
+          titlename="Wifi Version"
+          value={data.wifiVersion}
+          type="text"
+          onchange={(e) => {
+            handlechange("wifiVersion", e.target.value);
+          }}
+        />
+        <Standardinputfield
           titlename="Bluetooth Version"
           value={data.bluetoothVersion}
           type="number"

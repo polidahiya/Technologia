@@ -4,7 +4,8 @@ import { CachedProduct } from "@/app/_globalcomps/cachedata/cachedProducts";
 
 async function page({ searchParams }) {
   const { edit, copy } = await searchParams;
-  let productdata = {}
+
+  let productdata = {};
 
   if (edit || copy) {
     const product = await CachedProduct(edit || copy);

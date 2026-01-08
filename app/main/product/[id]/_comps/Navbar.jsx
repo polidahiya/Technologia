@@ -31,7 +31,7 @@ function Navbar({ navitems, stickyat = "top-0" }) {
           href={`#${label}`}
           ref={(el) => (itemRefs.current[label] = el)}
           className="flex items-center gap-1 md:gap-2 p-1 md:p-2 pr-5 md:pr-5 rounded-full
-                     bg-gray-100 text-xs md:text-sm font-medium whitespace-nowrap
+                     bg-bg1 shadow text-xs md:text-sm font-medium whitespace-nowrap
                      hover:bg-gray-200 transition scroll-ml-3"
         >
           <span

@@ -29,7 +29,9 @@ export default function Herosection({ product }) {
 
       <div className="">
         <h1 className="text-3xl font-bold font-tenor">
-          {product.brand} {product.model}
+          {!product.model.toLowerCase().includes(product.brand.toLowerCase()) &&
+            product.brand}{" "}
+          {product.model}
         </h1>
 
         <p className="opacity-70 font-semibold">{product.deviceType}</p>

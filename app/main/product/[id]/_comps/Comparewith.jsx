@@ -7,15 +7,30 @@ import formatPrice from "@/app/_globalcomps/Formateprice";
 async function Comparewith({ product }) {
   const price = product?.price[0]?.mrp || product?.price[0]?.sp;
   const [min, max] = getCompetitorPriceRange(price);
-  const comparelist = await Getproducts(
+  const numberofproducts = 10;
+  let comparelist = await Getproducts(
     "",
     {
       Price: `${min}-${max}`,
       Device: product?.deviceType?.toLowerCase(),
     },
     "default",
-    9
+    numberofproducts
   );
+
+  let hasitsown = false;
+  for (let a of comparelist?.products) {
+    if (a?._id == product?._id) {
+      hasitsown = true;
+    }
+  }
+
+  let products;
+  if (hasitsown) {
+    products = comparelist?.products.filter((a) => a._id != product._id);
+  } else {
+    products = comparelist.slice(0, numberofproducts);
+  }
 
   return (
     <section className="relative bg-white rounded-2xl shadow overflow-hidden scroll-mt-32">
@@ -26,7 +41,7 @@ async function Comparewith({ product }) {
         <span className="block absolute h-1/2 w-1 bg-theme rounded-r-full top-1/2 left-0 -translate-y-1/2 "></span>
       </h2>
       <div className="p-2 grid grid-cols-1 md:grid-cols-3 gap-2">
-        {(comparelist.products || []).map((item, i) => {
+        {(products || []).map((item, i) => {
           return (
             <Link
               key={i}
