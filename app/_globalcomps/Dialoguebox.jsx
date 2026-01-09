@@ -8,7 +8,7 @@ export default function Dialoguebox() {
 
   if (showdialog?.show) {
     return (
-      <div className="fixed top-0 left-0 h-screen w-full flex items-center justify-center z-30 bg-black/50">
+      <div className="fixed top-0 left-0 h-screen w-full flex items-center justify-center z-30 bg-bg2/50">
         <div className="bg-white rounded-md py-10  px-20">
           <p className="flex items-center justify-center gap-2 text-center">
             {loading && (

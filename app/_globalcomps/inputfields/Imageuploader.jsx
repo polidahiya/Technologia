@@ -76,7 +76,7 @@ function Imageuploader({
         className="absolute top-0 left-0 h-full w-full opacity-0"
       />
       {imageloading && (
-        <div className="absolute top-0 left-0 h-full w-full bg-black/20 flex items-center justify-center ">
+        <div className="absolute top-0 left-0 h-full w-full bg-bg2/20 flex items-center justify-center ">
           <div className="w-10 aspect-square border-t-4 border-b-4 border-white rounded-full animate-spin"></div>
         </div>
       )}

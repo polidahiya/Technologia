@@ -18,13 +18,13 @@ function Sortmenumobile({ appliedSort = "default" }) {
     <AnimatePresence>
       {showsort && (
         <motion.div
-          initial={{ x: -300, opacity: 0 }}
+          initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -300, opacity: 0 }}
+          exit={{ x: 300, opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed top-0 left-0 w-full h-dvh overflow-y-scroll bg-bg1 p-2 space-y-2 z-50"
+          className="fixed top-0 right-0 w-full h-dvh overflow-y-scroll bg-bg1 p-2 space-y-2 z-50"
         >
-          <div className="flex justify-between items-center gap-2 p-2 bg-[#191918]  sticky top-0 rounded-2xl shadow z-10">
+          <div className="flex justify-between items-center gap-2 p-2 bg-bg2  sticky top-0 rounded-2xl shadow z-10">
             <div className="w-8"></div>
             <h2 className="text-white">Sort</h2>
             <button
@@ -38,7 +38,8 @@ function Sortmenumobile({ appliedSort = "default" }) {
             {Object.entries(sortdata).map(([name, value]) => {
               const isApplied = appliedSort == name;
               return (
-                <Link prefetch={false} 
+                <Link
+                  prefetch={false}
                   key={name}
                   href={
                     Filterlinkhook(

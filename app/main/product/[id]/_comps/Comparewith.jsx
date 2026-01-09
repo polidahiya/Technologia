@@ -25,11 +25,11 @@ async function Comparewith({ product }) {
     }
   }
 
-  let products;
+  let products = comparelist?.products || [];
   if (hasitsown) {
     products = comparelist?.products.filter((a) => a._id != product._id);
   } else {
-    products = comparelist.slice(0, numberofproducts);
+    products = comparelist?.products.slice(0, numberofproducts);
   }
 
   return (
@@ -82,7 +82,7 @@ async function Comparewith({ product }) {
                   </div>
                 </div>
               ))}
-              <div className="absolute top-1/2 -translate-y-1/2 right-5 h-10 w-10 flex items-center justify-center text-white font-bold text-sm bg-black rounded-full">
+              <div className="absolute top-1/2 -translate-y-1/2 right-5 h-10 w-10 flex items-center justify-center text-white font-bold text-sm bg-bg2 rounded-full">
                 VS
               </div>
             </Link>

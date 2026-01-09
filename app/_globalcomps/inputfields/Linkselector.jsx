@@ -30,7 +30,7 @@ function Linkselector({
         )}
       </button>
       {show && (
-        <div className="fixed top-0 left-0 h-dvh w-full flex items-center justify-center bg-black/20 z-40 p-2">
+        <div className="fixed top-0 left-0 h-dvh w-full flex items-center justify-center bg-bg2/20 z-40 p-2">
           <div className="w-full max-w-3xl bg-white flex flex-col rounded-3xl">
             {/* header */}
             <div className="p-2">

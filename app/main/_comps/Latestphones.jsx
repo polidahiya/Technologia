@@ -6,40 +6,53 @@ import formatPrice from "@/app/_globalcomps/Formateprice";
 
 function Latestphones({ products }) {
   return (
-    <div className="bg-white rounded-2xl p-6 shadow">
-      <div className="flex items-center justify-between py-2 mb-2 bg-white">
-        <h3 className="font-semibold">New Release</h3>
+    <div className="bg-white rounded-2xl p-4 md:p-6 shadow">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-semibold text-base md:text-lg">New Release</h3>
         <Link
           prefetch={false}
           href="/main/all"
-          className="text-theme font-medium px-5"
+          className="text-theme font-medium text-sm md:text-base"
         >
           View All
         </Link>
       </div>
 
-      <div className="grid grid-cols-2  md:grid-cols-5 gap-2 md:gap-4">
-        {products.map((item, i) => {
-          return (
-            <div key={i} className="">
-              <SmartphoneCard item={item} />
-            </div>
-          );
-        })}
+      {/* Mobile scroll / Desktop grid */}
+      <div
+        className="
+          flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2
+          md:grid md:grid-cols-5 md:gap-4 md:overflow-visible
+        "
+      >
+        {products.map((item, i) => (
+          <div
+            key={i}
+            className="
+              snap-start
+              min-w-[75%] sm:min-w-[45%]
+              md:min-w-0
+            "
+          >
+            <SmartphoneCard item={item} />
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
 function SmartphoneCard({ item }) {
-  const pricedata = item?.price[0];
+  const pricedata = item?.price?.[0];
+
   return (
-    <div className="group w-full max-w-sm rounded-2xl bg-white shadow">
+    <div className="h-full rounded-xl bg-white shadow-sm hover:shadow-md transition">
       {/* Image */}
       <Link
         prefetch={false}
         href={`/main/product/${item?._id}`}
-        className="relative w-full aspect-square rounded-t-2xl overflow-hidden"
+        className="block aspect-square overflow-hidden rounded-t-xl"
       >
         <Nextimage
           src={item?.images?.[0]}
@@ -47,38 +60,42 @@ function SmartphoneCard({ item }) {
           height={420}
           width={536}
           loading="lazy"
-          className="h-full w-full object-contain p-4 group-hover:scale-105 transition-transform"
+          className="h-full w-full object-contain p-3 md:p-4 transition-transform hover:scale-105"
         />
       </Link>
 
       {/* Content */}
-      <div className="p-4 flex flex-col gap-3">
+      <div className="p-3 md:p-4 flex flex-col gap-2">
         {/* Title */}
         <div>
-          <p className="text-xs text-gray-500">{item?.brand}</p>
-          <h3 className="text-base font-semibold text-gray-900 line-clamp-2">
+          <p className="text-[11px] text-gray-500">{item?.brand}</p>
+          <h3 className="text-sm md:text-base font-semibold line-clamp-2">
             {item?.model}
           </h3>
         </div>
 
         {/* Specs */}
-        <ul className="text-sm text-gray-600 space-y-1 truncate">
-          <li>
-            📱 {item?.display[0]?.size} {item?.display[0]?.type}
+        <ul className="text-[12px] md:text-sm text-gray-600 space-y-1">
+          <li className="truncate">
+            📱 {item?.display?.[0]?.size} {item?.display?.[0]?.type}
           </li>
-          <li>⚡ {item?.chipset}</li>
-          <li>📷 {item?.RearCameramegapixels} Mp Camera</li>
-          <li>🔋 {item?.batteryCapacity} mah</li>
+          <li className="truncate">⚡ {item?.chipset}</li>
+          <li className="hidden md:block">
+            📷 {item?.RearCameramegapixels} MP Camera
+          </li>
+          <li className="hidden md:block">
+            🔋 {item?.batteryCapacity} mAh
+          </li>
         </ul>
 
         {/* Price + CTA */}
-        <div className="mt-2 flex flex-col items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-theme text-xl">
+        <div className="mt-2 flex flex-col gap-2">
+          <div className="flex items-center justify-center gap-2">
+            <span className="font-bold text-theme text-base md:text-xl">
               {formatPrice(pricedata?.sp, pricedata?.currency)}
             </span>
-            {pricedata?.mrp != pricedata?.sp && (
-              <span className="line-through text-slate-400 text-sm">
+            {pricedata?.mrp !== pricedata?.sp && (
+              <span className="line-through text-slate-400 text-xs md:text-sm">
                 {formatPrice(pricedata?.mrp)}
               </span>
             )}

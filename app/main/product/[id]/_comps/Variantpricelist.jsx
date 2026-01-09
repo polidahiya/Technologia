@@ -35,9 +35,11 @@ export default function VariantPriceList({ prices = [] }) {
   // ✅ Best deal = lowest selling price
   const bestDealIndex =
     sortedPrices.length > 0
-      ? sortedPrices.reduce((best, item, i, arr) =>
-          Number(item.sp) < Number(arr[best].sp) ? i : best
-        , 0)
+      ? sortedPrices.reduce(
+          (best, item, i, arr) =>
+            Number(item.sp) < Number(arr[best].sp) ? i : best,
+          0
+        )
       : -1;
 
   return (
@@ -49,83 +51,83 @@ export default function VariantPriceList({ prices = [] }) {
         const mrp = Number(item.mrp);
 
         const discount =
-          mrp && sp && mrp > sp
-            ? Math.round(((mrp - sp) / mrp) * 100)
-            : null;
+          mrp && sp && mrp > sp ? Math.round(((mrp - sp) / mrp) * 100) : null;
 
         const platformKey = item.platform?.toLowerCase();
 
         return (
-          <Link prefetch={false} 
+          <Link
+            prefetch={false}
             key={i}
             href={item.link || "#"}
             target="_blank"
-            className={`group flex items-center justify-between gap-4 rounded-xl border px-5 py-4 transition
-              ${
-                isBestDeal
-                  ? "border-green-500 bg-green-50 shadow-md"
-                  : "border-slate-200 bg-white hover:shadow-md hover:border-theme"
-              }`}
+            className={`group flex items-center gap-3 rounded-lg border px-3 py-2 transition
+    ${
+      isBestDeal
+        ? "border-green-500 bg-green-50"
+        : "border-slate-200 bg-white hover:border-theme"
+    }`}
           >
-            {/* LEFT */}
-            <div className="flex flex-col gap-1">
-              {/* Variant */}
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-extrabold text-slate-900">
+            {/* LEFT CONTENT */}
+            <div className="flex flex-col gap-1 flex-1 min-w-0">
+              {/* ROW 1: Variant */}
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="truncate text-sm font-semibold text-slate-900">
                   {item.variant}
                 </span>
 
                 {isBestDeal && (
-                  <span className="rounded-full bg-green-600 px-2 py-0.5 text-xs font-bold text-white">
-                    Best Value
+                  <span className="shrink-0 rounded-full bg-green-600 px-2 py-0.5 text-[10px] font-bold text-white">
+                    Best
                   </span>
                 )}
               </div>
 
-              {/* Price */}
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-extrabold text-theme">
+              {/* ROW 2: Price + Platform */}
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
+                <span className="text-base font-extrabold text-theme">
                   {formatPrice(sp, item.currency)}
                 </span>
 
                 {mrp && mrp !== sp && (
-                  <span className="text-sm text-slate-400 line-through">
+                  <span className="text-slate-400 line-through">
                     {formatPrice(mrp, item.currency)}
                   </span>
                 )}
 
                 {discount > 0 && (
-                  <span className="text-xs font-bold text-red-600">
+                  <span className="font-bold text-red-600">
                     {discount}% OFF
                   </span>
                 )}
-              </div>
 
-              {/* Platform */}
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                {platformImageMap[platformKey] && (
-                  <Nextimage
-                    src={platformImageMap[platformKey]}
-                    height={16}
-                    width={16}
-                    alt={item.platform}
-                    className="rounded"
-                  />
-                )}
-                <span>Available on {item.platform}</span>
+                <span className="text-slate-400">•</span>
+
+                <div className="flex items-center gap-1 text-slate-500">
+                  {platformImageMap[platformKey] && (
+                    <Nextimage
+                      src={platformImageMap[platformKey]}
+                      height={14}
+                      width={14}
+                      alt={item.platform}
+                      className="rounded"
+                    />
+                  )}
+                  <span className="truncate">{item.platform}</span>
+                </div>
               </div>
             </div>
 
             {/* CTA */}
             <span
-              className={`shrink-0 rounded-full px-4 py-1 text-sm font-semibold
-                ${
-                  isBestDeal
-                    ? "bg-green-600 text-white"
-                    : "bg-theme/10 text-theme group-hover:bg-theme group-hover:text-white"
-                }`}
+              className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold whitespace-nowrap
+      ${
+        isBestDeal
+          ? "bg-green-600 text-white"
+          : "bg-theme/10 text-theme group-hover:bg-theme group-hover:text-white"
+      }`}
             >
-              View Deal →
+              View →
             </span>
           </Link>
         );

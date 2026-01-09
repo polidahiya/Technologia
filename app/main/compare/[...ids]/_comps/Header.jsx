@@ -93,7 +93,8 @@ function CompareHeader({ ids, products }) {
                 }`}
               >
                 {/* flex container */}
-                <Link prefetch={false} 
+                <Link
+                  prefetch={false}
                   href={`/main/product/${product?._id}`}
                   className={`flex flex-col items-center ${
                     compact ? "md:flex-row md:gap-2" : ""
@@ -117,7 +118,7 @@ function CompareHeader({ ids, products }) {
                     }`}
                   >
                     <div className="font-semibold line-clamp-3 md:text-base">
-                      {product?.brand} {product.model}
+                      {product.model}
                     </div>
 
                     <div className="font-bold text-green-600">
@@ -152,11 +153,14 @@ function CompareHeader({ ids, products }) {
                       className="w-5 translate-y-0.5"
                     ></Nextimage>
                   </div>
-                  <span className="text-blue-600">Visit Stores</span>
+                  <span className="text-blue-600 text-xs md:text-base">
+                    Visit Stores
+                  </span>
                 </button>
                 {/* controls */}
                 <div className="flex-col gap-1 absolute top-1 right-1 hidden md:flex">
-                  <Link prefetch={false} 
+                  <Link
+                    prefetch={false}
                     href={`/main/compare/${ids
                       .slice(0, 3)
                       .filter((_, j) => j != i)

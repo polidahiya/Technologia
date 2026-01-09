@@ -13,7 +13,7 @@ export default function Navbar({ device }) {
   const ismobile = device == "mobile";
 
   return (
-    <header className="sticky top-0 z-50 bg-[#191918] border-b">
+    <header className="sticky top-0 z-50 bg-bg2 border-b">
       <div className="mx-auto max-w-6xl px-4 lg:px-0">
         <div className="flex h-16 items-center gap-4">
           {/* Logo */}
@@ -60,7 +60,7 @@ export default function Navbar({ device }) {
               {/* Auth */}
               {ismobile ? (
                 showLoginlinks && (
-                  <div className="absolute top-full right-2 translate-y-2 bg-[#191918] p-5 flex items-center gap-5">
+                  <div className="absolute top-full right-2 translate-y-2 bg-bg1 p-5 flex items-center gap-5">
                     <Loginlinks />
                   </div>
                 )

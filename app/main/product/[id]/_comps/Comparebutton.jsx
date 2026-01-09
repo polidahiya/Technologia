@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
 import { AppContextfn } from "@/app/Context";
+import { GoPlus } from "react-icons/go";
+import { FiMinus } from "react-icons/fi";
 
 function Comparebutton({ product }) {
   const { comparelist, setcomparelist, setmessagefn } = AppContextfn();
 
-  const isadded = comparelist.some(
-    (item) => item && item._id === product._id
-  );
+  const isadded = comparelist.some((item) => item && item._id === product._id);
 
   const handleClick = () => {
     setcomparelist((prev) => {
@@ -46,10 +46,10 @@ function Comparebutton({ product }) {
             : "bg-blue-100 border-blue-300 text-blue-700"
         }`}
     >
-      <span className="h-8 w-8 flex items-center justify-center rounded-full bg-white">
-        {isadded ? "−" : "+"}
+      <span className="h-8 w-8 shrink-0 flex items-center justify-center rounded-full bg-white">
+        {isadded ? <FiMinus /> : <GoPlus />}
       </span>
-      {isadded ? "Added" : "Compare"}
+      <span className="inline-block w-full text-center">{isadded ? "Added" : "Compare"}</span>
     </button>
   );
 }

@@ -60,7 +60,7 @@ function Mobile({ appliedfilters = {} }) {
           transition={{ duration: 0.2 }}
           className="fixed top-0 left-0 w-full h-dvh overflow-y-scroll bg-bg1 p-2 space-y-2 z-50"
         >
-          <div className="flex justify-between items-center gap-2 p-2 bg-[#191918]  sticky top-0 rounded-2xl shadow z-10">
+          <div className="flex justify-between items-center gap-2 p-2 bg-bg2  sticky top-0 rounded-2xl shadow z-10">
             <div className="w-8"></div>
             <h2 className="text-white">Filters</h2>
             <button

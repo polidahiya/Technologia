@@ -16,8 +16,8 @@ export default function Herosection({ product }) {
           <Nextimage
             src={product?.images?.[0]}
             alt={product?.model}
-            height={420}
-            width={536}
+            height={500}
+            width={500}
             loading="lazy"
             className="w-full max-h-[420px] object-contain rounded-xl"
           />
@@ -28,11 +28,7 @@ export default function Herosection({ product }) {
       </div>
 
       <div className="">
-        <h1 className="text-3xl font-bold font-tenor">
-          {!product.model.toLowerCase().includes(product.brand.toLowerCase()) &&
-            product.brand}{" "}
-          {product.model}
-        </h1>
+        <h1 className="text-3xl font-bold font-tenor">{product.model}</h1>
 
         <p className="opacity-70 font-semibold">{product.deviceType}</p>
 

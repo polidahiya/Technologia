@@ -47,7 +47,7 @@ export default function Footer() {
         them, we may earn a small commission at no extra cost to you.
       </p>
 
-      <footer className=" bg-[#191918] text-gray-300">
+      <footer className=" bg-bg2 text-gray-300">
         <div className="max-w-6xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div>
