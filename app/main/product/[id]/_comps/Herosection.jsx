@@ -6,11 +6,11 @@ import formatPrice from "@/app/_globalcomps/Formateprice";
 import Comparebutton from "./Comparebutton";
 import VariantPriceList from "./Variantpricelist";
 
-export default function Herosection({ product }) {
+export default function Herosection({ product, tokenRes }) {
   const pricedata = product?.price[0];
 
   return (
-    <section className="bg-white rounded-2xl shadow p-6 grid md:grid-cols-2 gap-8">
+    <section className="relative bg-white rounded-2xl shadow p-6 grid md:grid-cols-2 gap-8">
       <div className="">
         <Link prefetch={false} href={`/main/product/${product?._id}`}>
           <Nextimage
@@ -94,6 +94,26 @@ export default function Herosection({ product }) {
         {/* Buy buttons */}
         <VariantPriceList prices={product.price} />
       </div>
+      {tokenRes?.verified && (
+        <div className="absolute top-2 left-2 flex items-center gap-2 z-10">
+          <Link
+            prefetch={false}
+            href={`/admin/product/add?edit=${product._id}`}
+            target="_blank"
+            className="bg-theme text-white px-5 py-2 rounded-md"
+          >
+            Edit
+          </Link>
+          <Link
+            prefetch={false}
+            href={`/admin/product/add?copy=${product._id}`}
+            target="_blank"
+            className="bg-theme text-white px-5 py-2 rounded-md"
+          >
+            Copy
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

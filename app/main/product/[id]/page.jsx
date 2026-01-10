@@ -6,7 +6,6 @@ import Herosection from "./_comps/Herosection";
 import SpecTable from "./_comps/Spectable";
 import { navitems } from "@/lib/data";
 import Verification from "@/lib/verification";
-import Link from "next/link";
 import Comparewith from "./_comps/Comparewith";
 
 export default async function Page({ params }) {
@@ -17,9 +16,9 @@ export default async function Page({ params }) {
 
   return (
     <Pagectxwrapper>
-      <div className="min-h-screen py-2 px-2 md:py-10 md:px-0">
+      <div className="min-h-screen py-2 px-2 md:px-0">
         <div className="max-w-6xl mx-auto space-y-2 ">
-          <Herosection product={product} />
+          <Herosection product={product} tokenRes={tokenRes} />
 
           <Navbar navitems={navitems} stickyat="top-16" />
 
@@ -191,16 +190,6 @@ export default async function Page({ params }) {
           <Comparewith product={product} />
         </div>
       </div>
-      {tokenRes?.verified && (
-        <Link
-          prefetch={false}
-          href={`/admin/product/add?edit=${product._id}`}
-          target="_blank"
-          className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-theme text-white px-5 py-2 rounded-2xl z-10"
-        >
-          Edit
-        </Link>
-      )}
     </Pagectxwrapper>
   );
 }

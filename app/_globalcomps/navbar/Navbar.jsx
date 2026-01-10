@@ -13,7 +13,7 @@ export default function Navbar({ device }) {
   const ismobile = device == "mobile";
 
   return (
-    <header className="sticky top-0 z-50 bg-bg2 border-b">
+    <header className="h-16 sticky top-0 z-50 bg-bg2 border-b">
       <div className="mx-auto max-w-6xl px-4 lg:px-0">
         <div className="flex h-16 items-center gap-4">
           {/* Logo */}
