@@ -33,7 +33,6 @@ function Clientpage({ productdata }) {
   );
   const pricedata = {
     platform: "",
-    variant: "",
     mrp: "",
     sp: "",
     currency: "",
@@ -69,6 +68,7 @@ function Clientpage({ productdata }) {
   const initialData = {
     brand: "",
     model: "",
+    variant: "",
     deviceType: "",
     releaseDate: new Date(),
     price: [pricedata],
@@ -284,6 +284,14 @@ function Clientpage({ productdata }) {
             handlechange("model", e.target.value);
           }}
         />
+        <Standardinputfield
+          titlename="Variant"
+          value={data.variant}
+          type="text"
+          onchange={(e) => {
+            handlechange("variant", e.target.value);
+          }}
+        />
         <Dateselector
           label="Release Date"
           state={data.releaseDate}
@@ -302,14 +310,6 @@ function Clientpage({ productdata }) {
                     handlenestedchange("price", i, "platform", value);
                   }}
                   options={Object.keys(platforms)}
-                />
-                <Standardinputfield
-                  titlename="Variant"
-                  value={item.variant}
-                  type="text"
-                  onchange={(e) => {
-                    handlenestedchange("price", i, "variant", e.target.value);
-                  }}
                 />
                 <Standardinputfield
                   titlename="Mrp"
