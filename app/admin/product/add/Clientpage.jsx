@@ -301,7 +301,7 @@ function Clientpage({ productdata }) {
                   onchange={(value) => {
                     handlenestedchange("price", i, "platform", value);
                   }}
-                  options={platforms}
+                  options={Object.keys(platforms)}
                 />
                 <Standardinputfield
                   titlename="Variant"
