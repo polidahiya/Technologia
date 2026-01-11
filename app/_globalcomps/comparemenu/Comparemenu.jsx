@@ -104,7 +104,7 @@ const Showproduct = ({ setcomparelist, item, i }) => {
       </div>
       <div className="px-1">
         <p className="text-sm font-semibold text-black group-hover:text-theme">
-          {item?.model}
+          {item?.model} {item?.variant && <>({item?.variant})</>}
         </p>
         <p className="text-xs text-gray-500">
           From{" "}

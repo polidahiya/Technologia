@@ -60,7 +60,7 @@ function Searchbar({
     setshowsearchbar(false);
     setisfocused(false);
     if (useaction) return;
-    
+
     router.push(`/main/all?search=${searchtext}`);
   };
 
@@ -123,7 +123,7 @@ function Searchbar({
                   </div>
                   <div className="px-1">
                     <p className="text-sm truncate font-semibold text-black group-hover:text-theme">
-                      {item?.model}
+                      {item?.model} {item?.variant && <>({item?.variant})</>}
                     </p>
                     <p className="text-xs text-gray-500 truncate">
                       From{" "}

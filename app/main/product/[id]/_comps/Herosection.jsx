@@ -3,6 +3,7 @@ import Link from "next/link";
 import Nextimage from "@/app/_globalcomps/Nextimage";
 import { icons } from "@/lib/data";
 import formatPrice from "@/app/_globalcomps/Formateprice";
+import formatDate from "@/app/_globalcomps/Formateddate";
 import Comparebutton from "./Comparebutton";
 import VariantPriceList from "./Variantpricelist";
 
@@ -28,15 +29,24 @@ export default function Herosection({ product, tokenRes }) {
       </div>
 
       <div className="">
-        <h1 className="text-3xl font-bold font-tenor">{product.model}</h1>
+        <h1 className="text-3xl font-bold font-tenor">
+          {product.model}{" "}
+          {product?.variant && (
+            <span className="text-2xl text-slate-400 font-normal">
+              ({product?.variant})
+            </span>
+          )}
+        </h1>
 
-        <p className="opacity-70 font-semibold">{product.deviceType}</p>
+        <p className="opacity-70 font-semibold">
+          {product.deviceType} | {formatDate(product?.releaseDate)}{" "}
+        </p>
 
         <div className="flex items-center gap-4 mt-3">
           <span className="text-3xl font-bold text-theme">
             {formatPrice(pricedata?.sp, pricedata?.currency)}
           </span>
-          {product?.mrp != pricedata?.sp && (
+          {pricedata?.mrp != pricedata?.sp && (
             <span className="line-through text-slate-400">
               {formatPrice(pricedata?.mrp)}
             </span>

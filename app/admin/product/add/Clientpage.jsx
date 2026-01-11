@@ -303,6 +303,7 @@ function Clientpage({ productdata }) {
           {data.price.map((item, i) => {
             return (
               <div key={i} className="border rounded-2xl p-2 space-y-2">
+                <p>{item?.variant}</p>
                 <Dropdownmenu
                   title="Platform"
                   state={item.platform}
