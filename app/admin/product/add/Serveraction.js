@@ -18,12 +18,12 @@ export const Saveproduct = async (data) => {
         { _id: new ObjectId(data._id) },
         { $set: { ...updateFields, lastupdated: date } }
       );
-      revalidateTag(`product-${_id}`, "max");
-      revalidateTag(`productsIds`, "max");
+      revalidateTag(`product-${_id}`);
+      revalidateTag(`productsIds`);
       return { status: 200, message: "Updated successfully" };
     } else {
       await Productscollection.insertOne({ ...data, lastupdated: date });
-      revalidateTag(`productsIds`, "max");
+      revalidateTag(`productsIds`);
       return { status: 200, message: "Added successfully" };
     }
   } catch (error) {

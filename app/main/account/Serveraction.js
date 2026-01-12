@@ -132,7 +132,7 @@ export const signup = async (userdata) => {
 export const logout = async () => {
   try {
     const cookieStore = await cookies();
-    const allCookies = ["token", "userdata", "cart", "next-auth.csrf-token"];
+    const allCookies = ["token", "next-auth.csrf-token"];
     allCookies.forEach((name) => cookieStore.delete(name));
 
     return { status: 200, message: "Logout successful" };

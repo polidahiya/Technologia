@@ -6,8 +6,11 @@ import Nextimage from "../Nextimage";
 import Searchbar from "./searchbar/Searchbar";
 import { icons } from "@/lib/data";
 import { TiUser } from "react-icons/ti";
+import { logout } from "@/app/main/account/Serveraction";
+import { AppContextfn } from "@/app/Context";
+import { useRouter } from "next/navigation";
 
-export default function Navbar({ device }) {
+export default function Navbar({ device, tokenres }) {
   const [showsearch, setshowsearch] = useState(false);
   const [showLoginlinks, setshowLoginlinks] = useState(false);
   const ismobile = device == "mobile";
@@ -58,14 +61,14 @@ export default function Navbar({ device }) {
                 Find a phone
               </Link>
               {/* Auth */}
-              {ismobile ? (
+              {ismobile || device == "tablet" ? (
                 showLoginlinks && (
-                  <div className="absolute top-full right-2 translate-y-2 bg-bg1 p-5 flex items-center gap-5">
-                    <Loginlinks />
+                  <div className="absolute top-full right-2 translate-y-2 bg-bg2 p-5 flex items-center gap-5">
+                    <Loginlinks tokenres={tokenres} />
                   </div>
                 )
               ) : (
-                <Loginlinks />
+                <Loginlinks tokenres={tokenres} />
               )}
             </div>
           )}
@@ -77,6 +80,7 @@ export default function Navbar({ device }) {
               {showsearch ? <>{icons.Cross}</> : <Search />}
             </button>
           )}
+
           {!showsearch && ismobile && (
             <button
               className="text-2xl border rounded-full text-white"
@@ -91,22 +95,43 @@ export default function Navbar({ device }) {
   );
 }
 
-const Loginlinks = () => {
+const Loginlinks = ({ tokenres }) => {
+  const { setmessagefn } = AppContextfn();
+  const router = useRouter();
   return (
     <div className="h-full flex items-center flex-col-reverse lg:flex-row gap-2">
-      <Link
-        href="/main/account/login"
-        className="text-sm  px-10 lg:px-3 py-1.5 text-gray-300 hover:text-primary"
-      >
-        Login
-      </Link>
+      {tokenres?.verified ? (
+        <>
+          <button
+            className="text-sm  px-10 lg:px-3 py-1.5 text-gray-300 hover:text-primary"
+            onClick={async () => {
+              const res = await logout();
+              setmessagefn(res?.message);
+              if (res.status == 200) {
+                router.push("/main");
+              }
+            }}
+          >
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          <Link
+            href="/main/account/login"
+            className="text-sm  px-10 lg:px-3 py-1.5 text-gray-300 hover:text-primary"
+          >
+            Login
+          </Link>
 
-      <Link
-        href="/main/account/signup"
-        className="rounded px-10 lg:px-3 py-1.5 text-sm bg-theme text-white"
-      >
-        Sign up
-      </Link>
+          <Link
+            href="/main/account/signup"
+            className="rounded px-10 lg:px-3 py-1.5 text-sm bg-theme text-white"
+          >
+            Sign up
+          </Link>
+        </>
+      )}
     </div>
   );
 };

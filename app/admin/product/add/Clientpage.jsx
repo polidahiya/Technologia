@@ -352,17 +352,15 @@ function Clientpage({ productdata }) {
                   }}
                   options={["Available", "Unavailable", "Upcoming"]}
                 />
-                {i != 0 && (
-                  <button
-                    className="px-5 py-2 rounded-md bg-red-600 text-white w-fit ml-auto"
-                    type="button"
-                    onClick={() =>
-                      handleArrayChange("price", "delete", { index: i })
-                    }
-                  >
-                    Remove
-                  </button>
-                )}
+                <button
+                  className="px-5 py-2 rounded-md bg-red-600 text-white w-fit ml-auto"
+                  type="button"
+                  onClick={() =>
+                    handleArrayChange("price", "delete", { index: i })
+                  }
+                >
+                  Remove
+                </button>
               </div>
             );
           })}

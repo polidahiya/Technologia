@@ -122,7 +122,7 @@ function Searchbar({
                     ></Nextimage>
                   </div>
                   <div className="px-1">
-                    <p className="text-sm truncate font-semibold text-black group-hover:text-theme">
+                    <p className="text-sm font-semibold text-black group-hover:text-theme line-clamp-1">
                       {item?.model} {item?.variant && <>({item?.variant})</>}
                     </p>
                     <p className="text-xs text-gray-500 truncate">

@@ -4,30 +4,41 @@ import { CACHE_TIME } from "@/lib/data";
 import { Cachedproducts } from "../_globalcomps/cachedata/cachedProducts";
 
 export default async function SortFn(type = "default") {
-  const products = await Cachedproducts();
   return unstable_cache(
     async () => {
-      if (type == "default") {
-        return products.sort(
+      const products = await Cachedproducts();
+
+      const sorted = [...products]; // ✅ prevent mutation
+
+      if (type === "default") {
+        sorted.sort(
           (a, b) => new Date(b?.releaseDate) - new Date(a?.releaseDate)
-        ); //newer first
-      } else if (type == "pricelh") {
-        return products.sort((a, b) => {
-          const fa = a.price[0];
-          const fb = b.price[0];
-          return Number(fa?.sp || fa?.mrp) - Number(fb?.sp || fb?.mrp);
+        );
+      } else if (type === "pricelh") {
+        sorted.sort((a, b) => {
+          const fa = a.price?.[0];
+          const fb = b.price?.[0];
+          return (
+            Number(fa?.sp ?? fa?.mrp ?? Infinity) -
+            Number(fb?.sp ?? fb?.mrp ?? Infinity)
+          );
         });
-      } else if (type == "pricehl") {
-        return products.sort((a, b) => {
-          const fa = a.price[0];
-          const fb = b.price[0];
-          return Number(fb?.sp || fb?.mrp) - Number(fa?.sp || fa?.mrp);
+      } else if (type === "pricehl") {
+        sorted.sort((a, b) => {
+          const fa = a.price?.[0];
+          const fb = b.price?.[0];
+          return (
+            Number(fb?.sp ?? fb?.mrp ?? 0) - Number(fa?.sp ?? fa?.mrp ?? 0)
+          );
         });
-      } else if (type == 3) {
-      } else if (type == 4) {
       }
+
+      return sorted;
     },
     [`sort-${type}`],
-    { revalidate: CACHE_TIME, tags: [`sort-${type}`, "productsIds"] }
+    {
+      revalidate: CACHE_TIME,
+      tags: ["productsIds"],
+    }
   )();
 }

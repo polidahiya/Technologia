@@ -3,12 +3,14 @@ import Navbar from "../_globalcomps/navbar/Navbar";
 import Footer from "../_globalcomps/footer/Footer";
 import Comparemenu from "../_globalcomps/comparemenu/Comparemenu";
 import DeviceDetector from "../_globalcomps/Devicedetector";
+import Verification from "@/lib/verification";
 
 async function layout({ children }) {
+  const tokenres = await Verification();
   const device = await DeviceDetector();
   return (
     <div className="bg-bg1">
-      <Navbar device={device} />
+      <Navbar device={device} tokenres={tokenres} />
       {children}
       <Comparemenu device={device} />
       <Footer />
