@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Standardinputfield from "@/app/_globalcomps/inputfields/Standardinputfield";
-import Dropdownmenu from "@/app/_globalcomps/inputfields/Dropdownmenu";
+import InputWithSuggestions from "@/app/_globalcomps/inputfields/Inputwithsuggestions";
 import Dateselector from "@/app/_globalcomps/inputfields/Dateselector";
 import Togglebuttons from "@/app/_globalcomps/inputfields/Togglebuttons";
 import Imageuploader from "@/app/_globalcomps/inputfields/Imageuploader";
@@ -16,6 +16,7 @@ import {
   cameraCutouts,
   screenProtections,
   chipsets,
+  mobileGPUs,
   ramTypes,
   storage,
   storageType,
@@ -23,6 +24,7 @@ import {
   osTypes,
   Fingerprints,
   filters,
+  usbConnectors,
   smartphoneAwards,
 } from "@/lib/data";
 
@@ -80,6 +82,7 @@ function Clientpage({ productdata }) {
     cpuClockSpeed: "",
     maxCpuClockSpeed: "",
     cpuCores: "",
+    gpu: "",
     ram: "",
     ramType: "",
     storage: "",
@@ -93,6 +96,7 @@ function Clientpage({ productdata }) {
     frontCameramegapixelsDetails: "",
     RearCameravideoRecording: "",
     frontCameravideoRecording: "",
+    flash: true,
     ois: false,
     CameraimageSamples: [],
     //
@@ -115,6 +119,7 @@ function Clientpage({ productdata }) {
     wifiVersion: "", // 5, 6, 6E
     bluetoothVersion: "", // 5.2
     nfc: false,
+    usbType: "",
     usbVersion: "", // 2.0, 3.1
     esim: false,
     irBlaster: false,
@@ -260,7 +265,7 @@ function Clientpage({ productdata }) {
           </div>
         </div>
 
-        <Dropdownmenu
+        <InputWithSuggestions
           title="Device Type"
           state={data.deviceType}
           onchange={(value) => {
@@ -268,7 +273,7 @@ function Clientpage({ productdata }) {
           }}
           options={deviceType}
         />
-        <Dropdownmenu
+        <InputWithSuggestions
           title="Brand"
           state={data.brand}
           onchange={(value) => {
@@ -304,7 +309,7 @@ function Clientpage({ productdata }) {
             return (
               <div key={i} className="border rounded-2xl p-2 space-y-2">
                 <p>{item?.variant}</p>
-                <Dropdownmenu
+                <InputWithSuggestions
                   title="Platform"
                   state={item.platform}
                   onchange={(value) => {
@@ -328,7 +333,7 @@ function Clientpage({ productdata }) {
                     handlenestedchange("price", i, "sp", e.target.value);
                   }}
                 />
-                <Dropdownmenu
+                <InputWithSuggestions
                   title="Currency"
                   state={item.currency}
                   onchange={(value) => {
@@ -344,7 +349,7 @@ function Clientpage({ productdata }) {
                     handlenestedchange("price", i, "link", e.target.value);
                   }}
                 />
-                <Dropdownmenu
+                <InputWithSuggestions
                   title="Status"
                   state={item.status}
                   onchange={(value) => {
@@ -397,7 +402,7 @@ function Clientpage({ productdata }) {
                   handlenestedchange("display", i, "size", e.target.value);
                 }}
               />
-              <Dropdownmenu
+              <InputWithSuggestions
                 title="Type"
                 state={item.type}
                 onchange={(value) => {
@@ -405,7 +410,7 @@ function Clientpage({ productdata }) {
                 }}
                 options={displayTypes}
               />
-              <Dropdownmenu
+              <InputWithSuggestions
                 title="Camera Cutout"
                 state={item.cameraCutout}
                 onchange={(value) => {
@@ -490,7 +495,7 @@ function Clientpage({ productdata }) {
                   );
                 }}
               />
-              <Dropdownmenu
+              <InputWithSuggestions
                 title="Screen Protection"
                 state={item.screenProtection}
                 onchange={(value) => {
@@ -595,7 +600,7 @@ function Clientpage({ productdata }) {
         selectedgroup={selectedgroup}
         setselectedgroup={setselectedgroup}
       >
-        <Dropdownmenu
+        <InputWithSuggestions
           title="Chipset"
           state={data.chipset}
           onchange={(value) => {
@@ -628,7 +633,15 @@ function Clientpage({ productdata }) {
             handlechange("cpuCores", e.target.value);
           }}
         />
-        <Dropdownmenu
+        <InputWithSuggestions
+          title="GPU"
+          state={data.gpu}
+          onchange={(value) => {
+            handlechange("gpu", value);
+          }}
+          options={mobileGPUs}
+        />
+        <InputWithSuggestions
           title="Ram Type"
           state={data.ramType}
           onchange={(value) => {
@@ -644,7 +657,7 @@ function Clientpage({ productdata }) {
             handlechange("ram", e.target.value);
           }}
         />
-        <Dropdownmenu
+        <InputWithSuggestions
           title="Storage"
           state={data.storage}
           onchange={(value) => {
@@ -652,7 +665,7 @@ function Clientpage({ productdata }) {
           }}
           options={storage}
         />
-        <Dropdownmenu
+        <InputWithSuggestions
           title="Storage Type"
           state={data.storageType}
           onchange={(value) => {
@@ -733,6 +746,14 @@ function Clientpage({ productdata }) {
           }}
         />
         <Togglebuttons
+          titlename="Flash"
+          value={data.flash}
+          positive={() => handlechange("flash", true)}
+          negative={() => handlechange("flash", false)}
+          positiveText="Yes"
+          negativeText="No"
+        />
+        <Togglebuttons
           titlename="Optical Image Stabilizer (Ois)"
           value={data.ois}
           positive={() => handlechange("ois", true)}
@@ -783,7 +804,7 @@ function Clientpage({ productdata }) {
         selectedgroup={selectedgroup}
         setselectedgroup={setselectedgroup}
       >
-        <Dropdownmenu
+        <InputWithSuggestions
           title="Battery Type"
           state={data.batteryType}
           onchange={(value) => {
@@ -846,7 +867,7 @@ function Clientpage({ productdata }) {
         selectedgroup={selectedgroup}
         setselectedgroup={setselectedgroup}
       >
-        <Dropdownmenu
+        <InputWithSuggestions
           title="Opperating System"
           state={data.os}
           onchange={(value) => {
@@ -865,7 +886,7 @@ function Clientpage({ productdata }) {
         <Standardinputfield
           titlename="Update years"
           value={data.updateYears}
-          type="number"
+          type="text"
           onchange={(e) => {
             handlechange("updateYears", e.target.value);
           }}
@@ -932,6 +953,14 @@ function Clientpage({ productdata }) {
           negative={() => handlechange("nfc", false)}
           positiveText="Yes"
           negativeText="No"
+        />
+        <InputWithSuggestions
+          title="Usb Type"
+          state={data.usbType}
+          onchange={(value) => {
+            handlechange("usbType", value);
+          }}
+          options={usbConnectors}
         />
         <Standardinputfield
           titlename="Usb Version"
@@ -1035,7 +1064,7 @@ function Clientpage({ productdata }) {
         selectedgroup={selectedgroup}
         setselectedgroup={setselectedgroup}
       >
-        <Dropdownmenu
+        <InputWithSuggestions
           title="Fingerprint"
           state={data.fingerprint}
           onchange={(value) => {
