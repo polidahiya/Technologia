@@ -38,7 +38,7 @@ export default async function SortFn(type = "default") {
     [`sort-${type}`],
     {
       revalidate: CACHE_TIME,
-      tags: ["productsIds"],
+      tags: ["productsIds", "all"],
     }
   )();
 }

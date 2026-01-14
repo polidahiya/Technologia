@@ -20,7 +20,7 @@ export async function CachedProduct(productid) {
       };
     },
     [`product-${productid}`],
-    { revalidate: CACHE_TIME, tags: [`product-${productid}`] }
+    { revalidate: CACHE_TIME, tags: [`product-${productid}`, "all"] }
   )();
 }
 
@@ -29,19 +29,18 @@ export async function Cachedproducts() {
     async () => {
       const { Productscollection } = await getcollection();
 
-      const productsList = await Productscollection
-        .find({}, { projection: { _id: 1 } })
-        .toArray();
+      const productsList = await Productscollection.find(
+        {},
+        { projection: { _id: 1 } }
+      ).toArray();
 
-      return productsList.map(p => ({
+      return productsList.map((p) => ({
         _id: p._id.toString(),
       }));
     },
     ["productsIds"],
-    { revalidate: CACHE_TIME, tags: ["productsIds"] }
+    { revalidate: CACHE_TIME, tags: ["productsIds", "all"] }
   )();
 
-  return await Promise.all(
-    allIds.map(item => CachedProduct(item._id))
-  );
+  return await Promise.all(allIds.map((item) => CachedProduct(item._id)));
 }
