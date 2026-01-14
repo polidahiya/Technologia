@@ -4,6 +4,7 @@ import Priceselection from "./_comps/Priceselection";
 import Latestphones from "./_comps/Latestphones";
 import Getproducts from "@/lib/Getproducts";
 import Homepagedesc from "./_comps/Homepagedesc";
+import Topcomparisons from "./_comps/Topcomparisons";
 
 export default async function HomePage() {
   const latestproducts = await Getproducts();
@@ -272,6 +273,7 @@ export default async function HomePage() {
 
       {/* latest */}
       <Latestphones products={latestproducts.products} />
+      <Topcomparisons />
 
       {/* Tech News */}
       <section className="bg-white rounded-2xl p-6 shadow">
