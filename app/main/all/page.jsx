@@ -76,7 +76,12 @@ async function page({ searchParams }) {
             <div className="w-full space-y-2">
               {(data.products || []).map((product, i) => {
                 return (
-                  <Herosection key={i} product={product} tokenRes={tokenRes} />
+                  <Herosection
+                    key={i}
+                    product={product}
+                    tokenRes={tokenRes}
+                    fullmode={false}
+                  />
                 );
               })}
               {data.hasNext && <Morebutton pageno={Number(pageno)} />}

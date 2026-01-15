@@ -1,7 +1,7 @@
 "use server";
 import { getcollection } from "@/lib/db";
 import Verification from "@/lib/verification";
-import { revalidateTag } from "next/cache";
+import Revalidatefn from "@/app/_globalcomps/cachedata/Revalidatefn";
 
 export const Saveproduct = async (data) => {
   try {
@@ -18,12 +18,11 @@ export const Saveproduct = async (data) => {
         { _id: new ObjectId(data._id) },
         { $set: { ...updateFields, lastupdated: date } }
       );
-      revalidateTag(`product-${_id}`);
-      revalidateTag(`productsIds`);
+      Revalidatefn([`product-${_id}`, "productsIds", `Variant-${data?.model}`]);
       return { status: 200, message: "Updated successfully" };
     } else {
       await Productscollection.insertOne({ ...data, lastupdated: date });
-      revalidateTag(`productsIds`);
+      Revalidatefn(["productsIds", `Variant-${data?.model}`]);
       return { status: 200, message: "Added successfully" };
     }
   } catch (error) {

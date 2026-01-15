@@ -1,11 +1,11 @@
 import React from "react";
 import Refreshsite from "./_comps/Refreshsite";
-import { revalidateTag } from "next/cache";
+import Revalidatefn from "@/app/_globalcomps/cachedata/Revalidatefn";
 
 async function page() {
   const Revalidatesitefn = async () => {
     "use server";
-    revalidateTag("all");
+    Revalidatefn(["all"]);
   };
   return (
     <div>

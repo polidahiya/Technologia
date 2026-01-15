@@ -7,8 +7,9 @@ import formatDate from "@/app/_globalcomps/Formateddate";
 import Comparebutton from "./Comparebutton";
 import VariantPriceList from "./Variantpricelist";
 import Admincopyproductdata from "./_herocomps/Admincopyproductdata";
+import Variants from "./_herocomps/Variants";
 
-export default function Herosection({ product, tokenRes }) {
+export default function Herosection({ product, tokenRes, fullmode = true }) {
   const pricedata = product?.price[0];
 
   return (
@@ -41,7 +42,12 @@ export default function Herosection({ product, tokenRes }) {
         {tokenRes?.verified && <Admincopyproductdata product={product} />}
 
         <p className="opacity-70 font-semibold">
-          {product.deviceType} | {formatDate(product?.releaseDate)}{" "}
+          {product.deviceType} |{" "}
+          {new Date(product?.releaseDate) > new Date() ? (
+            <span className="text-blue-500">Upcoming</span>
+          ) : (
+            formatDate(product?.releaseDate)
+          )}
         </p>
 
         <div className="flex items-center gap-4 mt-3">
@@ -106,6 +112,7 @@ export default function Herosection({ product, tokenRes }) {
         {/* Buy buttons */}
         <VariantPriceList prices={product.price} />
       </div>
+      {fullmode && <Variants product={product} />}
       {tokenRes?.verified && (
         <div className="absolute top-2 left-2 flex items-center gap-2 z-10">
           <Link
