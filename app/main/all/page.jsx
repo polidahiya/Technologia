@@ -27,6 +27,14 @@ async function page({ searchParams }) {
   if (!Number.isInteger(pageno) || pageno < 1 || !sortdata[sort]) {
     notFound();
   }
+
+  Object.entries(appliedfilters).forEach(([key, value]) => {
+    if (!filters[key]) notFound();
+    if (key == "Price") return;
+    value.split(",").forEach((item) => {
+      if (!filters[key].options[item]) notFound();
+    });
+  });
   //
   const pageSize = 10;
   const start = (Number(pageno) - 1) * pageSize;
