@@ -7,11 +7,15 @@ import SpecTable from "./_comps/Spectable";
 import { navitems } from "@/lib/data";
 import Verification from "@/lib/verification";
 import Comparewith from "./_comps/Comparewith";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }) {
   const tokenRes = await Verification();
   const { id } = await params;
+  if (!id || id == "undefined") notFound();
+  //
   const product = await CachedProduct(id);
+  if (!product) notFound();
   const d = product.display?.[0] || {};
 
   return (

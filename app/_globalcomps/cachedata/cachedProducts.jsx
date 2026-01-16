@@ -4,6 +4,9 @@ import { unstable_cache } from "next/cache";
 import { CACHE_TIME } from "@/lib/data";
 
 export async function CachedProduct(productid) {
+  if (!productid || productid == "undefined") return null;
+  const { ObjectId } = await getcollection();
+  if (!ObjectId.isValid(productid)) return null;
   return unstable_cache(
     async () => {
       const { Productscollection, ObjectId } = await getcollection();

@@ -9,7 +9,7 @@ async function Variants({ product }) {
   if (list.length <= 1) return null;
 
   return (
-    <div className="col-span-2 flex gap-2 overflow-x-scroll">
+    <div className="md:col-span-2 flex gap-2 overflow-x-scroll">
       {list.map((variant, i) => {
         const pricedata = variant?.price[0];
         const currentvar = variant?.variant == product?.variant;

@@ -4,11 +4,12 @@ import SortFn from "@/app/_hooks/Sortproducts";
 const Getdata = async (
   searchQuery = "",
   sort = "default",
-  maxProducts = 10
+  maxProducts = 10,
+  limitdata = false
 ) => {
   let allproducts = await SortFn(sort);
 
-  const lowerQuery = searchQuery.toLowerCase();
+  const lowerQuery = searchQuery.slice(0, 40).toLowerCase();
   const words = lowerQuery.split(" ").filter(Boolean);
 
   // 1️⃣ Sort by relevance (query match first)
@@ -35,7 +36,21 @@ const Getdata = async (
     );
 
     if (matchesAllWords) {
-      results.push(product);
+      if (limitdata) {
+        results.push({
+          _id: product?._id,
+          brand: product?.brand,
+          model: product?.model,
+          variant: product?.variant,
+          deviceType: product?.deviceType,
+          releaseDate: product?.releaseDate,
+          price: product?.price,
+          images: product?.images,
+          awards: product?.awards,
+        });
+      } else {
+        results.push(product);
+      }
     }
   }
 

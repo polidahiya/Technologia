@@ -28,7 +28,7 @@ function Searchbar({
   useEffect(() => {
     let debounceTimeout;
     const fetchSearchedProducts = async () => {
-      if (searchtext.trim() === "") {
+      if (searchtext.trim() === "" && searchtext.length <= 3) {
         setsearchedproducts([]);
         return;
       }
@@ -41,7 +41,14 @@ function Searchbar({
       //     items: [],
       //   });
       setloading(true);
-      const searched = await Getdata(searchtext);
+      const searched = await Getdata(
+        searchtext.slice(0, 40),
+        "default",
+        10,
+        true
+      );
+      console.log(searched);
+      
       setloading(false);
       setsearchedproducts(searched);
     };
@@ -60,8 +67,8 @@ function Searchbar({
     setshowsearchbar(false);
     setisfocused(false);
     if (useaction) return;
-
-    router.push(`/main/all?search=${searchtext}`);
+    if (searchtext.length > 3)
+      router.push(`/main/all?search=${searchtext.slice(0, 40)}`);
   };
 
   return (
@@ -82,6 +89,7 @@ function Searchbar({
             }, 500);
           }}
           value={searchtext}
+          maxLength={40}
           required
           autoFocus={autoFocus}
           onChange={(e) => {
