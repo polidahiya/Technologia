@@ -13,7 +13,7 @@ function CompareSpecTable({ title, Icon, rows, products, id }) {
   return (
     <section
       id={id}
-      className="relative bg-white rounded-2xl shadow overflow-hidden scroll-mt-68"
+      className="relative bg-white rounded-2xl shadow overflow-hidden"
     >
       <h2 className="relative flex items-center gap-2 px-4 md:px-6 py-4 font-extrabold border-b border-slate-300 font-tenor tracking-wider text-theme">
         {Icon}

@@ -24,7 +24,7 @@ export default async function Page({ params }) {
         <div className="max-w-6xl mx-auto space-y-2 ">
           <Herosection product={product} tokenRes={tokenRes} />
 
-          <Navbar navitems={navitems} stickyat="top-16" />
+          <Navbar navitems={navitems} stickyat="top-16" scrolloffset={135}/>
 
           <SpecTable
             title={navitems[0].label}
