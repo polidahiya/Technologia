@@ -26,6 +26,7 @@ import {
   filters,
   usbConnectors,
   smartphoneAwards,
+  availability,
 } from "@/lib/data";
 
 function Clientpage({ productdata }) {
@@ -355,7 +356,7 @@ function Clientpage({ productdata }) {
                   onchange={(value) => {
                     handlenestedchange("price", i, "status", value);
                   }}
-                  options={["Available", "Unavailable", "Upcoming"]}
+                  options={availability}
                 />
                 <button
                   className="px-5 py-2 rounded-md bg-red-600 text-white w-fit ml-auto"

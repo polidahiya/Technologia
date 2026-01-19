@@ -3,6 +3,7 @@ import "./globals.css";
 import { Appwrapper } from "./Context";
 import Message from "./_globalcomps/Message";
 import { Googleadsid } from "@/lib/data";
+import Googleanayltics from "./_globalcomps/Googleanalytics";
 
 const mulish = Mulish({
   variable: "--font-mulish",
@@ -29,6 +30,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* analytics */}
+        <Googleanayltics />
         {/* google adsense */}
         <script
           async
