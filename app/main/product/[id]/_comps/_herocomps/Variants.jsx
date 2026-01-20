@@ -4,7 +4,10 @@ import Link from "next/link";
 import formatPrice from "@/app/_globalcomps/Formateprice";
 
 async function Variants({ product }) {
-  const list = (await CachedVariants(product?.model)) || [];
+  const list = product.variant
+    ? (await CachedVariants(product?.model)) || []
+    : [];
+    
   if (list.length <= 1) return null;
 
   return (
@@ -41,9 +44,7 @@ async function Variants({ product }) {
                 }`}
               />
 
-              <span className="whitespace-nowrap">
-                {variant?.variant}
-              </span>
+              <span className="whitespace-nowrap">{variant?.variant}</span>
 
               <span className="text-green-600 font-medium">
                 {formatPrice(pricedata?.sp, pricedata?.currency)}

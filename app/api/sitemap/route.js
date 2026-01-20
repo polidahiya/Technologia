@@ -15,7 +15,7 @@ const today = new Date().toISOString();
 const allProducts = (products) =>
   products.map((p) => ({
     loc: `${baseurl}/main/product/${p?._id}`,
-    lastmod: p?.lastupdated || today,
+    lastmod: new Date(p?.lastupdated).toISOString() || today,
     changefreq: "daily",
     priority: "0.9",
   }));
