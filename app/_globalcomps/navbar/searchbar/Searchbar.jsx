@@ -47,7 +47,6 @@ function Searchbar({
         10,
         true
       );
-      console.log(searched);
       
       setloading(false);
       setsearchedproducts(searched);

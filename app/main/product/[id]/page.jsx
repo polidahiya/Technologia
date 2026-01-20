@@ -20,8 +20,8 @@ export default async function Page({ params }) {
 
   return (
     <Pagectxwrapper>
-      <div className="min-h-screen py-2 px-2 md:px-0">
-        <div className="max-w-6xl mx-auto space-y-2 ">
+      <div className="min-h-screen py-2 px-2 md:px-0 w-full">
+        <div className="max-w-6xl mx-auto space-y-2 w-full">
           <Herosection product={product} tokenRes={tokenRes} />
 
           <Navbar navitems={navitems} stickyat="top-16" scrolloffset={135}/>

@@ -22,7 +22,7 @@ function Navbar({ navitems, stickyat = "top-0", scrolloffset = 0 }) {
   return (
     <>
       <div
-        className={`flex gap-2 p-1 md:p-2 sticky ${stickyat} shadow bg-white rounded-2xl z-10
+        className={`flex gap-2 p-1 md:p-2 sticky ${stickyat} bottom-0 shadow bg-white rounded-2xl z-10
                     overflow-x-auto no-scrollbar`}
       >
         {navitems.map(({ label, icon: Icon }) => (

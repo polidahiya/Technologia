@@ -13,7 +13,7 @@ export default function Herosection({ product, tokenRes, fullmode = true }) {
   const pricedata = product?.price[0];
 
   return (
-    <section className="relative bg-white rounded-2xl shadow p-6 grid md:grid-cols-2 gap-8">
+    <section className="w-full relative bg-white rounded-2xl shadow p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
       <div className="">
         <Link prefetch={false} href={`/main/product/${product?._id}`}>
           <Nextimage
@@ -34,8 +34,8 @@ export default function Herosection({ product, tokenRes, fullmode = true }) {
         <h1 className="text-3xl font-bold font-tenor">
           {product.model}{" "}
           {product?.variant && (
-            <span className="text-2xl text-slate-400 font-normal">
-              ({product?.variant})
+            <span className="text-2xl opacity-50">
+              ( {product?.variant} )
             </span>
           )}
         </h1>
@@ -111,8 +111,9 @@ export default function Herosection({ product, tokenRes, fullmode = true }) {
 
         {/* Buy buttons */}
         <VariantPriceList prices={product.price} />
+        {/*variants */}
+        {fullmode && <Variants product={product} />}
       </div>
-      {fullmode && <Variants product={product} />}
       {tokenRes?.verified && (
         <div className="absolute top-2 left-2 flex items-center gap-2 z-10">
           <Link
