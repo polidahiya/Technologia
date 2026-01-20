@@ -11,6 +11,18 @@ import Getproducts from "@/lib/Getproducts";
 import Homepagedesc from "./main/_comps/Homepagedesc";
 import Topcomparisons from "./main/_comps/Topcomparisons";
 import Link from "next/link";
+import {
+  Zap,
+  Camera,
+  Gamepad2,
+  Signal,
+  CreditCard,
+  MemoryStick,
+  HardDrive,
+  Smartphone,
+  RefreshCcw,
+  BatteryCharging,
+} from "lucide-react";
 
 async function page() {
   const tokenres = await Verification();
@@ -32,60 +44,70 @@ async function page() {
       title: "Flagship Performance",
       link: "/main/all?Performance=flagship",
       img: "/moreimages/phone.jpg",
+      icon: Zap,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "Best Camera Phones",
       link: "/main/all?Camera=bestCamera",
       img: "/moreimages/phone.jpg",
+      icon: Camera,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "Best Gaming Phones",
       link: "/main/all?Gaming=bestGaming",
       img: "/moreimages/phone.jpg",
+      icon: Gamepad2,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "5G Phones",
       link: "/main/all?Connectivity=fiveG",
       img: "/moreimages/phone.jpg",
+      icon: Signal,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "eSIM Support",
       link: "/main/all?Connectivity=esim",
       img: "/moreimages/phone.jpg",
+      icon: CreditCard,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
-      title: "8Gb RAM",
+      title: "8GB RAM",
       link: "/main/all?Memory=ram8Plus",
       img: "/moreimages/phone.jpg",
+      icon: MemoryStick,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
-      title: "256Gb Storage",
+      title: "256GB Storage",
       link: "/main/all?Memory=storage256Plus",
       img: "/moreimages/phone.jpg",
+      icon: HardDrive,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
-      title: "Amoled Display",
+      title: "AMOLED Display",
       link: "/main/all?Display=amoled",
       img: "/moreimages/phone.jpg",
+      icon: Smartphone,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
-      title: "120 Hz (Super Smooth Display)",
+      title: "120Hz (Super Smooth Display)",
       link: "/main/all?Display=hz120",
       img: "/moreimages/phone.jpg",
+      icon: RefreshCcw,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "Wireless Charging",
       link: "/main/all?Battery=wireless",
       img: "/moreimages/phone.jpg",
+      icon: BatteryCharging,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
   ];
@@ -161,34 +183,32 @@ async function page() {
         <div className="grid lg:grid-cols-3 gap-2 ">
           {/* Finder */}
           <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow">
-            <h2 className="text-xl font-semibold mb-4">
-              Let’s Find a Mobile For You!
-            </h2>
-
             <div className="grid md:grid-cols-2 gap-6">
               {/* Price Slider */}
-              <Priceselection usepath="/main/all" />
+              <div>
+                <h2 className="text-xl font-semibold mb-4">
+                  Let’s Find a Mobile For You!
+                </h2>
+                <Priceselection usepath="/main/all" />
+              </div>
 
               {/* Popular Features */}
               <div>
                 <div className="grid grid-cols-1 gap-2 max-h-64 overflow-y-scroll">
-                  {features.map((item, i) => (
-                    <Link
-                      prefetch={false}
-                      key={i}
-                      href={item.link}
-                      className={`flex items-center gap-3 border rounded-xl p-2 hover:shadow cursor-pointer ${item.color}`}
-                    >
-                      <Nextimage
-                        src={item.img}
-                        alt={item.title}
-                        width={40}
-                        height={40}
-                        className="w-10 h-10 bg-gray-200 rounded"
-                      ></Nextimage>
-                      <span className="font-medium">{item?.title}</span>
-                    </Link>
-                  ))}
+                  {features.map((item, i) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        prefetch={false}
+                        key={i}
+                        href={item.link}
+                        className={`flex items-center gap-3 border rounded-xl p-2 hover:shadow cursor-pointer ${item.color}`}
+                      >
+                        <Icon className="w-5 h-5 rounded"></Icon>
+                        <span className="font-medium">{item?.title}</span>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </div>

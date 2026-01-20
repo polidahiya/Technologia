@@ -19,7 +19,7 @@ async function page({ params }) {
         <div className="max-w-6xl mx-auto space-y-2">
           <div className="sticky -top-8 md:-top-16 p-2 bg-white rounded-2xl shadow z-10 space-y-2">
             <CompareHeader ids={ids} products={products} />
-            <Navbar navitems={navitems} scrolloffset={272}/>
+            <Navbar navitems={navitems} scrolloffset={272} />
           </div>
           <CompareSpecTable
             title={navitems[0].label}
@@ -295,4 +295,60 @@ function Video({ src }) {
   if (!src) return null;
   return <iframe src={src} className="w-full h-56 rounded-xl" loading="lazy" />;
 }
+
+const withVariant = (model, variant) =>
+  variant && variant.trim() !== "" ? `${model} (${variant})` : model;
+
+export const generateMetadata = async ({ params }) => {
+  const { ids } = await params;
+
+  const products = await Promise.all(
+    ids.slice(0, 3).map((id) => CachedProduct(id))
+  );
+
+  const validProducts = products.filter(Boolean);
+
+  if (validProducts.length < 2) {
+    return {
+      title: "Product Comparison | Tecknologia",
+      description:
+        "Compare smartphones, tablets and gadgets to find the best device for your needs.",
+    };
+  }
+
+  const [a, b, c] = validProducts;
+
+  const aName = withVariant(a?.model, a?.variant);
+  const bName = withVariant(b?.model, b?.variant);
+  const cName = c ? withVariant(c?.model, c?.variant) : null;
+
+  // 🆚 2-product comparison
+  if (validProducts.length === 2) {
+    return {
+      title: `${aName} vs ${bName} – Specs & Price Comparison`,
+      description: `Compare ${aName} vs ${bName} in terms of price, camera, performance, battery, display and features.`,
+      keywords: [
+        `${aName} vs ${bName}`,
+        `${aName} comparison`,
+        `${bName} comparison`,
+        "mobile comparison",
+        "smartphone specs comparison",
+      ].join(", "),
+    };
+  }
+
+  // 🧩 3-product comparison
+  return {
+    title: `${aName} vs ${bName} vs ${cName} – Comparison`,
+    description: `Compare ${aName}, ${bName}, and ${cName} on price, performance, camera, battery, display and features.`,
+    keywords: [
+      `${aName} vs ${bName}`,
+      `${bName} vs ${cName}`,
+      `${aName} vs ${cName}`,
+      "phone comparison",
+      "best smartphone comparison",
+    ].join(", "),
+  };
+};
+
 export default page;

@@ -24,7 +24,7 @@ export default async function Page({ params }) {
         <div className="max-w-6xl mx-auto space-y-2 w-full">
           <Herosection product={product} tokenRes={tokenRes} />
 
-          <Navbar navitems={navitems} stickyat="top-16" scrolloffset={135}/>
+          <Navbar navitems={navitems} stickyat="top-16" scrolloffset={135} />
 
           <SpecTable
             title={navitems[0].label}
@@ -204,3 +204,62 @@ function Video({ src }) {
   if (!src) return null;
   return <iframe src={src} className="w-full h-56 rounded-xl" loading="lazy" />;
 }
+
+const join = (...parts) => parts.filter(Boolean).join(" ");
+
+const joinComma = (...parts) => parts.filter(Boolean).join(", ");
+const generateMetaTitle = (p) => {
+  const title = join(p.model, p.variant && `(${p.variant})`);
+
+  const highlight =
+    p.chipset ||
+    (p.RearCameramegapixels && `${p.RearCameramegapixels}MP Camera`) ||
+    (p.batteryCapacity && `${p.batteryCapacity}mAh Battery`);
+
+  return join(
+    title,
+    highlight && "–",
+    highlight,
+    "| Price, Specs & Comparison"
+  ).slice(0, 60);
+};
+const generateMetaDescription = (p) => {
+  return join(
+    `Check ${p.model} full specifications, price in India,`,
+    p.display?.[0]?.size && `${p.display[0].size}" display,`,
+    p.RearCameramegapixels && `${p.RearCameramegapixels}MP camera,`,
+    p.batteryCapacity && `${p.batteryCapacity}mAh battery,`,
+    "pros & cons and best alternatives."
+  ).slice(0, 160);
+};
+
+const generateMetaKeywords = (p) => {
+  return joinComma(
+    `${p.brand} ${p.model}`,
+    `${p.brand} ${p.model} price`,
+    `${p.brand} ${p.model} specifications`,
+    `${p.brand} ${p.model} review`,
+    `${p.brand} ${p.model} comparison`,
+    p.chipset,
+    p.gpu,
+    p.os && `${p.os} phone`
+  );
+};
+
+export const generateMetadata = async ({ params }) => {
+  const { id } = await params;
+  const product = await CachedProduct(id);
+
+  const ogImage = product?.images[0] || null;
+  return {
+    title: generateMetaTitle(product),
+    description: generateMetaDescription(product),
+    keywords: generateMetaKeywords(product),
+    openGraph: {
+      images: ogImage,
+    },
+    // alternates: {
+    //   canonical: "",
+    // },
+  };
+};
