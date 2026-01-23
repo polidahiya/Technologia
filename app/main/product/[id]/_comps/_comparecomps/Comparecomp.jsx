@@ -2,12 +2,13 @@ import React from "react";
 import Link from "next/link";
 import Nextimage from "@/app/_globalcomps/Nextimage";
 import formatPrice from "@/app/_globalcomps/Formateprice";
+import { icons } from "@/lib/data";
 
 function Comparecomp({ title = "", pairs = [] }) {
   return (
     <section className="relative bg-white rounded-2xl shadow overflow-hidden scroll-mt-32">
       <h2 className="relative flex items-center gap-2 px-6 py-4 font-extrabold border-b border-slate-200 font-tenor tracking-wider">
-        {title}
+        {icons.compare} {title}
         <span className="block absolute h-1/2 w-1 bg-theme rounded-r-full top-1/2 left-0 -translate-y-1/2" />
       </h2>
       <div className="p-2 grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -36,7 +37,7 @@ function Comparecomp({ title = "", pairs = [] }) {
 
                 <div className="px-1 overflow-hidden">
                   <p className="text-sm truncate font-semibold text-black group-hover:text-theme">
-                    {mob?.brand} {mob?.model}
+                    {mob?.model}
                   </p>
                   <p className="text-xs text-gray-500 truncate">
                     From{" "}

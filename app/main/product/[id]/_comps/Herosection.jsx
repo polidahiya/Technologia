@@ -8,12 +8,36 @@ import Comparebutton from "./Comparebutton";
 import VariantPriceList from "./Variantpricelist";
 import Admincopyproductdata from "./_herocomps/Admincopyproductdata";
 import Variants from "./_herocomps/Variants";
+import { getScoreColor } from "./_scores/Showscores";
 
-export default function Herosection({ product, tokenRes, fullmode = true }) {
+export default function Herosection({
+  product,
+  tokenRes,
+  fullmode = true,
+  scores,
+}) {
   const pricedata = product?.price[0];
 
   return (
     <section className="w-full relative bg-white rounded-2xl shadow p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* spec score */}
+      {!fullmode && (
+        <div className="absolute top-3 left-3">
+          <div
+            className="flex h-16 w-16 flex-col items-center justify-center rounded-full text-white shadow-lg"
+            style={{ backgroundColor: getScoreColor(scores?.totalscore) }}
+          >
+            <span className="text-xl font-bold leading-none">
+              {scores?.totalscore}
+            </span>
+            <span className="text-[9px] uppercase tracking-wide opacity-90">
+              Score
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/*  */}
       <div className="">
         <Link prefetch={false} href={`/main/product/${product?._id}`}>
           <Nextimage
@@ -34,9 +58,7 @@ export default function Herosection({ product, tokenRes, fullmode = true }) {
         <h1 className="text-3xl font-bold font-tenor">
           {product.model}{" "}
           {product?.variant && (
-            <span className="text-2xl opacity-50">
-              ( {product?.variant} )
-            </span>
+            <span className="text-2xl opacity-50">( {product?.variant} )</span>
           )}
         </h1>
         {tokenRes?.verified && <Admincopyproductdata product={product} />}
@@ -110,12 +132,12 @@ export default function Herosection({ product, tokenRes, fullmode = true }) {
         </div>
 
         {/* Buy buttons */}
-        <VariantPriceList prices={product.price} />
+        <VariantPriceList prices={product.price} model={product?.model} />
         {/*variants */}
         {fullmode && <Variants product={product} />}
       </div>
       {tokenRes?.verified && (
-        <div className="absolute top-2 left-2 flex items-center gap-2 z-10">
+        <div className="absolute top-2 right-2 flex items-center gap-2 z-10">
           <Link
             prefetch={false}
             href={`/admin/product/add?edit=${product._id}`}

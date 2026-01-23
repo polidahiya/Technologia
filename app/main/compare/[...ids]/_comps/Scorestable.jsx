@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import { ScoreCircle } from "@/app/main/product/[id]/_comps/_scores/Showscores";
 
 const getValue = (obj, key) => {
   return key.split(".").reduce((acc, k) => acc?.[k], obj) ?? "—";
@@ -9,7 +11,72 @@ const toNumber = (v) => {
   return isNaN(n) ? null : n;
 };
 
-function CompareSpecTable({ title, Icon, rows, products, id }) {
+export default function ScorestableComp({ allscores, scoretitle }) {
+  const [expand, setExpand] = useState(false);
+
+  const baseRows = [
+    {
+      label: "Total",
+      key: "totalscore",
+      format: (s) => <ScoreCircle score={s?.totalscore} size="sm" />,
+    },
+  ];
+
+  const expandedRows = [
+    {
+      label: "Display",
+      key: "displayscore",
+      format: (s) => <ScoreCircle score={s?.displayscore} size="sm" />,
+    },
+    {
+      label: "Performance",
+      key: "performancescore",
+      format: (s) => <ScoreCircle score={s?.performancescore} size="sm" />,
+    },
+    {
+      label: "Camera",
+      key: "camerascore",
+      format: (s) => <ScoreCircle score={s?.camerascore} size="sm" />,
+    },
+    {
+      label: "Battery",
+      key: "batteryscore",
+      format: (s) => <ScoreCircle score={s?.batteryscore} size="sm" />,
+    },
+    {
+      label: "Connectivity",
+      key: "connectionscore",
+      format: (s) => <ScoreCircle score={s?.connectionscore} size="sm" />,
+    },
+    {
+      label: "Design",
+      key: "designscore",
+      format: (s) => <ScoreCircle score={s?.designscore} size="sm" />,
+    },
+  ];
+
+  return (
+    <>
+      <Scoretable
+        title={scoretitle?.label}
+        id={scoretitle?.label}
+        Icon={scoretitle?.icon}
+        products={allscores}
+        rows={[...baseRows, ...(expand ? expandedRows : [])]}
+      />
+      <div className="flex justify-center">
+        <button
+          onClick={() => setExpand((p) => !p)}
+          className="mb-2 text-sm font-medium text-theme hover:underline"
+        >
+          {expand ? "Hide detailed scores" : "Show detailed scores"}
+        </button>
+      </div>
+    </>
+  );
+}
+
+function Scoretable({ title, Icon, rows, products, id }) {
   return (
     <section
       id={id}
@@ -94,5 +161,3 @@ function CompareSpecTable({ title, Icon, rows, products, id }) {
     </section>
   );
 }
-
-export default CompareSpecTable;

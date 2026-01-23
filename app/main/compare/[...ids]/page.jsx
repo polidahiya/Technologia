@@ -3,14 +3,27 @@ import { CachedProduct } from "@/app/_globalcomps/cachedata/cachedProducts";
 import CompareSpecTable from "./_comps/Spectable";
 import CompareHeader from "./_comps/Header";
 import Navbar from "../../product/[id]/_comps/Navbar";
-import { navitems } from "@/lib/data";
+import { navitems, icons } from "@/lib/data";
 import { Pagectxwrapper } from "./Pagecontext";
 import Storesmenu from "./_comps/Storesmenu";
+import { notFound } from "next/navigation";
+import formatDate from "@/app/_globalcomps/Formateddate";
+import Scorecalculator from "@/app/_globalcomps/scorescalculator/Scorecalculator";
+import ScorestableComp from "./_comps/Scorestable";
 
 async function page({ params }) {
   const { ids } = await params;
   const products = await Promise.all(
-    ids.slice(0, 3).map((id) => CachedProduct(id))
+    ids.slice(0, 3).map((id) => CachedProduct(id)),
+  );
+
+  if (products.some((a) => !a)) notFound();
+
+  const scoretitle = { label: "Scores", icon: icons.flag };
+  let customnavitems = [scoretitle, ...navitems];
+
+  const allscores = await Promise.all(
+    products.slice(0, 3).map((product) => Scorecalculator(product)),
   );
 
   return (
@@ -19,12 +32,32 @@ async function page({ params }) {
         <div className="max-w-6xl mx-auto space-y-2">
           <div className="sticky -top-8 md:-top-16 p-2 bg-white rounded-2xl shadow z-10 space-y-2">
             <CompareHeader ids={ids} products={products} />
-            <Navbar navitems={navitems} scrolloffset={272} />
+            <Navbar navitems={customnavitems} scrolloffset={272} />
           </div>
+
+          <ScorestableComp allscores={allscores} scoretitle={scoretitle} />
           <CompareSpecTable
             title={navitems[0].label}
             id={navitems[0].label}
             Icon={navitems[0].icon}
+            products={products}
+            rows={[
+              { label: "Brand", key: "brand" },
+              { label: "Model", key: "model" },
+              { label: "Variant", key: "variant" },
+              { label: "Device Type", key: "deviceType" },
+              {
+                label: "Release Date",
+                key: "releaseDate",
+                format: (p) => formatDate(p?.releaseDate),
+              },
+              { label: "In Box", key: "inBox" },
+            ]}
+          />
+          <CompareSpecTable
+            title={navitems[1].label}
+            id={navitems[1].label}
+            Icon={navitems[1].icon}
             products={products}
             rows={[
               { label: "Size", key: "display.0.size", unit: "inches" },
@@ -83,9 +116,9 @@ async function page({ params }) {
           />
 
           <CompareSpecTable
-            title={navitems[1].label}
-            id={navitems[1].label}
-            Icon={navitems[1].icon}
+            title={navitems[2].label}
+            id={navitems[2].label}
+            Icon={navitems[2].icon}
             products={products} // <-- array of products
             rows={[
               { label: "Chipset", key: "chipset" },
@@ -111,9 +144,9 @@ async function page({ params }) {
             ]}
           />
           <CompareSpecTable
-            title={navitems[2].label}
-            id={navitems[2].label}
-            Icon={navitems[2].icon}
+            title={navitems[3].label}
+            id={navitems[3].label}
+            Icon={navitems[3].icon}
             products={products}
             rows={[
               {
@@ -140,9 +173,9 @@ async function page({ params }) {
             ]}
           />
           <CompareSpecTable
-            title={navitems[3].label}
-            id={navitems[3].label}
-            Icon={navitems[3].icon}
+            title={navitems[4].label}
+            id={navitems[4].label}
+            Icon={navitems[4].icon}
             products={products}
             rows={[
               {
@@ -174,9 +207,9 @@ async function page({ params }) {
             ]}
           />
           <CompareSpecTable
-            title={navitems[4].label}
-            id={navitems[4].label}
-            Icon={navitems[4].icon}
+            title={navitems[5].label}
+            id={navitems[5].label}
+            Icon={navitems[5].icon}
             products={products}
             rows={[
               {
@@ -195,9 +228,9 @@ async function page({ params }) {
             ]}
           />
           <CompareSpecTable
-            title={navitems[5].label}
-            id={navitems[5].label}
-            Icon={navitems[5].icon}
+            title={navitems[6].label}
+            id={navitems[6].label}
+            Icon={navitems[6].icon}
             products={products}
             rows={[
               { label: "5G", key: "has5G", type: "boolean" },
@@ -214,24 +247,29 @@ async function page({ params }) {
             ]}
           />
           <CompareSpecTable
-            title={navitems[6].label}
-            id={navitems[6].label}
-            Icon={navitems[6].icon}
+            title={navitems[7].label}
+            id={navitems[7].label}
+            Icon={navitems[7].icon}
             products={products}
             rows={[
               { label: "Height", key: "height", unit: "mm" },
               { label: "Width", key: "width", unit: "mm" },
-              { label: "Thickness", key: "thickness", unit: "mm" },
-              { label: "Weight", key: "weight", unit: "g" },
+              {
+                label: "Thickness",
+                key: "thickness",
+                unit: "mm",
+                win: "min",
+              },
+              { label: "Weight", key: "weight", unit: "g", win: "min" },
               { label: "Water Resistance", key: "waterResistance" },
               { label: "Foldable", key: "foldable", type: "boolean" },
               { label: "Colors", key: "colors" },
             ]}
           />
           <CompareSpecTable
-            title={navitems[7].label}
-            id={navitems[7].label}
-            Icon={navitems[7].icon}
+            title={navitems[8].label}
+            id={navitems[8].label}
+            Icon={navitems[8].icon}
             products={products}
             rows={[
               { label: "Fingerprint", key: "fingerprint" },
@@ -251,9 +289,9 @@ async function page({ params }) {
           />
           {products.some((p) => p.gaming?.length > 0) && (
             <CompareSpecTable
-              title={navitems[8].label}
-              id={navitems[8].label}
-              Icon={navitems[8].icon}
+              title={navitems[9].label}
+              id={navitems[9].label}
+              Icon={navitems[9].icon}
               products={products}
               rows={[
                 { label: "Max Settings", key: "gaming.0.maxSettings" },
@@ -266,10 +304,10 @@ async function page({ params }) {
 
           <section
             className="bg-white rounded-2xl shadow overflow-hidden"
-            id={navitems[9].label}
+            id={navitems[10].label}
           >
             <h2 className="relative flex items-center gap-2 px-6 py-4 font-extrabold border-b border-slate-200 font-tenor tracking-wider text-theme">
-              {navitems[9].icon} {navitems[9].label}
+              {navitems[10].icon} {navitems[10].label}
               <span className="block absolute h-1/2 w-1 bg-theme rounded-r-full top-1/2 left-0 -translate-y-1/2 "></span>
             </h2>
 
@@ -303,7 +341,7 @@ export const generateMetadata = async ({ params }) => {
   const { ids } = await params;
 
   const products = await Promise.all(
-    ids.slice(0, 3).map((id) => CachedProduct(id))
+    ids.slice(0, 3).map((id) => CachedProduct(id)),
   );
 
   const validProducts = products.filter(Boolean);

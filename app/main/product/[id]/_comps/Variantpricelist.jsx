@@ -3,7 +3,7 @@ import Link from "next/link";
 import Nextimage from "@/app/_globalcomps/Nextimage";
 import formatPrice from "@/app/_globalcomps/Formateprice";
 
-export default function VariantPriceList({ prices = [] }) {
+export default function VariantPriceList({ prices = [], model }) {
   const platformImageMap = {
     amazon: "/stores/1519104223.avif",
     flipkart: "/stores/1519104215.avif",
@@ -131,8 +131,37 @@ export default function VariantPriceList({ prices = [] }) {
 
       {/* Optional empty state */}
       {sortedPrices.length === 0 && (
-        <div className="text-sm text-slate-500">
-          No available offers right now.
+        <div className="w-full flex items-center gap-2">
+          <Link
+            href={`https://www.amazon.in/s?k=${model}&crid=3OY4X1HU5DRPB&sprefix=,aps,393&linkCode=ll2&tag=amz12er56ui90-21&linkId=13339aa058fddb240087181980baf753&language=en_IN&ref_=as_li_ss_tl`}
+            target="_blank"
+            prefetch={false}
+            className={`flex items-center gap-3 rounded-lg border px-5 py-2 transition border-slate-200 bg-white hover:border-theme`}
+          >
+            <Nextimage
+              src={platformImageMap?.amazon}
+              height={14}
+              width={14}
+              alt="Amazon"
+              className="rounded"
+            />{" "}
+            Search
+          </Link>
+          <Link
+            href={`https://www.flipkart.com/search?q=${model}&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off`}
+            target="_blank"
+            prefetch={false}
+            className={`flex items-center gap-3 rounded-lg border px-5 py-2 transition border-slate-200 bg-white hover:border-theme`}
+          >
+            <Nextimage
+              src={platformImageMap?.flipkart}
+              height={14}
+              width={14}
+              alt="Flipkart"
+              className="rounded"
+            />{" "}
+            Search
+          </Link>
         </div>
       )}
     </div>

@@ -12,6 +12,7 @@ import Sortmenulaptop from "./_comps/sortmenucomps/Sortmenulaptop";
 import Morebutton from "./_comps/Morebutton";
 import { notFound } from "next/navigation";
 import Getproducts from "@/lib/Getproducts";
+import Scorecalculator from "@/app/_globalcomps/scorescalculator/Scorecalculator";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
@@ -82,13 +83,15 @@ async function page({ searchParams }) {
             )}
 
             <div className="w-full space-y-2">
-              {(data.products || []).map((product, i) => {
+              {(data.products || []).map(async (product, i) => {
+                const scores = await Scorecalculator(product);
                 return (
                   <Herosection
                     key={i}
                     product={product}
                     tokenRes={tokenRes}
                     fullmode={false}
+                    scores={scores}
                   />
                 );
               })}

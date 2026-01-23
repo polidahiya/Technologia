@@ -18,7 +18,7 @@ export const Saveproduct = async (data) => {
         { _id: new ObjectId(data._id) },
         { $set: { ...updateFields, lastupdated: date } }
       );
-      Revalidatefn([`product-${_id}`, "productsIds", `Variant-${data?.model}`]);
+      Revalidatefn([`product-${_id}`, "productsIds", `Variant-${data?.model}`,`score-${_id}`]);
       return { status: 200, message: "Updated successfully" };
     } else {
       await Productscollection.insertOne({ ...data, lastupdated: date });

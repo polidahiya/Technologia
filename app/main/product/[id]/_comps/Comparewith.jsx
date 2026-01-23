@@ -11,12 +11,16 @@ async function Comparewith({ product }) {
 
   const comparelist = await Getproducts(
     "",
-    {
-      Price: `${min}-${max}`,
-      Device: product?.deviceType?.toLowerCase(),
-    },
+    product.foldable
+      ? {
+          Features: "foldable",
+        }
+      : {
+          Price: `${min}-${max}`,
+          Device: product?.deviceType?.toLowerCase(),
+        },
     "default",
-    numberofproducts
+    numberofproducts,
   );
 
   let products = comparelist?.products || [];
@@ -38,8 +42,8 @@ function getCompetitorPriceRange(price) {
   else if (price <= 20000) delta = 2500;
   else if (price <= 30000) delta = 3500;
   else if (price <= 40000) delta = 5000;
-  else if (price <= 60000) delta = 7000;
-  else if (price <= 100000) delta = 10000;
+  else if (price <= 60000) delta = 10000;
+  else if (price <= 100000) delta = 25000;
   else delta = 15000;
 
   return [Math.max(0, price - delta), price + delta];
