@@ -10,6 +10,17 @@ import { notFound } from "next/navigation";
 import formatDate from "@/app/_globalcomps/Formateddate";
 import Scorecalculator from "@/app/_globalcomps/scorescalculator/Scorecalculator";
 import ScorestableComp from "./_comps/Scorestable";
+import {
+  displayTypes,
+  screenProtections,
+  cameraCutouts,
+  chipsets,
+  batteryType,
+  Fingerprints,
+  storage,
+  storageType,
+  ramTypes,
+} from "@/lib/data";
 
 async function page({ params }) {
   const { ids } = await params;
@@ -42,16 +53,17 @@ async function page({ params }) {
             Icon={navitems[0].icon}
             products={products}
             rows={[
-              { label: "Brand", key: "brand" },
-              { label: "Model", key: "model" },
-              { label: "Variant", key: "variant" },
-              { label: "Device Type", key: "deviceType" },
+              { label: "Brand", key: "brand", rank: false },
+              { label: "Model", key: "model", rank: false },
+              { label: "Variant", key: "variant", rank: false },
+              { label: "Device Type", key: "deviceType", rank: false },
               {
                 label: "Release Date",
                 key: "releaseDate",
                 format: (p) => formatDate(p?.releaseDate),
+                rank: false,
               },
-              { label: "In Box", key: "inBox" },
+              { label: "In Box", key: "inBox", rank: false },
             ]}
           />
           <CompareSpecTable
@@ -61,12 +73,19 @@ async function page({ params }) {
             products={products}
             rows={[
               { label: "Size", key: "display.0.size", unit: "inches" },
-              { label: "Type", key: "display.0.type" },
+              {
+                label: "Type",
+                key: "display.0.type",
+                type: "list",
+                list: displayTypes,
+                win: "min",
+              },
               {
                 label: "Resolution",
                 key: "display.0",
                 format: (p) =>
                   `${p.display?.[0]?.pixelx} × ${p.display?.[0]?.pixely}`,
+                rank: false,
               },
               { label: "PPI", key: "display.0.ppi" },
               {
@@ -83,35 +102,64 @@ async function page({ params }) {
               {
                 label: "Screen to Body Ratio",
                 key: "display.0.screenToBodyRatio",
-                unit: "%",
+                format: (p) => `~ ${p?.display?.[0]?.screenToBodyRatio} %`,
               },
-              { label: "Protection", key: "display.0.screenProtection" },
-              { label: "Camera Cutout", key: "display.0.cameraCutout" },
               {
-                label: "Curved Display",
-                key: "display.0.curved",
-                type: "boolean",
+                label: "Protection",
+                key: "display.0.screenProtection",
+                type: "list",
+                list: screenProtections,
+                win: "min",
               },
+              {
+                label: "Camera Cutout",
+                key: "display.0.cameraCutout",
+                type: "list",
+                list: cameraCutouts,
+                win: "min",
+              },
+              ...(products.some((p) => p?.display?.[0]?.curved)
+                ? [
+                    {
+                      label: "Curved Display",
+                      key: "display.0.curved",
+                      type: "boolean",
+                    },
+                  ]
+                : []),
+
               {
                 label: "Round Corners",
                 key: "display.0.roundCorners",
                 type: "boolean",
               },
-              {
-                label: "Anti Reflection",
-                key: "display.0.antiReflection",
-                type: "boolean",
-              },
-              {
-                label: "Nano Texture",
-                key: "display.0.nanoTexture",
-                type: "boolean",
-              },
-              {
-                label: "Dust Resistance",
-                key: "display.0.dustResistance",
-                type: "boolean",
-              },
+              ...(products.some((p) => p?.display?.[0]?.antiReflection)
+                ? [
+                    {
+                      label: "Anti Reflection",
+                      key: "display.0.antiReflection",
+                      type: "boolean",
+                    },
+                  ]
+                : []),
+              ...(products.some((p) => p?.display?.[0]?.nanoTexture)
+                ? [
+                    {
+                      label: "Nano Texture",
+                      key: "display.0.nanoTexture",
+                      type: "boolean",
+                    },
+                  ]
+                : []),
+              ...(products.some((p) => p?.display?.[0]?.dustResistance)
+                ? [
+                    {
+                      label: "Dust Resistance",
+                      key: "display.0.dustResistance",
+                      type: "boolean",
+                    },
+                  ]
+                : []),
             ]}
           />
 
@@ -121,26 +169,57 @@ async function page({ params }) {
             Icon={navitems[2].icon}
             products={products} // <-- array of products
             rows={[
-              { label: "Chipset", key: "chipset" },
+              {
+                label: "Chipset",
+                key: "chipset",
+                type: "list",
+                list: chipsets,
+                win: "min",
+              },
               { label: "CPU Cores", key: "cpuCores" },
-              { label: "Base Clock", key: "cpuClockSpeed" },
+              { label: "Cores Details", key: "cpuClockSpeed", rank: false },
               { label: "Max Clock", key: "maxCpuClockSpeed", unit: "GHz" },
+              { label: "GPU", key: "gpu" },
               {
                 label: "RAM",
                 key: "ram",
-                format: (p) => `${p.ram} Gb (${p.ramType})`,
+                format: (p) => `${p?.ram}GB`,
+              },
+              {
+                label: "RAM Type",
+                key: "ramType",
+                type: "list",
+                list: ramTypes,
+                win: "min",
               },
               {
                 label: "Storage",
                 key: "storage",
-                format: (p) => `${p.storage} (${p.storageType})`,
+                type: "list",
+                list: storage,
+                win: "min",
               },
               {
-                label: "Expandable Storage",
-                key: "expandableStorage",
-                type: "boolean",
+                label: "Storage Type",
+                key: "storageType",
+                type: "list",
+                list: storageType,
+                win: "min",
               },
-              { label: "Antutu Score", key: "antutuscore" },
+              ...(products.some((p) => p?.expandableStorage)
+                ? [
+                    {
+                      label: "Expandable Storage",
+                      key: "expandableStorage",
+                      type: "boolean",
+                    },
+                  ]
+                : []),
+              {
+                label: "Antutu Score",
+                key: "antutuscore",
+                format: (p) => Number(p?.antutuscore)?.toLocaleString(),
+              },
             ]}
           />
           <CompareSpecTable
@@ -152,23 +231,37 @@ async function page({ params }) {
               {
                 label: "Rear Camera",
                 key: "RearCameramegapixelsDetails",
+                rank: false,
               },
               {
                 label: "Rear Video",
                 key: "RearCameravideoRecording",
+                rank: false,
               },
               {
-                label: "OIS",
-                key: "ois",
+                label: "Flash",
+                key: "flash",
                 type: "boolean",
               },
+              ...(products.some((p) => p?.ois)
+                ? [
+                    {
+                      label: "OIS",
+                      key: "ois",
+                      type: "boolean",
+                    },
+                  ]
+                : []),
+
               {
                 label: "Front Camera",
                 key: "frontCameramegapixelsDetails",
+                rank: false,
               },
               {
                 label: "Front Video",
                 key: "frontCameravideoRecording",
+                rank: false,
               },
             ]}
           />
@@ -181,6 +274,9 @@ async function page({ params }) {
               {
                 label: "Battery Type",
                 key: "batteryType",
+                type: "list",
+                list: batteryType,
+                win: "min",
               },
               {
                 label: "Capacity",
@@ -194,13 +290,13 @@ async function page({ params }) {
               },
               {
                 label: "Wireless Charging",
-                key: "wirelessCharging",
+                key: "wirelessChargingSpeed",
                 format: (p) =>
                   p.wirelessCharging ? `${p.wirelessChargingSpeed} W` : "No",
               },
               {
                 label: "Reverse Charging",
-                key: "reverseCharging",
+                key: "reverseChargingSpeed",
                 format: (p) =>
                   p.reverseCharging ? `${p.reverseChargingSpeed} W` : "No",
               },
@@ -215,15 +311,17 @@ async function page({ params }) {
               {
                 label: "Operating System",
                 key: "os",
+                rank: false,
               },
               {
                 label: "OS Version",
-                key: "osVersion",
+                format: (p) => `v${p.osVersion}`,
+                rank: false,
               },
               {
                 label: "Update Policy",
                 key: "updateYears",
-                unit: "Years",
+                rank: false,
               },
             ]}
           />
@@ -237,13 +335,19 @@ async function page({ params }) {
               { label: "4G", key: "has4G", type: "boolean" },
               { label: "3G", key: "has3G", type: "boolean" },
               { label: "SIM", key: "sim" },
-              { label: "Wi-Fi", key: "wifiVersion" },
-              { label: "Bluetooth", key: "bluetoothVersion" },
-              { label: "USB", key: "usbVersion" },
+              { label: "Wi-Fi", key: "wifiVersion", rank: false },
+              {
+                label: "Bluetooth",
+                format: (p) => `v${p?.bluetoothVersion}`,
+              },
+              {
+                label: "USB",
+                format: (p) => `v${p?.usbVersion}`,
+              },
               { label: "NFC", key: "nfc", type: "boolean" },
               { label: "eSIM", key: "esim", type: "boolean" },
               { label: "IR Blaster", key: "irBlaster", type: "boolean" },
-              { label: "Sensors", key: "sensors" },
+              { label: "Sensors", key: "sensors", rank: false },
             ]}
           />
           <CompareSpecTable
@@ -261,9 +365,11 @@ async function page({ params }) {
                 win: "min",
               },
               { label: "Weight", key: "weight", unit: "g", win: "min" },
-              { label: "Water Resistance", key: "waterResistance" },
-              { label: "Foldable", key: "foldable", type: "boolean" },
-              { label: "Colors", key: "colors" },
+              { label: "Water Resistance, IP Rating", key: "waterResistance" },
+              ...(products.some((p) => p?.foldable)
+                ? [{ label: "Foldable", key: "foldable", type: "boolean" }]
+                : []),
+              { label: "Colors", key: "colors", rank: false },
             ]}
           />
           <CompareSpecTable
@@ -272,7 +378,13 @@ async function page({ params }) {
             Icon={navitems[8].icon}
             products={products}
             rows={[
-              { label: "Fingerprint", key: "fingerprint" },
+              {
+                label: "Fingerprint",
+                key: "fingerprint",
+                type: "list",
+                list: Fingerprints,
+                win: "min",
+              },
               { label: "Face Unlock", key: "faceUnlock", type: "boolean" },
               { label: "Speakers", key: "speakers" },
               {
@@ -294,10 +406,21 @@ async function page({ params }) {
               Icon={navitems[9].icon}
               products={products}
               rows={[
-                { label: "Max Settings", key: "gaming.0.maxSettings" },
-                { label: "FPS Drop", key: "gaming.0.fpsDrop" },
-                { label: "Temperature Rise", key: "gaming.0.TempratureRaise" },
-                { label: "AI FPS Generation", key: "gaming.0.AiFpsGeneration" },
+                {
+                  label: "Dedicated Cooling",
+                  key: "dedicatedCooling",
+                  type: "boolean",
+                },
+                {
+                  label: "Gaming Triggers",
+                  key: "gamingTriggers",
+                  type: "boolean",
+                },
+                {
+                  label: "AI FPS Generation",
+                  key: "AiFpsGeneration",
+                  type: "boolean",
+                },
               ]}
             />
           )}

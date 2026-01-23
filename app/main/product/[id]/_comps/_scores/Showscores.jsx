@@ -27,7 +27,7 @@ function ScoreBreakdown({ scores }) {
   return (
     <div className="h-full w-full grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
       {items.map(([label, value]) => (
-        <ScoreCircle key={label} title={label} score={value} />
+        <ScoreCircle key={label} title={label} score={value} size="md"/>
       ))}
     </div>
   );
@@ -63,7 +63,7 @@ export function ScoreCircle({ score = 50, title = "", size = "md" }) {
     lg: {
       wrapper: "h-36 w-36",
       text: "text-4xl",
-      strokeWidth: 12,
+      strokeWidth: 10,
       title: "text-base",
     },
   };

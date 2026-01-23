@@ -1,7 +1,7 @@
 import React from "react";
 
 const getValue = (obj, key) => {
-  return key.split(".").reduce((acc, k) => acc?.[k], obj) ?? "—";
+  return key?.split(".").reduce((acc, k) => acc?.[k], obj) ?? "—";
 };
 
 const toNumber = (v) => {
@@ -27,24 +27,43 @@ function CompareSpecTable({ title, Icon, rows, products, id }) {
             {rows.map((row, i) => {
               // Boolean row → true wins
               let winnerIndexes = [];
-
-              if (row.type === "boolean") {
-                winnerIndexes = products
-                  .map((p, j) => (getValue(p, row.key) === true ? j : -1))
-                  .filter((j) => j !== -1);
-              } else {
-                const nums = products.map((p) =>
-                  toNumber(getValue(p, row.key)),
-                );
-
-                const valid = nums.filter((n) => n !== null);
-
-                if (valid.length) {
-                  const minmax =
-                    row?.win == "min" ? Math.min(...valid) : Math.max(...valid);
-                  winnerIndexes = nums
-                    .map((n, j) => (n === minmax ? j : -1))
+              if (row?.rank !== false) {
+                if (row.type === "boolean") {
+                  winnerIndexes = products
+                    .map((p, j) => (getValue(p, row.key) === true ? j : -1))
                     .filter((j) => j !== -1);
+                } else if (row?.type == "list") {
+                  const nums = products.map((p) =>
+                    row.list.indexOf(getValue(p, row.key)),
+                  );
+
+                  const valid = nums.filter((n) => n !== -1);
+
+                  if (valid.length) {
+                    const minmax =
+                      row?.win == "min"
+                        ? Math.min(...valid)
+                        : Math.max(...valid);
+                    winnerIndexes = nums
+                      .map((n, j) => (n === minmax ? j : -1))
+                      .filter((j) => j !== -1);
+                  }
+                } else {
+                  const nums = products.map((p) =>
+                    toNumber(getValue(p, row.key)),
+                  );
+
+                  const valid = nums.filter((n) => n !== null);
+
+                  if (valid.length) {
+                    const minmax =
+                      row?.win == "min"
+                        ? Math.min(...valid)
+                        : Math.max(...valid);
+                    winnerIndexes = nums
+                      .map((n, j) => (n === minmax ? j : -1))
+                      .filter((j) => j !== -1);
+                  }
                 }
               }
 

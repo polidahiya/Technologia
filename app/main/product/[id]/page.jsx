@@ -47,8 +47,8 @@ export default async function Page({ params }) {
     <Pagectxwrapper>
       <div className="min-h-screen py-2 px-2 md:px-0 w-full">
         <div className="max-w-6xl mx-auto space-y-2 w-full">
-          <Herosection product={product} tokenRes={tokenRes} scores={scores}/>
-          <ScoreOverview scores={scores}/>
+          <Herosection product={product} tokenRes={tokenRes} scores={scores} />
+          <ScoreOverview scores={scores} />
 
           <Navbar
             navitems={customnavitems}
@@ -68,7 +68,7 @@ export default async function Page({ params }) {
               ["Release Date", formatDate(product?.releaseDate)],
               ["In Box", product?.inBox],
               ...(product?.awards.length
-                ? [["Tecknologia Awards", yesNo(product?.awards)]]
+                ? [["Tecknologia Awards", product?.awards]]
                 : []),
             ]}
           />
