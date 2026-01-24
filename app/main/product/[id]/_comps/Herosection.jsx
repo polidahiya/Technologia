@@ -56,7 +56,7 @@ export default function Herosection({
 
       <div className="">
         <h1 className="text-3xl font-bold font-tenor">
-          {product.model}{" "}
+          {product?.model}{" "}
           {product?.variant && (
             <span className="text-2xl opacity-50">( {product?.variant} )</span>
           )}
@@ -64,7 +64,7 @@ export default function Herosection({
         {tokenRes?.verified && <Admincopyproductdata product={product} />}
 
         <p className="opacity-70 font-semibold">
-          {product.deviceType} |{" "}
+          {product?.deviceType} |{" "}
           {new Date(product?.releaseDate) > new Date() ? (
             <span className="text-blue-500">Upcoming</span>
           ) : (
@@ -132,7 +132,7 @@ export default function Herosection({
         </div>
 
         {/* Buy buttons */}
-        <VariantPriceList prices={product.price} model={product?.model} />
+        <VariantPriceList prices={product?.price} model={product?.model} />
         {/*variants */}
         {fullmode && <Variants product={product} />}
       </div>
@@ -140,7 +140,7 @@ export default function Herosection({
         <div className="absolute top-2 right-2 flex items-center gap-2 z-10">
           <Link
             prefetch={false}
-            href={`/admin/product/add?edit=${product._id}`}
+            href={`/admin/product/add?edit=${product?._id}`}
             target="_blank"
             className="bg-theme text-white px-5 py-2 rounded-md"
           >
@@ -148,7 +148,7 @@ export default function Herosection({
           </Link>
           <Link
             prefetch={false}
-            href={`/admin/product/add?copy=${product._id}`}
+            href={`/admin/product/add?copy=${product?._id}`}
             target="_blank"
             className="bg-theme text-white px-5 py-2 rounded-md"
           >

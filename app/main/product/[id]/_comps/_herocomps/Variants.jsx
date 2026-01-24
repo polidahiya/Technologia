@@ -4,7 +4,7 @@ import Link from "next/link";
 import formatPrice from "@/app/_globalcomps/Formateprice";
 
 async function Variants({ product }) {
-  const list = product.variant
+  const list = product?.variant
     ? (await CachedVariants(product?.model)) || []
     : [];
     

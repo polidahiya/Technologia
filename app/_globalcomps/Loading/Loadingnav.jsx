@@ -3,28 +3,24 @@ import Loadingtile from "./Loadingtile";
 
 function Loadingnav() {
   return (
-    <div>
-      <div className="flex">
-        <div className="flex-1 flex items-center gap-2 py-2">
-          <Loadingtile className={"w-40 h-10"} />{" "}
-          <Loadingtile className={"w-28 h-10 hidden lg:block"} />
+    <div className="h-16 w-full sticky top-0 left-0 z-50 bg-bg2 border-b">
+      <div className="mx-auto max-w-6xl px-4 lg:px-0">
+        <div className="flex h-16 items-center gap-4">
+          <div className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded bg-primary flex items-center justify-center bg-white">
+              <Loadingtile className={"h-10 w-10"} />
+            </div>
+            <Loadingtile className={"h-10 w-24"} />
+          </div>
+
+          <Loadingtile className={"h-9 w-lg ml-8 hidden md:block"} />
+
+          <div className="ml-auto flex items-center gap-2">
+            <Loadingtile className={"h-9 w-28"} />
+            <Loadingtile className={"h-9 w-9 md:w-16"} />
+            <Loadingtile className={"h-9 w-16 hidden md:block"} />
+          </div>
         </div>
-        <div className="flex-1 items-center gap-2 py-2 hidden lg:flex">
-          <Loadingtile className={"w-full h-full"} />
-        </div>
-        <div className="flex-1 flex items-center justify-end gap-2 py-2">
-          <Loadingtile className={"hidden lg:block w-10 aspect-square"} />
-          <Loadingtile className={"hidden lg:block w-10 aspect-square"} />
-          <Loadingtile className={"hidden lg:block w-10 aspect-square"} />
-          <Loadingtile />
-        </div>
-      </div>
-      <div className="items-center justify-center gap-2 py-2 hidden lg:flex">
-        <Loadingtile className={"w-40 h-7"} />
-        <Loadingtile className={"w-40 h-7"} />
-        <Loadingtile className={"w-40 h-7"} />
-        <Loadingtile className={"w-40 h-7"} />
-        <Loadingtile className={"w-40 h-7"} />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ function Loadingtile({ className, children }) {
         className || "w-10 aspect-square"
       }`}
     >
-      <div className="absolute h-full shimmer w-24 bg-gradient-to-r from-gray-100 via-white to-gray-100 z-10" />
+      <div className="absolute h-full shimmer w-24 bg-linear-to-r from-gray-100 via-white to-gray-100 z-10" />
       <span className="opacity-0">{children}</span>
     </div>
   );

@@ -3,7 +3,6 @@ import React from "react";
 function SpecTable({ title, Icon, rows,id }) {
   return (
     <section  className="relative bg-white rounded-2xl shadow overflow-hidden" id={id}>
-      <span className="absolute -top-20 left-0 pointer-events-none" ></span>
       <h2 className="relative flex  items-center gap-2 px-6 py-4 font-extrabold border-b border-slate-200 font-tenor tracking-wider">
         {Icon}
         {title}
