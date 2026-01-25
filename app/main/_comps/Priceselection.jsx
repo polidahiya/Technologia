@@ -78,15 +78,17 @@ function Priceselection({
         <Slider
           range
           min={1000}
-          max={200000}
+          max={60000}
           step={1000}
           value={[min, max]}
           marks={{
             0: "₹0",
-            50000: "₹50K",
-            100000: "₹1L",
-            150000: "₹1.5L",
-            200000: "₹2L",
+            10000: "₹10k",
+            20000: "₹20k",
+            30000: "₹30k",
+            40000: "₹40k",
+            50000: "₹50k",
+            60000: "₹60k",
           }}
           onChange={handleSliderChange}
         />
@@ -94,14 +96,16 @@ function Priceselection({
 
       {/* Action button */}
       {showactionbutton && !useaction && (
-        <Link prefetch={false} 
+        <Link
+          prefetch={false}
+          replace={useaction}
           href={
             Filterlinkhook(
               usepath ? usepath : pathname,
               searchParams,
               "Price",
               `${price[0]}-${price[1]}`,
-              false
+              false,
             ) || `/main/all?Price=${price[0]}-${price[1]}`
           }
           className="w-full bg-theme text-white py-2 rounded-md font-semibold block text-center my-2"

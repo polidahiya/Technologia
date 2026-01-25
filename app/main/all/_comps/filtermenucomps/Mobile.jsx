@@ -46,7 +46,7 @@ function Mobile({ appliedfilters = {} }) {
       }
     });
 
-    router.push(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
     setshowfilter(false);
   };
 

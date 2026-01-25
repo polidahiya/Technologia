@@ -13,15 +13,17 @@ function Laptoplistview({ items, name, multipleMode, appliedfilters = [] }) {
         const isApplied = appliedfilters.includes(slug);
 
         return (
-          <Link prefetch={false} 
+          <Link
+            prefetch={false}
             key={slug}
+            replace
             href={
               Filterlinkhook(
                 pathname,
                 searchParams,
                 name,
                 slug,
-                multipleMode
+                multipleMode,
               ) || "#"
             }
             className="group flex items-center gap-2 px-2 py-2 text-xs md:text-sm transition-colors"

@@ -48,7 +48,7 @@ function getScreenSizeScore(size, deviceType, isFoldable) {
 /* ---------------- Main Display Score ---------------- */
 
 export default function Displayscore(product, max) {
-  const d = product.display[0];
+  const d = product?.display?.[0];
   let score = 0;
 
   /* -------- Quantitative (70 pts) -------- */

@@ -12,6 +12,7 @@ function Morebutton({ pageno }) {
       <Link
         prefetch={false}
         scroll={false}
+        replace
         href={
           Filterlinkhook(
             pathname,

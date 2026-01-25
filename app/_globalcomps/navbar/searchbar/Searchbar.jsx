@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { AppContextfn } from "@/app/Context";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Getdata from "./Getdata";
+import Getproducts from "@/lib/Getproducts";
 import Nextimage from "../../Nextimage";
 // import { fbq } from "@/app/_connections/Fbpixel";
 // import { event } from "nextjs-google-analytics";
@@ -41,15 +41,16 @@ function Searchbar({
       //     items: [],
       //   });
       setloading(true);
-      const searched = await Getdata(
+      const searched = await Getproducts(
         searchtext.slice(0, 40),
+        {},
         "default",
         10,
-        true
+        true,
       );
-      
+
       setloading(false);
-      setsearchedproducts(searched);
+      setsearchedproducts(searched?.products);
     };
 
     debounceTimeout = setTimeout(() => {
@@ -136,7 +137,7 @@ function Searchbar({
                       From{" "}
                       <span className="font-semibold text-theme">
                         {formatPrice(
-                          item?.price?.[0]?.sp || item?.price?.[0]?.mrp
+                          item?.price?.[0]?.sp || item?.price?.[0]?.mrp,
                         )}
                       </span>
                       <span className="ml-1 text-[11px] text-gray-400">

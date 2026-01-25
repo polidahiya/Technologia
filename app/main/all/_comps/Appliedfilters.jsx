@@ -20,11 +20,13 @@ export default function Appliedfilters({ filterArray }) {
                 </p>
                 <p className="whitespace-nowrap">{item[2]}</p>
               </div>
-              <Link prefetch={false} 
+              <Link
+                prefetch={false}
                 href={
                   Filterlinkhook(pathname, searchParams, item[0], item[1]) ||
                   "#"
                 }
+                replace
                 className="h-6 aspect-square flex items-center justify-center bg-white text-red-600 rounded-lg"
               >
                 {icons?.Cross}

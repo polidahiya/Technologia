@@ -19,7 +19,9 @@ function Sortmenulaptop({ appliedSort = "default" }) {
           {Object.entries(sortdata).map(([name, value]) => {
             const isApplied = appliedSort == name;
             return (
-              <Link prefetch={false} 
+              <Link
+                prefetch={false}
+                replace
                 key={name}
                 href={
                   Filterlinkhook(pathname, searchParams, "sort", name, false) ||

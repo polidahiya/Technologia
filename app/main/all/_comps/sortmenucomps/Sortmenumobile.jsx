@@ -40,6 +40,7 @@ function Sortmenumobile({ appliedSort = "default" }) {
               return (
                 <Link
                   prefetch={false}
+                  replace
                   key={name}
                   href={
                     Filterlinkhook(
@@ -47,7 +48,7 @@ function Sortmenumobile({ appliedSort = "default" }) {
                       searchParams,
                       "sort",
                       name,
-                      false
+                      false,
                     ) || "#"
                   }
                   className="group flex items-center gap-2 px-2 py-2 text-xs md:text-sm transition-colors"
