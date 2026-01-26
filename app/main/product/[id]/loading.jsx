@@ -1,6 +1,6 @@
 import React from "react";
 import Loadingtile from "@/app/_globalcomps/Loading/Loadingtile";
-import Herosection from "./_comps/Herosection";
+import Herosectionloading from "@/app/_globalcomps/Loading/Herosectionloading";
 import Secondnavloading from "@/app/_globalcomps/Loading/Secondnavloading";
 
 function loading() {
@@ -8,7 +8,7 @@ function loading() {
     <div className="h-screen overflow-hidden bg-bg1">
       <div className="min-h-screen py-2 px-2 md:px-0 w-full">
         <div className="max-w-6xl mx-auto space-y-2 w-full">
-          <Herosection fullmode={true} />
+          <Herosectionloading fullmode={true} />
           <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
             {/* Overall */}
             <div className="flex items-center justify-center rounded-2xl bg-white p-6 shadow">

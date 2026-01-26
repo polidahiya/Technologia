@@ -7,7 +7,7 @@ async function Variants({ product }) {
   const list = product?.variant
     ? (await CachedVariants(product?.model)) || []
     : [];
-    
+
   if (list.length <= 1) return null;
 
   return (
@@ -17,13 +17,14 @@ async function Variants({ product }) {
           const pricedata = variant?.price?.[0];
           const current = variant?.variant === product?.variant;
           const available = variant?.price?.some(
-            (p) => p.status === "Available"
+            (p) => p.status === "Available",
           );
 
           return (
             <Link
               key={i}
               href={`/main/product/${variant?._id}`}
+              replace
               prefetch={false}
               className={`
                 px-3 py-1.5 rounded-md border text-sm

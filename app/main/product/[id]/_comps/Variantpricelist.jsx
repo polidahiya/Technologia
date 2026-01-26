@@ -43,7 +43,7 @@ export default function VariantPriceList({ prices = [], model }) {
       : -1;
 
   return (
-    <div className="flex flex-col gap-3 pt-4">
+    <div className="flex flex-col gap-3">
       {sortedPrices.map((item, i) => {
         const isBestDeal = i === bestDealIndex;
 
@@ -102,7 +102,7 @@ export default function VariantPriceList({ prices = [], model }) {
                 <div className="flex items-center gap-1 text-slate-500">
                   {platformImageMap[platformKey] && (
                     <Nextimage
-                      src={platformImageMap[platformKey]}
+                      src={platformImageMap[platformKey]||null}
                       height={14}
                       width={14}
                       alt={item.platform}

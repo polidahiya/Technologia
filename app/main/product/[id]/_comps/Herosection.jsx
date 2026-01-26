@@ -41,7 +41,7 @@ export default function Herosection({
       <div className="">
         <Link prefetch={false} href={`/main/product/${product?._id}`}>
           <Nextimage
-            src={product?.images?.[0]}
+            src={product?.images[0] || null}
             alt={product?.model}
             height={500}
             width={500}
@@ -132,7 +132,9 @@ export default function Herosection({
         </div>
 
         {/* Buy buttons */}
-        <VariantPriceList prices={product?.price} model={product?.model} />
+        <div className="mt-4">
+          <VariantPriceList prices={product?.price} model={product?.model} />
+        </div>
         {/*variants */}
         {fullmode && <Variants product={product} />}
       </div>
