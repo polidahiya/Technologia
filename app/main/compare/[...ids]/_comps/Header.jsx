@@ -46,12 +46,12 @@ function CompareHeader({ ids, products }) {
   };
 
   return (
-    <div className={`bg-white  transition-all duration-300  h-60`}>
-      <div className="sticky top-18 rounded-2xl overflow-hidden shadow">
+    <div className={`transition-all duration-300  h-60`}>
+      <div className="sticky top-18 rounded-2xl overflow-hidden shadow bg-white">
         <div className="flex transition-all duration-300">
           {/* Left column */}
           <div
-            className={`flex-1 max-w-48 flex flex-col items-center justify-center text-sm bg-bg1 border-r border-slate-200  ${
+            className={`flex-1 max-w-48 flex flex-col items-center justify-center text-sm border-r border-slate-200  ${
               compact ? "h-36 md:h-28" : "h-60"
             }`}
           >

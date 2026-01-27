@@ -12,6 +12,9 @@ import formatDate from "@/app/_globalcomps/Formateddate";
 import { icons } from "@/lib/data";
 import Scorecalculator from "@/app/_globalcomps/scorescalculator/Scorecalculator";
 import ScoreOverview from "./_comps/_scores/Showscores";
+import Seoeditbutton from "@/app/_globalcomps/Addseo/Seoeditbutton";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
+import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 
 export default async function page({ params }) {
   const tokenRes = await Verification();
@@ -20,6 +23,7 @@ export default async function page({ params }) {
   //
   const product = await CachedProduct(id);
   if (!product) notFound();
+
   const d = product?.display?.[0] || {};
 
   const videoreview =
@@ -42,6 +46,11 @@ export default async function page({ params }) {
     customnavitems = customnavitems.filter((p) => p.label != "Gaming");
 
   const scores = await Scorecalculator({ ...product });
+
+  const seokey = `SEO-${product?.model}`;
+  const seodata = await getseodata(seokey);
+  const converter = new QuillDeltaToHtmlConverter(seodata?.delta, {});
+  const html = converter.convert();
 
   return (
     <Pagectxwrapper>
@@ -275,7 +284,12 @@ export default async function page({ params }) {
           <div id={comparisontitle.label}>
             <Comparewith product={product} />
           </div>
+          {/* description */}
+          <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
+        {tokenRes?.verified && (
+          <Seoeditbutton editdata={seodata} seokey={seokey} />
+        )}
       </div>
     </Pagectxwrapper>
   );
@@ -333,11 +347,14 @@ export const generateMetadata = async ({ params }) => {
   const { id } = await params;
   const product = await CachedProduct(id);
 
+  const seokey = `SEO-${product?.model}`;
+  const seodata = await getseodata(seokey);
+
   const ogImage = product?.images[0] || null;
   return {
-    title: generateMetaTitle(product),
-    description: generateMetaDescription(product),
-    keywords: generateMetaKeywords(product),
+    title: seodata?.title || generateMetaTitle(product),
+    description: seodata?.metadesc || generateMetaDescription(product),
+    keywords: seodata?.keywords || generateMetaKeywords(product),
     openGraph: {
       images: ogImage,
     },

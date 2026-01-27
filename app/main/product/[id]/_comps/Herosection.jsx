@@ -139,7 +139,7 @@ export default function Herosection({
         {fullmode && <Variants product={product} />}
       </div>
       {tokenRes?.verified && (
-        <div className="absolute top-2 right-2 flex items-center gap-2 z-10">
+        <div className="absolute top-2 right-2 flex items-center gap-2">
           <Link
             prefetch={false}
             href={`/admin/product/add?edit=${product?._id}`}

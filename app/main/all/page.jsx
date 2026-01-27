@@ -13,6 +13,10 @@ import Morebutton from "./_comps/Morebutton";
 import { notFound } from "next/navigation";
 import Getproducts from "@/lib/Getproducts";
 import Scorecalculator from "@/app/_globalcomps/scorescalculator/Scorecalculator";
+import Seoeditbutton from "@/app/_globalcomps/Addseo/Seoeditbutton";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
+import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
+import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
@@ -61,47 +65,119 @@ async function page({ searchParams }) {
     });
   });
 
+  // seo
+  const keyObject = {
+    sort,
+    search,
+    ...appliedfilters,
+  };
+
+  // make it stable (same order every time)
+  const key = JSON.stringify(
+    Object.keys(keyObject)
+      .sort()
+      .reduce((acc, k) => {
+        acc[k] = keyObject[k];
+        return acc;
+      }, {}),
+  );
+
+  const seokey = `SEO-${key}`;
+  const seodata = await getseodata(seokey);
+  const converter = new QuillDeltaToHtmlConverter(seodata?.delta, {});
+  const html = converter.convert();
+
   return (
     <Pagectxwrapper>
       <div className="w-full min-h-screen p-2">
-        <div className="w-full flex gap-2 max-w-6xl mx-auto">
-          <Filtermenu appliedfilters={appliedfilters} device={device} />
-          {device != "desktop" && <Sortmenumobile appliedSort={sort} />}
-          <div className="w-full lg:max-w-[864px] space-y-2">
-            {device == "desktop" ? (
-              <div className="flex gap-2 ">
-                <Appliedfilters filterArray={filterArray} device={device} />
-                <Sortmenulaptop appliedSort={sort} />
-              </div>
-            ) : (
-              <div className="space-y-2">
-                <Mobilesortandfilterbtn />
-                {filterArray.length > 0 && (
+        <div className="max-w-6xl mx-auto">
+          <div className="w-full flex gap-2">
+            <Filtermenu appliedfilters={appliedfilters} device={device} />
+            {device != "desktop" && <Sortmenumobile appliedSort={sort} />}
+            <div className="w-full lg:max-w-[864px] space-y-2">
+              {device == "desktop" ? (
+                <div className="flex gap-2 ">
                   <Appliedfilters filterArray={filterArray} device={device} />
-                )}
-              </div>
-            )}
+                  <Sortmenulaptop appliedSort={sort} />
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Mobilesortandfilterbtn />
+                  {filterArray.length > 0 && (
+                    <Appliedfilters filterArray={filterArray} device={device} />
+                  )}
+                </div>
+              )}
 
-            <div className="w-full space-y-2">
-              {(data.products || []).map(async (product, i) => {
-                const scores = await Scorecalculator(product);
-                return (
-                  <Herosection
-                    key={i}
-                    product={product}
-                    tokenRes={tokenRes}
-                    fullmode={false}
-                    scores={scores}
-                  />
-                );
-              })}
-              {data.hasNext && <Morebutton pageno={Number(pageno)} />}
+              <div className="w-full space-y-2">
+                {(data.products || []).map(async (product, i) => {
+                  const scores = await Scorecalculator(product);
+                  return (
+                    <Herosection
+                      key={i}
+                      product={product}
+                      tokenRes={tokenRes}
+                      fullmode={false}
+                      scores={scores}
+                    />
+                  );
+                })}
+                {data.hasNext && <Morebutton pageno={Number(pageno)} />}
+              </div>
             </div>
           </div>
+          {/* description */}
+          <div
+            className="mt-10 text"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+          {/* seo form */}
+          {tokenRes?.verified && (
+            <div className="mt-5">
+              <Seoeditbutton editdata={seodata} seokey={seokey} />
+            </div>
+          )}
         </div>
       </div>
     </Pagectxwrapper>
   );
 }
+
+export const generateMetadata = async ({ searchParams }) => {
+  let {
+    sort = "default",
+    pageno = 1,
+    search = null,
+    ...appliedfilters
+  } = await searchParams;
+
+  const keyObject = {
+    sort,
+    search,
+    ...appliedfilters,
+  };
+
+  // make it stable (same order every time)
+  const key = JSON.stringify(
+    Object.keys(keyObject)
+      .sort()
+      .reduce((acc, k) => {
+        acc[k] = keyObject[k];
+        return acc;
+      }, {}),
+  );
+
+  const seokey = `SEO-${key}`;
+  const seodata = await getseodata(seokey);
+
+  return {
+    title: Metakeywordsreplacer(seodata?.title || ""),
+    description: Metakeywordsreplacer(seodata?.metadesc || ""),
+    keywords: Metakeywordsreplacer(seodata?.keywords || ""),
+    // alternates: {
+    //   canonical: "",
+    // },
+  };
+};
 
 export default page;

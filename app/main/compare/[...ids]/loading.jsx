@@ -6,13 +6,13 @@ function loading() {
   return (
     <div className="min-h-screen p-2">
       <div className="max-w-6xl mx-auto space-y-2">
-        <div className="sticky -top-8 md:-top-16 p-2 bg-white rounded-2xl shadow z-10 space-y-2">
+        <div className="sticky -top-8 md:-top-16 bg-bg1 rounded-2xl z-10 space-y-2">
           <div className={`bg-white  transition-all duration-300  h-60`}>
-            <div className="sticky top-18 rounded-2xl overflow-hidden shadow">
+            <div className="sticky top-18 rounded-2xl overflow-hidden shadow bg-white">
               <div className="flex transition-all duration-300">
                 {/* Left column */}
                 <div
-                  className={`flex-1 max-w-48 flex flex-col items-center justify-center gap-2 bg-bg1 h-60`}
+                  className={`flex-1 max-w-48 flex flex-col items-center justify-center gap-2 h-60`}
                 >
                   <Loadingtile className={"w-20 md:w-28 h-8"} />
                   <Loadingtile className={"w-20 md:w-28 h-8"} />

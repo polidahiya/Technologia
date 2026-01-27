@@ -3,7 +3,6 @@ import Nextimage from "../_globalcomps/Nextimage";
 import Priceselection from "./_comps/Priceselection";
 import Latestphones from "./_comps/Latestphones";
 import Getproducts from "@/lib/Getproducts";
-import Homepagedesc from "./_comps/Homepagedesc";
 import Topcomparisons from "./_comps/Topcomparisons";
 import {
   Zap,
@@ -17,8 +16,13 @@ import {
   RefreshCcw,
   BatteryCharging,
 } from "lucide-react";
+import Seoeditbutton from "@/app/_globalcomps/Addseo/Seoeditbutton";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
+import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
+import Verification from "@/lib/verification";
 
 export default async function HomePage() {
+  const tokenRes = await Verification();
   const latestproducts = await Getproducts();
 
   const priceChips = [
@@ -163,10 +167,16 @@ export default async function HomePage() {
 
   const res = await fetch(
     `https://newsapi.org/v2/everything?q=smartphone OR android OR iphone&pageSize=6&apiKey=${process.env.NEWS_API_KEY}`,
-    { next: { revalidate: 3600 } } // cache 1 hour
+    { next: { revalidate: 3600 } }, // cache 1 hour
   );
 
   const newsdata = await res.json();
+
+  // seo
+  const seokey = `SEO-home`;
+  const seodata = await getseodata(seokey);
+  const converter = new QuillDeltaToHtmlConverter(seodata?.delta, {});
+  const html = converter.convert();
 
   return (
     <main className="min-h-screen p-2 max-w-7xl mx-auto space-y-2">
@@ -353,7 +363,14 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
-      <Homepagedesc />
+      {/* description */}
+      <div className="mt-10 text" dangerouslySetInnerHTML={{ __html: html }} />
+      {/* seo form */}
+      {tokenRes?.verified && (
+        <div className="mt-5">
+          <Seoeditbutton editdata={seodata} seokey={seokey} />
+        </div>
+      )}
     </main>
   );
 }

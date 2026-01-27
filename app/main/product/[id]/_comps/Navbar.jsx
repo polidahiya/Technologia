@@ -31,7 +31,7 @@ function Navbar({ navitems, stickyat = "top-0", scrolloffset = 0 }) {
             ref={(el) => (itemRefs.current[label] = el)}
             className="flex items-center gap-1 md:gap-2 p-1 md:p-2 pr-5 md:pr-5 rounded-full
                      bg-bg1 shadow text-xs md:text-sm font-medium whitespace-nowrap
-                     hover:bg-gray-200 transition scroll-ml-3"
+                     hover:text-theme transition scroll-ml-3"
             onClick={() => {
               if (!label) return;
               const el = document.getElementById(label);
