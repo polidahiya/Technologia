@@ -2,7 +2,7 @@ import { SearchX } from "lucide-react";
 import Link from "next/link";
 
 export default function NoResults({
-  title = "No products found",
+  title = "No Results found",
   description = "Try adjusting your filters or search keywords.",
 }) {
   return (

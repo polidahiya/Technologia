@@ -115,6 +115,9 @@ const Showproduct = ({ setcomparelist, item, i }) => {
             • {item?.price?.[0]?.status}
           </span>
         </p>
+        {/* <button className="text-sm text-blue-600 flex items-center gap-1">
+          {icons?.Replace} Switch Variant
+        </button> */}
       </div>
       {/* remove button */}
       <button

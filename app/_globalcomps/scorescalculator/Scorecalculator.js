@@ -22,10 +22,10 @@ export default async function Scorecalculator(product) {
 
       //   performance
       const maxPerformanceValues = {
-        antutu: 4180000, // future-proof
-        cpuClock: 5.1, // GHz
-        maxcores: 16,
-        ram: 32, // GB
+        antutu: 3932397, // future-proof
+        cpuClock: 4.6, // GHz
+        maxcores: 10,
+        ram: 16, // GB
         storage: 4096, // GB
       };
       const pscore = PerformanceScore(product, maxPerformanceValues);
@@ -41,9 +41,8 @@ export default async function Scorecalculator(product) {
       const desscore = DesignScore(product);
 
       const total = dscore + pscore + camscore + bscore + connscore + desscore;
-      const clamped = Math.min(Math.round(total / 6), 100);
-      const totalscore = Math.round(50 + (clamped / 100) * 50);
-
+      const totalscore = Math.min(Math.round(total / 6), 100);
+      
       return {
         totalscore: totalscore,
         displayscore: dscore,

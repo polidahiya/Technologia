@@ -10,14 +10,19 @@ const wifiVersionScoreMap = {
 };
 
 const bluetoothScoreMap = {
-  5.4: 15,
-  5.3: 14,
-  5.2: 13,
-  5.1: 12,
-  "5.0": 11,
-  4.2: 9,
+  "6.0": 18, // LE Audio v2 (future-facing)
+  6: 18, // LE Audio v2 (future-facing)
+  5.4: 15, // LE GATT security + improvements
+  5.3: 14, // Isochronous stability
+  5.2: 13, // LE Audio, LC3
+  5.1: 12, // Direction finding
+  5.0: 11, // Long range, 2x speed
+  5: 11, // Long range, 2x speed
+  4.2: 9, // LE Secure Connections
   4.1: 8,
-  "4.0": 7,
+  4.0: 7, // Bluetooth LE
+  3.0: 4,
+  2.1: 2,
 };
 
 const usbVersionScoreMap = {
@@ -25,7 +30,9 @@ const usbVersionScoreMap = {
   3.2: 4,
   3.1: 3.5,
   "3.0": 3,
+  3: 3,
   "2.0": 2,
+  2: 2,
 };
 
 /* ===================== USB ===================== */
@@ -56,7 +63,23 @@ function usbScore(connector, version) {
 
 function wifiScore(version) {
   if (!version) return 0;
-  return wifiVersionScoreMap[version] ?? 12;
+
+  const v = JSON.stringify(version).toLowerCase();
+
+  for (const [key, score] of Object.entries(wifiVersionScoreMap)) {
+    if (v.includes(key.toLowerCase())) {
+      return score;
+    }
+  }
+
+  // Fallbacks for common aliases
+  if (v.includes("be")) return 20; // Wi-Fi 7
+  if (v.includes("6e")) return 18;
+  if (v.includes("ax")) return 16; // Wi-Fi 6
+  if (v.includes("ac")) return 13; // Wi-Fi 5
+  if (v.includes("n")) return 10; // Wi-Fi 4
+
+  return 12; // unknown but modern
 }
 
 /* ===================== BLUETOOTH ===================== */
@@ -98,7 +121,8 @@ function extraConnectivityScore(product) {
 
   if (product?.nfc) score += 4;
   if (product?.irBlaster) score += 3;
-  if (product?.gps) score += 3;
+  // if (product?.gps) score += 3;
+  score += 3;
 
   return Math.min(score, 10);
 }
@@ -106,19 +130,14 @@ function extraConnectivityScore(product) {
 /* ===================== SENSORS ===================== */
 
 function sensorScore(sensors) {
-  if (!sensors || !Array.isArray(sensors)) return 0;
+  if (!sensors) return 0;
+  sensors=sensors.toLowerCase()
 
-  const importantSensors = [
-    "Fingerprint",
-    "Gyroscope",
-    "Compass",
-    "Barometer",
-    "Proximity",
-  ];
+  const importantSensors = ["Gyro", "Compass", "Barometer", "Proximity"];
 
   let count = 0;
   for (const sensor of importantSensors) {
-    if (sensors.some((s) => s.toLowerCase().includes(sensor.toLowerCase()))) {
+    if (sensors.includes(sensor.toLowerCase())) {
       count++;
     }
   }

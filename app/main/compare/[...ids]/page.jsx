@@ -16,6 +16,7 @@ import {
   screenProtections,
   cameraCutouts,
   chipsets,
+  mobileGPUs,
   batteryType,
   Fingerprints,
   storage,
@@ -197,7 +198,13 @@ async function page({ params }) {
                   key: "maxCpuClockSpeed",
                   unit: "GHz",
                 },
-                { label: "GPU", key: "gpu" },
+                {
+                  label: "GPU",
+                  key: "gpu",
+                  type: "list",
+                  list: mobileGPUs,
+                  win: "min",
+                },
                 {
                   label: "RAM",
                   key: "ram",
