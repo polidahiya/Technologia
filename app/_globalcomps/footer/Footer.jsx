@@ -12,17 +12,32 @@ export default function Footer() {
       {
         title: "Compare",
         links: [
-          { label: "Best Phones", href: "/main/all?Performance=flagship" },
-          { label: "Best Gaming Phones", href: "/main/all?Gaming=bestGaming" },
-          { label: "Best Camera Phones", href: "/main/all?Camera=bestCamera" },
-          { label: "Latest Mobiles", href: "/main/all" },
+          {
+            label: "Best Phones",
+            href: "/main/all?ReleaseDate=available&Performance=flagship",
+          },
+          {
+            label: "Best Gaming Phones",
+            href: "/main/all?ReleaseDate=available&Gaming=bestGaming",
+          },
+          {
+            label: "Best Camera Phones",
+            href: "/main/all?ReleaseDate=available&Camera=bestCamera",
+          },
+          { label: "Latest Mobiles", href: "/main/all?ReleaseDate=available" },
         ],
       },
       {
         title: "Categories",
         links: [
-          { label: "Mobiles", href: "/main/all?Device=smartphone" },
-          { label: "Tablets", href: "/main/all?Device=tablet" },
+          {
+            label: "Mobiles",
+            href: "/main/all?ReleaseDate=available&Device=smartphone",
+          },
+          {
+            label: "Tablets",
+            href: "/main/all?ReleaseDate=available&Device=tablet",
+          },
         ],
       },
       {

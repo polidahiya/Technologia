@@ -12,7 +12,7 @@ function Latestphones({ products }) {
         <h3 className="font-semibold text-base md:text-lg">New Release</h3>
         <Link
           prefetch={false}
-          href="/main/all"
+          href="/main/all?ReleaseDate=available"
           className="text-theme font-medium text-sm md:text-base"
         >
           View All

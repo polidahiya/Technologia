@@ -38,70 +38,70 @@ export default async function HomePage() {
   const features = [
     {
       title: "Flagship Performance",
-      link: "/main/all?Performance=flagship",
+      link: "/main/all?ReleaseDate=available&Performance=flagship",
       img: "/moreimages/phone.jpg",
       icon: Zap,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "Best Camera Phones",
-      link: "/main/all?Camera=bestCamera",
+      link: "/main/all?ReleaseDate=available&Camera=bestCamera",
       img: "/moreimages/phone.jpg",
       icon: Camera,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "Best Gaming Phones",
-      link: "/main/all?Gaming=bestGaming",
+      link: "/main/all?ReleaseDate=available&Gaming=bestGaming",
       img: "/moreimages/phone.jpg",
       icon: Gamepad2,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "5G Phones",
-      link: "/main/all?Connectivity=fiveG",
+      link: "/main/all?ReleaseDate=available&Connectivity=fiveG",
       img: "/moreimages/phone.jpg",
       icon: Signal,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "eSIM Support",
-      link: "/main/all?Connectivity=esim",
+      link: "/main/all?ReleaseDate=available&Connectivity=esim",
       img: "/moreimages/phone.jpg",
       icon: CreditCard,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "8GB RAM",
-      link: "/main/all?Memory=ram8Plus",
+      link: "/main/all?ReleaseDate=available&Memory=ram8Plus",
       img: "/moreimages/phone.jpg",
       icon: MemoryStick,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "256GB Storage",
-      link: "/main/all?Memory=storage256Plus",
+      link: "/main/all?ReleaseDate=available&Memory=storage256Plus",
       img: "/moreimages/phone.jpg",
       icon: HardDrive,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "AMOLED Display",
-      link: "/main/all?Display=amoled",
+      link: "/main/all?ReleaseDate=available&Display=amoled",
       img: "/moreimages/phone.jpg",
       icon: Smartphone,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "120Hz (Super Smooth Display)",
-      link: "/main/all?Display=hz120",
+      link: "/main/all?ReleaseDate=available&Display=hz120",
       img: "/moreimages/phone.jpg",
       icon: RefreshCcw,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
     },
     {
       title: "Wireless Charging",
-      link: "/main/all?Battery=wireless",
+      link: "/main/all?ReleaseDate=available&Battery=wireless",
       img: "/moreimages/phone.jpg",
       icon: BatteryCharging,
       color: "bg-linear-to-r from-purple-100 to-white border border-purple-300",
@@ -112,56 +112,56 @@ export default async function HomePage() {
     {
       name: "Apple",
       img: "/brands/1763016542_Apple.png",
-      link: "/main/all?Brand=apple",
+      link: "/main/all?ReleaseDate=available&Brand=apple",
     },
     {
       name: "Samsung",
       img: "/brands/1583216214_Samsung.avif",
-      link: "/main/all?Brand=samsung",
+      link: "/main/all?ReleaseDate=available&Brand=samsung",
     },
     {
       name: "Xiaomi",
       img: "/brands/1763016604_MI.png",
-      link: "/main/all?Brand=xiaomi",
+      link: "/main/all?ReleaseDate=available&Brand=xiaomi",
     },
     {
       name: "Motorola",
       img: "/brands/1758304370_1758303907.avif",
-      link: "/main/all?Brand=motorola",
+      link: "/main/all?ReleaseDate=available&Brand=motorola",
     },
 
     {
       name: "Realme",
       img: "/brands/1761805391_realme.avif",
-      link: "/main/all?Brand=realme",
+      link: "/main/all?ReleaseDate=available&Brand=realme",
     },
 
     {
       name: "Google",
       img: "/brands/google.png",
-      link: "/main/all?Brand=google",
+      link: "/main/all?ReleaseDate=available&Brand=google",
     },
 
     {
       name: "OPPO",
       img: "/brands/1763016167_OPPO.png",
-      link: "/main/all?Brand=oppo",
+      link: "/main/all?ReleaseDate=available&Brand=oppo",
     },
     {
       name: "OnePlus",
       img: "/brands/1763016567_OnePlus.avif",
-      link: "/main/all?Brand=oneplus",
+      link: "/main/all?ReleaseDate=available&Brand=oneplus",
     },
     {
       name: "IQOO",
       img: "/brands/1763016387_iQOO.png",
-      link: "/main/all?Brand=iqoo",
+      link: "/main/all?ReleaseDate=available&Brand=iqoo",
     },
 
     {
       name: "vivo",
       img: "/brands/1763016653_vivo.avif",
-      link: "/main/all?Brand=vivo",
+      link: "/main/all?ReleaseDate=available&Brand=vivo",
     },
   ];
 
@@ -222,14 +222,14 @@ export default async function HomePage() {
             {[
               {
                 title: "Mobiles",
-                link: "/main/all?Device=smartphone",
+                link: "/main/all?ReleaseDate=available&Device=smartphone",
                 img: "/moreimages/phone.jpg",
                 color:
                   "bg-linear-to-r from-yellow-100 to-white border border-yellow-300",
               },
               {
                 title: "Tablets",
-                link: "/main/all?Device=tablet",
+                link: "/main/all?ReleaseDate=available&Device=tablet",
                 img: "/moreimages/tablet.png",
                 color:
                   "bg-linear-to-r from-pink-100 to-white border border-pink-300",
@@ -259,7 +259,7 @@ export default async function HomePage() {
               <Link
                 prefetch={false}
                 key={i}
-                href={`/main/all?Price=${p.value}`}
+                href={`/main/all?ReleaseDate=available&Price=${p.value}`}
                 className="px-3 py-1 border border-slate-300 rounded-lg text-sm hover:bg-gray-100 cursor-pointer"
               >
                 {p.label}

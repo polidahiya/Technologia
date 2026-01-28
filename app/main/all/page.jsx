@@ -17,6 +17,7 @@ import Seoeditbutton from "@/app/_globalcomps/Addseo/Seoeditbutton";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
+import NoResults from "./_comps/Notfoundcomp";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
@@ -45,7 +46,12 @@ async function page({ searchParams }) {
   const start = (Number(pageno) - 1) * pageSize;
   const maxProducts = start + pageSize;
 
-  const data = await Getproducts(search, appliedfilters, sort, maxProducts);
+  let noproducts = false;
+  let data = await Getproducts(search, appliedfilters, sort, maxProducts);
+  if (data.products.length == 0) {
+    data = await Getproducts("", {}, sort, maxProducts);
+    noproducts = true;
+  }
 
   const filterArray = [];
   //   if search
@@ -110,6 +116,11 @@ async function page({ searchParams }) {
               )}
 
               <div className="w-full space-y-2">
+                {noproducts && (
+                  <div className="w-full bg-white shadow rounded-2xl">
+                    <NoResults />
+                  </div>
+                )}
                 {(data.products || []).map(async (product, i) => {
                   const scores = await Scorecalculator(product);
                   return (
