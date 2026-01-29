@@ -285,7 +285,7 @@ export default async function page({ params }) {
             <Comparewith product={product} />
           </div>
           {/* description */}
-          <div dangerouslySetInnerHTML={{ __html: html }} />
+          <div className="text mt-10" dangerouslySetInnerHTML={{ __html: html }} />
         </div>
         {tokenRes?.verified && (
           <Seoeditbutton editdata={seodata} seokey={seokey} />

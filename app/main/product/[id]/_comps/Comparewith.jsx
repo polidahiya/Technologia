@@ -23,6 +23,20 @@ async function Comparewith({ product }) {
     numberofproducts,
   );
 
+  console.log(
+    "",
+    product.foldable
+      ? {
+          Features: "foldable",
+        }
+      : {
+          Price: `${min}-${max}`,
+          Device: product?.deviceType?.toLowerCase(),
+        },
+    "default",
+    numberofproducts,
+  );
+
   let products = comparelist?.products || [];
 
   // Remove self product if present
@@ -46,7 +60,7 @@ function getCompetitorPriceRange(price) {
   else if (price <= 100000) delta = 25000;
   else delta = 15000;
 
-  return [Math.max(0, price - delta), price + delta];
+  return [Math.max(0, price - delta), Number(price) + delta];
 }
 
 export default Comparewith;

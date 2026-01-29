@@ -123,8 +123,8 @@ function CompareHeader({ ids, products }) {
 
                     <div className="font-bold text-green-600">
                       {formatPrice(
-                        pricedata?.mrp || pricedata?.sp,
-                        pricedata?.currency
+                        pricedata?.sp || pricedata?.mrp,
+                        pricedata?.currency,
                       )}
                     </div>
                   </div>

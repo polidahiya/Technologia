@@ -55,7 +55,7 @@ export default function Navbar({ device, tokenres }) {
             <div className="ml-auto flex items-center gap-2">
               {/* CTA */}
               <Link
-                href="/main/all"
+                href="/main/all?ReleaseDate=available"
                 className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:text-theme hover:underline"
               >
                 Find a phone
