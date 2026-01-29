@@ -13,7 +13,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 function Comparemenu({ device }) {
   const { comparelist, setcomparelist } = AppContextfn();
   const [showmenu, setshowmenu] = useState(false);
-  const heightvalue = device == "mobile" ? 395 : 160;
+  const heightvalue = device == "mobile" ? 440 : 160;
 
   useEffect(() => {
     setshowmenu(true);
@@ -29,8 +29,21 @@ function Comparemenu({ device }) {
             y: heightvalue,
             opacity: 0,
           }}
-          className={`fixed -bottom-20 md:-bottom-8 left-1/2 -translate-x-1/2 md:h-48 w-full pt-2 md:pt-0 pb-28 md:pb-0 max-w-6xl bg-white rounded-t-2xl z-10 border border-slate-300`}
+          className={`fixed -bottom-20 md:-bottom-8 left-1/2 -translate-x-1/2 md:h-48 w-full pt-2 md:pt-0 pb-28 md:pb-0 max-w-6xl bg-white rounded-t-3xl z-10 border border-slate-300`}
         >
+          {device == "mobile" && (
+            <div className="flex justify-between items-center gap-2 p-2 bg-bg2 sticky top-0 rounded-2xl shadow z-10 mx-2">
+              <div className="w-8" />
+              <h2 className="text-white">Compare</h2>
+              <button
+                className="h-8 w-8 rounded-xl bg-bg1 flex items-center justify-center"
+                onClick={() => setshowmenu(false)}
+              >
+                {icons.Cross}
+              </button>
+            </div>
+          )}
+
           <div className="md:h-40 w-full flex flex-col md:flex-row">
             {comparelist.map((item, i) => (
               <Slote
@@ -60,14 +73,48 @@ function Comparemenu({ device }) {
               </button>
             </div>
           </div>
-          <button
-            className="absolute -top-12 left-1/2 -translate-x-1/2 bg-theme text-white w-10 aspect-square flex items-center justify-center rounded-full shadow"
-            onClick={() => setshowmenu((pre) => !pre)}
-          >
-            <ChevronUp
-              className={`duration-300 ${showmenu ? "rotate-180" : "rotate-0"}`}
-            />
-          </button>
+          <div className="absolute -top-12 left-2 h-10 flex gap-2">
+            <button
+              className="h-full flex items-center gap-2 rounded-full bg-bg2 text-white px-1.5 pr-6 shadow"
+              onClick={() => setshowmenu((pre) => !pre)}
+            >
+              {/* Avatar stack */}
+              <div className="relative h-8 w-[70px]">
+                {comparelist.map((item, i) => {
+                  if (!item) return null;
+
+                  return (
+                    <div
+                      key={i}
+                      className="absolute top-0 h-8 w-8 rounded-full bg-white overflow-hidden"
+                      style={{
+                        transform: `translateX(${i * 18}px)`,
+                        zIndex: 10 - i,
+                      }}
+                    >
+                      <Nextimage
+                        src={item?.images?.[0] || "/uiimages/404.jpg"}
+                        alt={item?.model}
+                        width={32}
+                        height={32}
+                        className="w-full h-full object-contain mix-blend-multiply"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
+              <span className="text-sm whitespace-nowrap">Compare</span>
+            </button>
+            {showmenu && device == "desktop" && (
+              <button
+                onClick={() => setshowmenu((pre) => !pre)}
+                className="h-full aspect-square rounded-full rotate-180 bg-bg2 text-white flex items-center justify-center"
+              >
+                <ChevronUp />
+              </button>
+            )}
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
@@ -91,6 +138,7 @@ const Slote = ({ comparelist, setcomparelist, item, i }) => {
   );
 };
 const Showproduct = ({ setcomparelist, item, i }) => {
+  const { setvariantmenu } = AppContextfn();
   return (
     <div className="relative flex-1 w-full flex items-center gap-2 px-2 min-h-20 md:min-h-auto">
       <div className="w-20 h-20 shrink-0">
@@ -115,13 +163,22 @@ const Showproduct = ({ setcomparelist, item, i }) => {
             • {item?.price?.[0]?.status}
           </span>
         </p>
-        {/* <button className="text-sm text-blue-600 flex items-center gap-1">
+        <button
+          className="text-sm text-blue-600 flex items-center gap-1"
+          onClick={() => {
+            setvariantmenu({
+              show: true,
+              model: item?.model,
+              currvariant: item?.variant,
+            });
+          }}
+        >
           {icons?.Replace} Switch Variant
-        </button> */}
+        </button>
       </div>
       {/* remove button */}
       <button
-        className="absolute top-5 right-3 text-gray-400 text-xl hover:text-red-500"
+        className="absolute top-2 md:top-5 right-3 text-red-500 md:text-gray-400 text-xl hover:text-red-500 bg-white p-2 md:p-0"
         onClick={() =>
           setcomparelist((prev) => {
             const updated = [...prev];

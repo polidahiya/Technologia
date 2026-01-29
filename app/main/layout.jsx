@@ -4,6 +4,7 @@ import Footer from "../_globalcomps/footer/Footer";
 import Comparemenu from "../_globalcomps/comparemenu/Comparemenu";
 import DeviceDetector from "../_globalcomps/Devicedetector";
 import Verification from "@/lib/verification";
+import Variantmenucomp from "../_globalcomps/Variantmenu";
 
 async function layout({ children }) {
   const tokenres = await Verification();
@@ -13,6 +14,7 @@ async function layout({ children }) {
       <Navbar device={device} tokenres={tokenres} />
       {children}
       <Comparemenu device={device} />
+      <Variantmenucomp />
       <Footer />
     </div>
   );

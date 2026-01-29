@@ -7,6 +7,11 @@ export function Appwrapper({ children }) {
   const [messagearray, setmessagearray] = useState([]);
   const [showsearchbar, setshowsearchbar] = useState(false);
   const [comparelist, setcomparelist] = useState([null, null, null]);
+  const [variantmenu, setvariantmenu] = useState({
+    show: false,
+    model: null,
+    currvariant: null,
+  });
 
   // messages
   const setmessagefn = (message) => {
@@ -23,6 +28,8 @@ export function Appwrapper({ children }) {
         setshowsearchbar,
         comparelist,
         setcomparelist,
+        variantmenu,
+        setvariantmenu,
         messagearray,
         setmessagearray,
         setmessagefn,

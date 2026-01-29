@@ -17,7 +17,7 @@ export async function CachedVariants(variantname) {
           (p) =>
             p?.model === variantname &&
             Array.isArray(p?.price) &&
-            p.price.length > 0 
+            p.price.length > 0,
         )
         .map((p) => ({
           _id: p._id,
@@ -30,6 +30,6 @@ export async function CachedVariants(variantname) {
     {
       revalidate: CACHE_TIME,
       tags: [`Variant-${variantname}`, "Variant", "all"],
-    }
+    },
   )();
 }
