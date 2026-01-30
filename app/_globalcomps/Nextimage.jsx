@@ -7,7 +7,7 @@ function Nextimage({ ...props }) {
 
   return (
     <Image
-      loading={!props.priority ? "lazy" : "eager"}
+      loading="lazy"
       onError={() => {
         setImgError(true);
       }}

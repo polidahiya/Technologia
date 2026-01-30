@@ -23,7 +23,14 @@ import Verification from "@/lib/verification";
 
 export default async function HomePage() {
   const tokenRes = await Verification();
-  const latestproducts = await Getproducts();
+  const latestproducts = await Getproducts(
+    "",
+    { ReleaseDate: "available" },
+    "default",
+    10,
+    false,
+    true,
+  );
 
   const priceChips = [
     { label: "Below ₹10,000", value: "0-10000" },

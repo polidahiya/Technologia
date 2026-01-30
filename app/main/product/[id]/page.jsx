@@ -15,6 +15,8 @@ import ScoreOverview from "./_comps/_scores/Showscores";
 import Seoeditbutton from "@/app/_globalcomps/Addseo/Seoeditbutton";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
+import Topfives from "./_comps/Topfives";
+import Link from "next/link";
 
 export default async function page({ params }) {
   const tokenRes = await Verification();
@@ -65,7 +67,7 @@ export default async function page({ params }) {
             scrolloffset={135}
           />
 
-          <div className="flex gap-2 w-full">
+          <div className="flex flex-col md:flex-row gap-2 w-full">
             <div className="space-y-2 w-full">
               <SpecTable
                 title={navitems[0].label}
@@ -279,13 +281,115 @@ export default async function page({ params }) {
                 </section>
               )}
             </div>
-            <div className="w-96 rounded-2xl bg-white p-6 shadow hidden"></div>
+            <div className="w-full md:w-96 flex flex-col gap-2">
+              <Topfives price={product?.price} />
+              {/*  */}
+              <div className="w-full rounded-2xl bg-white p-3 shadow space-y-3">
+                <div className="">
+                  <h2 className="text-lg font-semibold pl-2 mb-2">More Links</h2>
+                  {[
+                    {
+                      label: "Latest Phones",
+                      link: "/main/all?ReleaseDate=available",
+                    },
+                    {
+                      label: "Upcoming Mobile Phones",
+                      link: "/main/all?ReleaseDate=upcomming",
+                    },
+                    {
+                      label: "New Phones by " + product?.brand,
+                      link: `/main/all?Brand=${product?.brand}`,
+                    },
+                    {
+                      label: "Best Phones Under ₹10,000",
+                      link: "/main/all?sort=totalscore&Price=0-10000",
+                    },
+                    {
+                      label: "Best Phones Under ₹15,000",
+                      link: "/main/all?sort=totalscore&Price=0-15000",
+                    },
+                    {
+                      label: "Best Phones Under ₹20,000",
+                      link: "/main/all?sort=totalscore&Price=0-20000",
+                    },
+                    {
+                      label: "Best Phones Under ₹25,000",
+                      link: "/main/all?sort=totalscore&Price=0-25000",
+                    },
+                    {
+                      label: "Best Phones Under ₹30,000",
+                      link: "/main/all?sort=totalscore&Price=0-30000",
+                    },
+                    {
+                      label: "Best Camera Phones Under ₹20,000",
+                      link: "/main/all?sort=camerascore&Price=0-20000",
+                    },
+                    {
+                      label: "Best Camera Phones Under ₹30,000",
+                      link: "/main/all?sort=camerascore&Price=0-30000",
+                    },
+                    {
+                      label: "Good Selfie Camera Phones",
+                      link: "/main/all?sort=camerascore&Camera=selfie",
+                    },
+                    {
+                      label: "Best Video Recording Phones",
+                      link: "/main/all?Camera=video4k&sort=camerascore",
+                    },
+
+                    // 🎮 Gaming Focused
+                    {
+                      label: "Best Gaming Phones Under ₹20,000",
+                      link: "/main/all?sort=performancescore&Gaming=bestGaming",
+                    },
+                    {
+                      label: "Best Gaming Phones Under ₹30,000",
+                      link: "/main/all?sort=performancescore&Gaming=bestGaming&Price=0-30000",
+                    },
+                    {
+                      label: "High Performance Gaming Phones",
+                      link: "/main/all?sort=performancescore&Gaming=bestGaming%2ChighFps",
+                    },
+
+                    // 🔋 Battery & Display
+                    {
+                      label: "Best Battery Backup Phones",
+                      link: "/main/all?sort=batteryscore&Battery=mah5000Plus",
+                    },
+                    {
+                      label: "Fast Charging Phones",
+                      link: "/main/all?sort=pricelh&Battery=fastCharge67",
+                    },
+                    {
+                      label: "AMOLED Display Phones",
+                      link: "/main/all?sort=pricelh&Display=amoled",
+                    },
+                    {
+                      label: "120Hz Display Phones",
+                      link: "/main/all?sort=pricelh&Display=hz120",
+                    },
+                  ].map((item, i) => (
+                    <Link
+                      key={i}
+                      prefetch={false}
+                      href={item?.link}
+                      className="block text-sm w-full p-2  lg:hover:text-theme"
+                    >
+                      {item?.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
           <div id={comparisontitle.label}>
             <Comparewith product={product} />
           </div>
           {/* description */}
-          <div className="text mt-10" dangerouslySetInnerHTML={{ __html: html }} />
+          <div
+            className="text mt-10"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
         </div>
         {tokenRes?.verified && (
           <Seoeditbutton editdata={seodata} seokey={seokey} />

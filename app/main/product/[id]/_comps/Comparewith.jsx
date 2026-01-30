@@ -23,20 +23,6 @@ async function Comparewith({ product }) {
     numberofproducts,
   );
 
-  console.log(
-    "",
-    product.foldable
-      ? {
-          Features: "foldable",
-        }
-      : {
-          Price: `${min}-${max}`,
-          Device: product?.deviceType?.toLowerCase(),
-        },
-    "default",
-    numberofproducts,
-  );
-
   let products = comparelist?.products || [];
 
   // Remove self product if present

@@ -31,6 +31,7 @@ function Comparecomp({ title = "", pairs = [] }) {
                     alt={mob?.model}
                     height={40}
                     width={40}
+                    loading="lazy"
                     className="w-full h-full object-contain object-center mix-blend-multiply"
                   />
                 </div>
