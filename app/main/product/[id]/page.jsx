@@ -298,75 +298,75 @@ export default async function page({ params }) {
                     },
                     {
                       label: "New Phones by " + product?.brand,
-                      link: `/main/all?Brand=${product?.brand}`,
+                      link: `/main/all?ReleaseDate=available&Brand=${product?.brand}`,
                     },
                     {
                       label: "Best Phones Under ₹10,000",
-                      link: "/main/all?sort=totalscore&Price=0-10000",
+                      link: "/main/all?ReleaseDate=available&sort=totalscore&Price=0-10000",
                     },
                     {
                       label: "Best Phones Under ₹15,000",
-                      link: "/main/all?sort=totalscore&Price=0-15000",
+                      link: "/main/all?ReleaseDate=available&sort=totalscore&Price=0-15000",
                     },
                     {
                       label: "Best Phones Under ₹20,000",
-                      link: "/main/all?sort=totalscore&Price=0-20000",
+                      link: "/main/all?ReleaseDate=available&sort=totalscore&Price=0-20000",
                     },
                     {
                       label: "Best Phones Under ₹25,000",
-                      link: "/main/all?sort=totalscore&Price=0-25000",
+                      link: "/main/all?ReleaseDate=available&sort=totalscore&Price=0-25000",
                     },
                     {
                       label: "Best Phones Under ₹30,000",
-                      link: "/main/all?sort=totalscore&Price=0-30000",
+                      link: "/main/all?ReleaseDate=available&sort=totalscore&Price=0-30000",
                     },
                     {
                       label: "Best Camera Phones Under ₹20,000",
-                      link: "/main/all?sort=camerascore&Price=0-20000",
+                      link: "/main/all?ReleaseDate=available&sort=camerascore&Price=0-20000",
                     },
                     {
                       label: "Best Camera Phones Under ₹30,000",
-                      link: "/main/all?sort=camerascore&Price=0-30000",
+                      link: "/main/all?ReleaseDate=available&sort=camerascore&Price=0-30000",
                     },
                     {
                       label: "Good Selfie Camera Phones",
-                      link: "/main/all?sort=camerascore&Camera=selfie",
+                      link: "/main/all?ReleaseDate=available&sort=camerascore&Camera=selfie",
                     },
                     {
                       label: "Best Video Recording Phones",
-                      link: "/main/all?Camera=video4k&sort=camerascore",
+                      link: "/main/all?ReleaseDate=available&Camera=video4k&sort=camerascore",
                     },
 
                     // 🎮 Gaming Focused
                     {
                       label: "Best Gaming Phones Under ₹20,000",
-                      link: "/main/all?sort=performancescore&Gaming=bestGaming",
+                      link: "/main/all?ReleaseDate=available&sort=performancescore&Gaming=bestGaming",
                     },
                     {
                       label: "Best Gaming Phones Under ₹30,000",
-                      link: "/main/all?sort=performancescore&Gaming=bestGaming&Price=0-30000",
+                      link: "/main/all?ReleaseDate=available&sort=performancescore&Gaming=bestGaming&Price=0-30000",
                     },
                     {
                       label: "High Performance Gaming Phones",
-                      link: "/main/all?sort=performancescore&Gaming=bestGaming%2ChighFps",
+                      link: "/main/all?ReleaseDate=available&sort=performancescore&Gaming=bestGaming%2ChighFps",
                     },
 
                     // 🔋 Battery & Display
                     {
                       label: "Best Battery Backup Phones",
-                      link: "/main/all?sort=batteryscore&Battery=mah5000Plus",
+                      link: "/main/all?ReleaseDate=available&sort=batteryscore&Battery=mah5000Plus",
                     },
                     {
                       label: "Fast Charging Phones",
-                      link: "/main/all?sort=pricelh&Battery=fastCharge67",
+                      link: "/main/all?ReleaseDate=available&sort=pricelh&Battery=fastCharge67",
                     },
                     {
                       label: "AMOLED Display Phones",
-                      link: "/main/all?sort=pricelh&Display=amoled",
+                      link: "/main/all?ReleaseDate=available&sort=pricelh&Display=amoled",
                     },
                     {
                       label: "120Hz Display Phones",
-                      link: "/main/all?sort=pricelh&Display=hz120",
+                      link: "/main/all?ReleaseDate=available&sort=pricelh&Display=hz120",
                     },
                   ].map((item, i) => (
                     <Link
