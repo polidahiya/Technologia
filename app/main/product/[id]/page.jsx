@@ -514,7 +514,7 @@ export const generateMetadata = async ({ params }) => {
       images: ogImage,
     },
     alternates: {
-      canonical: "https://tecknologia/main/product/" + id,
+      canonical: "https://tecknologia.in/main/product/" + id,
     },
   };
 };

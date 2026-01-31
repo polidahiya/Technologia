@@ -9,6 +9,7 @@ import VariantPriceList from "./Variantpricelist";
 import Admincopyproductdata from "./_herocomps/Admincopyproductdata";
 import Variants from "./_herocomps/Variants";
 import { getScoreColor } from "./_scores/Showscores";
+import DeviceOverview from "./_herocomps/Secondimage";
 
 export default function Herosection({
   product,
@@ -55,6 +56,7 @@ export default function Herosection({
       </div>
 
       <div className="">
+        {/* <DeviceOverview device={product} /> */}
         <h1 className="text-3xl font-bold font-tenor">
           {product?.model}{" "}
           {product?.variant && (
