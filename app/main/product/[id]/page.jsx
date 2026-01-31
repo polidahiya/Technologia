@@ -49,10 +49,53 @@ export default async function page({ params }) {
 
   const scores = await Scorecalculator({ ...product });
 
+  // seo
   const seokey = `SEO-${product?.model}`;
   const seodata = await getseodata(seokey);
   const converter = new QuillDeltaToHtmlConverter(seodata?.delta, {});
   const html = converter.convert();
+
+  // schema
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product?.model,
+    image: product?.images,
+
+    description: seodata?.metadesc || generateMetaDescription(product),
+
+    sku: product?._id,
+    productID: product?._id,
+    category: product?.deviceType,
+
+    brand: {
+      "@type": "Brand",
+      name: product?.brand,
+    },
+
+    offers: {
+      "@type": "Offer",
+      url: `https://tecknologia.in/main/product/${product?._id}`,
+      priceCurrency: "INR",
+      price: parseInt(product?.price?.[0]?.sp || product?.price?.[0]?.mrp, 10),
+      availability: product?.price?.some((a) => a == "Avaialable")
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      itemCondition: "https://schema.org/NewCondition",
+      seller: {
+        "@type": "Organization",
+        name: product?.price?.[0]?.platform,
+      },
+    },
+
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: scores?.totalscore / 20,
+      reviewCount: "10",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
 
   return (
     <Pagectxwrapper>
@@ -286,7 +329,9 @@ export default async function page({ params }) {
               {/*  */}
               <div className="w-full rounded-2xl bg-white p-3 shadow space-y-3">
                 <div className="">
-                  <h2 className="text-lg font-semibold pl-2 mb-2">More Links</h2>
+                  <h2 className="text-lg font-semibold pl-2 mb-2">
+                    More Links
+                  </h2>
                   {[
                     {
                       label: "Latest Phones",
@@ -395,6 +440,12 @@ export default async function page({ params }) {
           <Seoeditbutton editdata={seodata} seokey={seokey} />
         )}
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productSchema),
+        }}
+      />
     </Pagectxwrapper>
   );
 }
@@ -462,8 +513,8 @@ export const generateMetadata = async ({ params }) => {
     openGraph: {
       images: ogImage,
     },
-    // alternates: {
-    //   canonical: "",
-    // },
+    alternates: {
+      canonical: "https://tecknologia/main/product/" + id,
+    },
   };
 };
