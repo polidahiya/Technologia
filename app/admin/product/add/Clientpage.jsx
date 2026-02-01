@@ -32,7 +32,7 @@ import {
 function Clientpage({ productdata }) {
   const { setmessagefn } = AppContextfn();
   const brands = Object.values(filters.Brand.options).map(
-    (option) => option.name
+    (option) => option.name,
   );
   const pricedata = {
     platform: "",
@@ -120,6 +120,7 @@ function Clientpage({ productdata }) {
     wifiVersion: "", // 5, 6, 6E
     bluetoothVersion: "", // 5.2
     nfc: false,
+    gps: true,
     usbType: "",
     usbVersion: "", // 2.0, 3.1
     esim: false,
@@ -185,7 +186,7 @@ function Clientpage({ productdata }) {
           return {
             ...prev,
             [property]: arr.map((item, i) =>
-              i === payload.index ? payload.value : item
+              i === payload.index ? payload.value : item,
             ),
           };
 
@@ -453,7 +454,7 @@ function Clientpage({ productdata }) {
                     "display",
                     i,
                     "refreshRate",
-                    e.target.value
+                    e.target.value,
                   );
                 }}
               />
@@ -492,7 +493,7 @@ function Clientpage({ productdata }) {
                     i,
                     "screenToBodyRatio",
 
-                    e.target.value
+                    e.target.value,
                   );
                 }}
               />
@@ -526,7 +527,7 @@ function Clientpage({ productdata }) {
                     i,
                     "Brightness",
 
-                    e.target.value
+                    e.target.value,
                   );
                 }}
               />
@@ -955,6 +956,14 @@ function Clientpage({ productdata }) {
           positiveText="Yes"
           negativeText="No"
         />
+        <Togglebuttons
+          titlename="GPS"
+          value={data.gps}
+          positive={() => handlechange("gps", true)}
+          negative={() => handlechange("gps", false)}
+          positiveText="Yes"
+          negativeText="No"
+        />
         <InputWithSuggestions
           title="Usb Type"
           state={data.usbType}
@@ -1171,7 +1180,7 @@ function Clientpage({ productdata }) {
                     "gaming",
                     i,
                     "maxSettings",
-                    e.target.value
+                    e.target.value,
                   );
                 }}
               />
@@ -1192,7 +1201,7 @@ function Clientpage({ productdata }) {
                     "gaming",
                     i,
                     "batterydrain",
-                    e.target.value
+                    e.target.value,
                   );
                 }}
               />
@@ -1205,7 +1214,7 @@ function Clientpage({ productdata }) {
                     "gaming",
                     i,
                     "tempratureRaise",
-                    e.target.value
+                    e.target.value,
                   );
                 }}
               />
