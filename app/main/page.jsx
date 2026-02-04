@@ -20,6 +20,7 @@ import Seoeditbutton from "@/app/_globalcomps/Addseo/Seoeditbutton";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Verification from "@/lib/verification";
+import Herosection from "./_comps/Herosection";
 
 export default async function HomePage() {
   const tokenRes = await Verification();
@@ -187,6 +188,7 @@ export default async function HomePage() {
 
   return (
     <main className="min-h-screen p-2 max-w-7xl mx-auto space-y-2">
+      {/* <Herosection /> */}
       {/* Top Section */}
       <div className="grid lg:grid-cols-3 gap-2 ">
         {/* Finder */}

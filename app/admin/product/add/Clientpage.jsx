@@ -145,6 +145,7 @@ function Clientpage({ productdata }) {
     dedicatedCooling: false,
     gamingTriggers: false,
     AiFpsGeneration: false,
+    bypasscharging: false,
     gaming: [gamedata],
     //
     inBox: "",
@@ -1149,6 +1150,14 @@ function Clientpage({ productdata }) {
           value={data.AiFpsGeneration}
           positive={() => handlechange("AiFpsGeneration", true)}
           negative={() => handlechange("AiFpsGeneration", false)}
+          positiveText="Yes"
+          negativeText="No"
+        />
+        <Togglebuttons
+          titlename="Bypass Charging"
+          value={data.bypasscharging}
+          positive={() => handlechange("bypasscharging", true)}
+          negative={() => handlechange("bypasscharging", false)}
           positiveText="Yes"
           negativeText="No"
         />
