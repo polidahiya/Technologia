@@ -1,2 +1,42 @@
+User-agent: Googlebot
+Disallow:
+
+User-agent: Bingbot
+Disallow:
+
+# Block SEO & AI crawlers
+User-agent: AhrefsBot
+Disallow: /
+
 User-agent: ClaudeBot
 Disallow: /
+
+User-agent: SEMrushBot
+Disallow: /
+
+User-agent: Moz
+Disallow: /
+
+User-agent: Majestic
+Disallow: /
+
+User-agent: Screaming Frog SEO Spider
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: Yandex
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+# Default rules
+User-agent: *
+Disallow: /admin
+
+Sitemap: https://tecknologia.in/api/sitemap

@@ -286,6 +286,7 @@ export default async function page({ params }) {
                     ["Dedicated Cooling", yesNo(product?.dedicatedCooling)],
                     ["Gaming Triggers", yesNo(product?.gamingTriggers)],
                     ["Ai Fps Generation", yesNo(product?.AiFpsGeneration)],
+                    ["Bypass Charging", yesNo(product?.bypasscharging)],
                   ]}
                 />
               )}
