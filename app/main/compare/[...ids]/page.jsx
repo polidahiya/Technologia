@@ -11,22 +11,11 @@ import { notFound } from "next/navigation";
 import formatDate from "@/app/_globalcomps/Formateddate";
 import Scorecalculator from "@/app/_globalcomps/scorescalculator/Scorecalculator";
 import ScorestableComp from "./_comps/Scorestable";
-import {
-  displayTypes,
-  screenProtections,
-  cameraCutouts,
-  chipsets,
-  mobileGPUs,
-  batteryType,
-  Fingerprints,
-  storage,
-  storageType,
-  ramTypes,
-} from "@/lib/data";
 import Seoeditbutton from "@/app/_globalcomps/Addseo/Seoeditbutton";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
+import { Getautofillvalues } from "@/lib/autofillvaluesfn";
 
 async function page({ params }) {
   const tokenRes = await Verification();
@@ -40,8 +29,25 @@ async function page({ params }) {
   const scoretitle = { label: "Scores", icon: icons.flag };
   let customnavitems = [scoretitle, ...navitems];
 
+  // autofillvalues
+  const autofillvalues = await Getautofillvalues();
+  const {
+    displayTypes,
+    screenProtections,
+    cameraCutouts,
+    chipsets,
+    mobileGPUs,
+    batteryType,
+    Fingerprints,
+    storage,
+    storageType,
+    ramTypes,
+  } = autofillvalues;
+
   const allscores = await Promise.all(
-    products.slice(0, 3).map((product) => Scorecalculator(product)),
+    products
+      .slice(0, 3)
+      .map((product) => Scorecalculator(product, autofillvalues)),
   );
 
   // seo

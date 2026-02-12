@@ -18,6 +18,7 @@ import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 import NoResults from "./_comps/Notfoundcomp";
+import { Getautofillvalues } from "@/lib/autofillvaluesfn";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
@@ -93,6 +94,9 @@ async function page({ searchParams }) {
   const converter = new QuillDeltaToHtmlConverter(seodata?.delta, {});
   const html = converter.convert();
 
+  // autofillvalues
+  const autofillvalues = await Getautofillvalues();
+
   return (
     <Pagectxwrapper>
       <div className="w-full min-h-screen p-2">
@@ -122,7 +126,7 @@ async function page({ searchParams }) {
                   </div>
                 )}
                 {(data.products || []).map(async (product, i) => {
-                  const scores = await Scorecalculator(product);
+                  const scores = await Scorecalculator(product, autofillvalues);
                   return (
                     <Herosection
                       key={i}

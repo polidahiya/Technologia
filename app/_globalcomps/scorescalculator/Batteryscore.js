@@ -1,5 +1,3 @@
-import { batteryType } from "@/lib/data";
-
 function getIndexedScore(value, list, maxPoints) {
   const index = list.indexOf(value);
   if (index === -1) return maxPoints * 0.5;
@@ -8,7 +6,7 @@ function getIndexedScore(value, list, maxPoints) {
   return Number((maxPoints * (1 - index / maxIndex)).toFixed(2));
 }
 
-function batteryTypeScore(type) {
+function batteryTypeScore(type, batteryType) {
   return getIndexedScore(type, batteryType, 15);
 }
 
@@ -55,10 +53,12 @@ function batteryCapacityScore(capacity, deviceType) {
   return Number((normalized * profile.max).toFixed(2));
 }
 
-export default function BatteryScore(product) {
+export default function BatteryScore(product, autofillvalues) {
+  const { batteryType } = autofillvalues;
+  
   let score = 0;
 
-  score += batteryTypeScore(product.batteryType);
+  score += batteryTypeScore(product.batteryType, batteryType);
   score += batteryCapacityScore(product.batteryCapacity, product.deviceType);
   score += fastChargingScore(product.ChargeSpeed);
   score += wirelessChargingScore(

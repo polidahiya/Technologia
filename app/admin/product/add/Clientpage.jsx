@@ -8,28 +8,27 @@ import Imageuploader from "@/app/_globalcomps/inputfields/Imageuploader";
 import Multiselectmenu from "@/app/_globalcomps/inputfields/Multiselectmenu";
 import { Saveproduct } from "./Serveraction";
 import { AppContextfn } from "@/app/Context";
-import {
-  deviceType,
-  platforms,
-  currency,
-  displayTypes,
-  cameraCutouts,
-  screenProtections,
-  chipsets,
-  mobileGPUs,
-  ramTypes,
-  storage,
-  storageType,
-  batteryType,
-  osTypes,
-  Fingerprints,
-  filters,
-  usbConnectors,
-  smartphoneAwards,
-  availability,
-} from "@/lib/data";
+import { filters, platforms } from "@/lib/data";
 
-function Clientpage({ productdata }) {
+function Clientpage({ productdata, autofillvalues }) {
+  const {
+    deviceType,
+    currency,
+    displayTypes,
+    cameraCutouts,
+    screenProtections,
+    chipsets,
+    mobileGPUs,
+    ramTypes,
+    storage,
+    storageType,
+    batteryType,
+    osTypes,
+    Fingerprints,
+    usbConnectors,
+    smartphoneAwards,
+    availability,
+  } = autofillvalues;
   const { setmessagefn } = AppContextfn();
   const brands = Object.values(filters.Brand.options).map(
     (option) => option.name,

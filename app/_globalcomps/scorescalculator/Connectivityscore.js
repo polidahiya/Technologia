@@ -1,6 +1,3 @@
-/* ===================== ENUMS / PRIORITY LISTS ===================== */
-import { usbConnectors } from "@/lib/data";
-
 const wifiVersionScoreMap = {
   "Wi-Fi 7": 20,
   "Wi-Fi 6E": 18,
@@ -37,7 +34,7 @@ const usbVersionScoreMap = {
 
 /* ===================== USB ===================== */
 
-function usbConnectorScore(connector) {
+function usbConnectorScore(connector, usbConnectors) {
   if (!connector) return 0;
 
   const index = usbConnectors.indexOf(connector);
@@ -52,9 +49,9 @@ function usbVersionScore(version) {
   return usbVersionScoreMap[version] ?? 3;
 }
 
-function usbScore(connector, version) {
+function usbScore(connector, version, usbConnectors) {
   let score = 0;
-  score += usbConnectorScore(connector); // 10
+  score += usbConnectorScore(connector, usbConnectors); // 10
   score += usbVersionScore(version); // 5
   return Math.min(score, 15);
 }
@@ -131,7 +128,7 @@ function extraConnectivityScore(product) {
 
 function sensorScore(sensors) {
   if (!sensors) return 0;
-  sensors=sensors.toLowerCase()
+  sensors = sensors.toLowerCase();
 
   const importantSensors = ["Gyro", "Compass", "Barometer", "Proximity"];
 
@@ -147,14 +144,15 @@ function sensorScore(sensors) {
 
 /* ===================== FINAL CONNECTIVITY SCORE ===================== */
 
-export default function ConnectivityScore(product) {
+export default function ConnectivityScore(product, autofillvalues) {
+  const { usbConnectors } = autofillvalues;
   let score = 0;
 
   score += cellularScore(product); // 25
   score += simScore(product.sim, product.esim); // 10
   score += wifiScore(product.wifiVersion); // 20
   score += bluetoothScore(product.bluetoothVersion); // 15
-  score += usbScore(product.usbType, product.usbVersion); // 15
+  score += usbScore(product.usbType, product.usbVersion, usbConnectors); // 15
   score += extraConnectivityScore(product); // 10
   score += sensorScore(product.sensors); // 5
 

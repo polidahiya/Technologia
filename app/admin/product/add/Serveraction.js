@@ -2,6 +2,7 @@
 import { getcollection } from "@/lib/db";
 import Verification from "@/lib/verification";
 import Revalidatefn from "@/app/_globalcomps/cachedata/Revalidatefn";
+import { Setautofillvalues } from "@/lib/autofillvaluesfn";
 
 export const Saveproduct = async (data) => {
   try {
@@ -9,6 +10,9 @@ export const Saveproduct = async (data) => {
     if (!tokenRes?.verified) {
       return { status: 401, message: "Unauthorized" };
     }
+    
+    await Setautofillvalues(data);
+
     const { Productscollection, ObjectId } = await getcollection();
     const date = new Date().getTime();
 
@@ -16,9 +20,14 @@ export const Saveproduct = async (data) => {
       const { _id, ...updateFields } = data;
       await Productscollection.updateOne(
         { _id: new ObjectId(data._id) },
-        { $set: { ...updateFields, lastupdated: date } }
+        { $set: { ...updateFields, lastupdated: date } },
       );
-      Revalidatefn([`product-${_id}`, "productsIds", `Variant-${data?.model}`,`score-${_id}`]);
+      Revalidatefn([
+        `product-${_id}`,
+        "productsIds",
+        `Variant-${data?.model}`,
+        `score-${_id}`,
+      ]);
       return { status: 200, message: "Updated successfully" };
     } else {
       await Productscollection.insertOne({ ...data, lastupdated: date });

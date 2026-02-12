@@ -1,11 +1,3 @@
-import {
-  chipsets,
-  mobileGPUs,
-  ramTypes,
-  storage,
-  storageType,
-} from "@/lib/data";
-
 function normalize(value, max, weight) {
   if (!value || !max) return 0;
   return Math.min(value / max, 1) * weight;
@@ -31,7 +23,9 @@ function parseStorageToGB(value) {
   return unit === "tb" ? amount * 1024 : amount;
 }
 
-export default function PerformanceScore(product, max) {
+export default function PerformanceScore(product, max, autofillvalues) {
+  const { chipsets, mobileGPUs, ramTypes, storage, storageType } =
+    autofillvalues;
   let score = 0;
 
   /* ---------- Quantitative (55 pts) ---------- */

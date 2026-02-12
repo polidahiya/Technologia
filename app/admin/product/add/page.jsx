@@ -1,9 +1,11 @@
 import React from "react";
 import Clientpage from "./Clientpage";
 import { CachedProduct } from "@/app/_globalcomps/cachedata/cachedProducts";
+import { Getautofillvalues } from "@/lib/autofillvaluesfn";
 
 async function page({ searchParams }) {
   const { edit, copy } = await searchParams;
+  const autofillvalues = await Getautofillvalues();
 
   let productdata = {};
 
@@ -21,7 +23,7 @@ async function page({ searchParams }) {
 
   return (
     <div>
-      <Clientpage productdata={productdata} />
+      <Clientpage productdata={productdata} autofillvalues={autofillvalues} />
     </div>
   );
 }

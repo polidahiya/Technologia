@@ -1,4 +1,3 @@
-import { cameraCutouts, screenProtections, displayTypes } from "@/lib/data";
 function normalize(value, max, weight) {
   if (!value || !max) return 0;
   return Math.min(value / max, 1) * weight;
@@ -47,7 +46,8 @@ function getScreenSizeScore(size, deviceType, isFoldable) {
 
 /* ---------------- Main Display Score ---------------- */
 
-export default function Displayscore(product, max) {
+export default function Displayscore(product, max, autofillvalues) {
+  const { cameraCutouts, screenProtections, displayTypes } = autofillvalues;
   const d = product?.display?.[0];
   let score = 0;
 

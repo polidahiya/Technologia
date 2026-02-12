@@ -17,6 +17,7 @@ import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Topfives from "./_comps/Topfives";
 import Link from "next/link";
+import { Getautofillvalues } from "@/lib/autofillvaluesfn";
 
 export default async function page({ params }) {
   const tokenRes = await Verification();
@@ -47,7 +48,10 @@ export default async function page({ params }) {
   if (!gamingreview && !product?.gaming?.length)
     customnavitems = customnavitems.filter((p) => p.label != "Gaming");
 
-  const scores = await Scorecalculator({ ...product });
+  // autofillvalues
+  const autofillvalues = await Getautofillvalues();
+
+  const scores = await Scorecalculator(product, autofillvalues);
 
   // seo
   const seokey = `SEO-${product?.model}`;

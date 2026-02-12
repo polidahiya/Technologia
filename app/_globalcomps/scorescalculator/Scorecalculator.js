@@ -7,7 +7,7 @@ import DesignScore from "./Designscore";
 import { unstable_cache } from "next/cache";
 import { CACHE_TIME } from "@/lib/data";
 
-export default async function Scorecalculator(product) {
+export default async function Scorecalculator(product, autofillvalues) {
   const productid = product?._id;
   return unstable_cache(
     async () => {
@@ -18,7 +18,7 @@ export default async function Scorecalculator(product) {
         refreshRate: 180,
         screenToBody: 174.37,
       };
-      const dscore = Displayscore(product, maxscreenvalues);
+      const dscore = Displayscore(product, maxscreenvalues, autofillvalues);
 
       //   performance
       const maxPerformanceValues = {
@@ -28,21 +28,25 @@ export default async function Scorecalculator(product) {
         ram: 16, // GB
         storage: 4096, // GB
       };
-      const pscore = PerformanceScore(product, maxPerformanceValues);
+      const pscore = PerformanceScore(
+        product,
+        maxPerformanceValues,
+        autofillvalues,
+      );
 
       //   camera
       const camscore = CameraScore(product);
 
       //   battery
-      const bscore = BatteryScore(product);
+      const bscore = BatteryScore(product, autofillvalues);
       //   network
-      const connscore = ConnectivityScore(product);
+      const connscore = ConnectivityScore(product, autofillvalues);
       //   design
       const desscore = DesignScore(product);
 
       const total = dscore + pscore + camscore + bscore + connscore + desscore;
       const totalscore = Math.min(Math.round(total / 6), 100);
-      
+
       return {
         totalscore: totalscore,
         displayscore: dscore,
