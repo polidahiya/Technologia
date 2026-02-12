@@ -3,6 +3,7 @@ import { unstable_cache } from "next/cache";
 import { CACHE_TIME } from "@/lib/data";
 import { Cachedproducts } from "../_globalcomps/cachedata/cachedProducts";
 import Scorecalculator from "../_globalcomps/scorescalculator/Scorecalculator";
+import { Getautofillvalues } from "@/lib/autofillvaluesfn";
 
 const SCORE_SORTS = {
   totalscore: "totalscore",
@@ -15,6 +16,9 @@ const SCORE_SORTS = {
 };
 
 export default async function SortFn(type = "default") {
+  // autofillvalues
+  const autofillvalues = await Getautofillvalues();
+
   if (type === "default") {
     return getDefaultSorted();
   }
@@ -24,7 +28,7 @@ export default async function SortFn(type = "default") {
   }
 
   if (type in SCORE_SORTS) {
-    return getScoreSorted(type);
+    return getScoreSorted(type, autofillvalues);
   }
 
   return getDefaultSorted();
@@ -67,7 +71,7 @@ const getPriceSorted = (type) =>
     },
   )();
 
-const getScoreSorted = (type) =>
+const getScoreSorted = (type, autofillvalues) =>
   unstable_cache(
     async () => {
       const products = await Cachedproducts();
@@ -75,7 +79,7 @@ const getScoreSorted = (type) =>
       const withScores = await Promise.all(
         products.map(async (p) => ({
           ...p,
-          ...(await Scorecalculator(p)),
+          ...(await Scorecalculator(p, autofillvalues)),
         })),
       );
 
