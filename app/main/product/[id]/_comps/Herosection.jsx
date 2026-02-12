@@ -144,7 +144,7 @@ export default function Herosection({
             prefetch={false}
             href={`/admin/product/add?edit=${product?._id}`}
             target="_blank"
-            className="bg-theme text-white px-5 py-2 rounded-md"
+            className="bg-theme/50 hover:bg-theme text-white px-2 py-1 rounded-md"
           >
             Edit
           </Link>
@@ -152,7 +152,7 @@ export default function Herosection({
             prefetch={false}
             href={`/admin/product/add?copy=${product?._id}`}
             target="_blank"
-            className="bg-theme text-white px-5 py-2 rounded-md"
+            className="bg-theme/50 hover:bg-theme text-white px-2 py-1 rounded-md"
           >
             Copy
           </Link>

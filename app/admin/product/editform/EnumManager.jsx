@@ -1,16 +1,74 @@
 "use client";
 import { useState } from "react";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+  arrayMove,
+} from "@dnd-kit/sortable";
+
+import copytoclipboard from "@/app/_globalcomps/copytoclipboard";
+import { CSS } from "@dnd-kit/utilities";
 import { UpdateEnumField } from "./UpdateEnumField ";
+import { AppContextfn } from "@/app/Context";
+
+function SortableItem({ id, onRemove }) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="flex justify-between items-center border p-2 rounded bg-white"
+    >
+      <div {...attributes} {...listeners} className="cursor-grab flex-1">
+        {id}
+      </div>
+
+      <button onClick={() => onRemove(id)} className="text-red-500 ml-2">
+        ✕
+      </button>
+    </div>
+  );
+}
 
 export default function EnumManager({ title, field, values }) {
+  const { setmessagefn } = AppContextfn();
   const [items, setItems] = useState(values || []);
   const [newValue, setNewValue] = useState("");
 
-  const addValue = () => {
-    if (!newValue.trim()) return;
-    if (items.includes(newValue.trim())) return;
+  const sensors = useSensors(useSensor(PointerSensor));
 
-    setItems([...items, newValue.trim()]);
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = items.indexOf(active.id);
+    const newIndex = items.indexOf(over.id);
+
+    setItems(arrayMove(items, oldIndex, newIndex));
+  };
+
+  const addValue = () => {
+    const trimmed = newValue.trim();
+    if (!trimmed || items.includes(trimmed)) return;
+
+    setItems([...items, trimmed]);
     setNewValue("");
   };
 
@@ -18,26 +76,28 @@ export default function EnumManager({ title, field, values }) {
     setItems(items.filter((v) => v !== value));
   };
 
-  const move = (index, direction) => {
-    const newArr = [...items];
-    const swapIndex = index + direction;
-    if (swapIndex < 0 || swapIndex >= newArr.length) return;
-
-    [newArr[index], newArr[swapIndex]] =
-      [newArr[swapIndex], newArr[index]];
-
-    setItems(newArr);
-  };
-
   const saveChanges = async () => {
-    await UpdateEnumField(field, items);
+    const res = await UpdateEnumField(field, items);
+    setmessagefn(res?.message);
   };
 
   return (
-    <div className="border p-4 rounded-xl space-y-4">
-      <h2 className="text-lg font-semibold">{title}</h2>
+    <div className="border p-4 rounded-xl space-y-4 bg-gray-50">
+      <h2 className="text-lg font-semibold">
+        {title}
+        <button
+          className="text-blue-600 ml-5 text-sm"
+          onClick={() => {
+            copytoclipboard(`[${items.join(",")}]`, () => {
+              setmessagefn("Copied Successfully");
+            });
+          }}
+        >
+          Copy
+        </button>
+      </h2>
 
-      {/* Add input */}
+      {/* Add new */}
       <div className="flex gap-2">
         <input
           value={newValue}
@@ -53,28 +113,20 @@ export default function EnumManager({ title, field, values }) {
         </button>
       </div>
 
-      {/* List */}
-      <ul className="space-y-2">
-        {items.map((item, i) => (
-          <li
-            key={item}
-            className="flex justify-between items-center border p-2 rounded"
-          >
-            <span>{item}</span>
-
-            <div className="flex gap-2">
-              <button onClick={() => move(i, -1)}>⬆</button>
-              <button onClick={() => move(i, 1)}>⬇</button>
-              <button
-                onClick={() => removeValue(item)}
-                className="text-red-500"
-              >
-                ✕
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {/* Drag list */}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext items={items} strategy={verticalListSortingStrategy}>
+          <div className="space-y-2">
+            {items.map((item) => (
+              <SortableItem key={item} id={item} onRemove={removeValue} />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
 
       <button
         onClick={saveChanges}
