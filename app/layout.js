@@ -4,6 +4,7 @@ import { Appwrapper } from "./Context";
 import Message from "./_globalcomps/Message";
 import { Googleadsid } from "@/lib/data";
 import Googleanayltics from "./_globalcomps/Googleanalytics";
+import Confirmdialogbox from "./_globalcomps/Confirmdialogbox";
 
 const mulish = Mulish({
   variable: "--font-mulish",
@@ -46,6 +47,7 @@ export default function RootLayout({ children }) {
         <Appwrapper>
           <Message />
           {children}
+          <Confirmdialogbox />
         </Appwrapper>
       </body>
     </html>

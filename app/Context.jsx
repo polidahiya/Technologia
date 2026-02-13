@@ -13,6 +13,14 @@ export function Appwrapper({ children }) {
     currvariant: null,
   });
 
+  const showdialoginitialvalues = {
+    show: false,
+    title: "",
+    continue: null,
+    type: true,
+  };
+  const [showdialog, setshowdialog] = useState(showdialoginitialvalues);
+
   // messages
   const setmessagefn = (message) => {
     setmessagearray([
@@ -33,6 +41,9 @@ export function Appwrapper({ children }) {
         messagearray,
         setmessagearray,
         setmessagefn,
+        showdialog,
+        setshowdialog,
+        showdialoginitialvalues,
       }}
     >
       {children}
