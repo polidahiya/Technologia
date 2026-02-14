@@ -42,10 +42,10 @@ export default function Footer() {
             label: "Blogs",
             href: "/main/Blogs",
           },
-          {
-            label: "Viral Tech",
-            href: "/main/viraltech",
-          },
+          // {
+          //   label: "Viral Tech",
+          //   href: "/main/viraltech",
+          // },
         ],
       },
       {
