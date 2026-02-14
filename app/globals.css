@@ -56,7 +56,7 @@ button {
 }
 
 /* Blog container */
-.text {
+.text{
   line-height: 1.75;
   font-size: 14px;
   color: #222;
@@ -205,10 +205,6 @@ button {
 
 /* Large screens: keep things readable */
 @media (min-width: 1400px) {
-  .text {
-    max-width: 960px;
-  }
-
   .text img {
     max-width: 760px;
   }

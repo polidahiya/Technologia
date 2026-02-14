@@ -38,6 +38,14 @@ export default function Footer() {
             label: "Tablets",
             href: "/main/all?ReleaseDate=available&Device=tablet",
           },
+          {
+            label: "Blogs",
+            href: "/main/Blogs",
+          },
+          {
+            label: "Viral Tech",
+            href: "/main/viraltech",
+          },
         ],
       },
       {

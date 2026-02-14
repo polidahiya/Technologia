@@ -19,6 +19,7 @@ import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 import NoResults from "./_comps/Notfoundcomp";
 import { Getautofillvalues } from "@/lib/autofillvaluesfn";
+import Link from "next/link";
 
 async function page({ searchParams }) {
   const tokenRes = await Verification();
@@ -120,6 +121,19 @@ async function page({ searchParams }) {
               )}
 
               <div className="w-full space-y-2">
+                {tokenRes?.verified && (
+                  <Link
+                    href="/admin/product/add"
+                    target="_blank"
+                    prefetch={false}
+                    className="relative flex flex-col items-center justify-center h-40 rounded-2xl border-2 border-dashed border-gray-300 bg-white hover:bg-gray-50 transition cursor-pointer"
+                  >
+                    <div className="text-4xl text-gray-400">+</div>
+                    <div className="mt-2 text-sm text-gray-600 font-medium">
+                      Add New Product
+                    </div>
+                  </Link>
+                )}
                 {noproducts && (
                   <div className="w-full bg-white shadow rounded-2xl">
                     <NoResults />

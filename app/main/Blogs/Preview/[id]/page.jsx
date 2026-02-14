@@ -3,6 +3,7 @@ import { getcollection } from "@/lib/db";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import { CACHE_TIME } from "@/lib/data";
+import Nextimage from "@/app/_globalcomps/Nextimage";
 
 const getblogdata = async (id) => {
   return unstable_cache(
@@ -46,6 +47,13 @@ export default async function BlogPage({ params }) {
           {blogdata?.title}
         </h1>
       </div>
+      <Nextimage
+        src={blogdata?.images[0]}
+        alt={blogdata?.title}
+        height={400}
+        width={400}
+        className="mt-5 mb-3 w-full max-w-2xl rounded-md object-contain"
+      />
       <div
         dangerouslySetInnerHTML={{ __html: html }}
         className="py-10 min-h-96 mt-10 text"
