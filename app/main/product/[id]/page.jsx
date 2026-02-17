@@ -18,6 +18,7 @@ import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Topfives from "./_comps/Topfives";
 import Link from "next/link";
 import { Getautofillvalues } from "@/lib/autofillvaluesfn";
+import Fallbackreview from "./_comps/Fallbackreview";
 
 export default async function page({ params }) {
   const tokenRes = await Verification();
@@ -330,7 +331,7 @@ export default async function page({ params }) {
               )}
             </div>
             <div className="w-full md:w-96 flex flex-col gap-2">
-              <Topfives price={product?.price} />
+              <Topfives price={product?.price} deviceType={product?.deviceType}/>
               {/*  */}
               <div className="w-full rounded-2xl bg-white p-3 shadow space-y-3">
                 <div className="">
@@ -436,10 +437,14 @@ export default async function page({ params }) {
             <Comparewith product={product} />
           </div>
           {/* description */}
-          <div
-            className="text mt-10"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          {seodata ? (
+            <div
+              className="text mt-10"
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          ) : (
+            <Fallbackreview product={product} />
+          )}
         </div>
         {tokenRes?.verified && (
           <Seoeditbutton editdata={seodata} seokey={seokey} />

@@ -13,7 +13,7 @@ function Card({ haveaccess, post }) {
           alt={post?.title}
           width={300}
           height={300}
-          className="w-full aspect-4/3 object-cover"
+          className="w-full aspect-square object-cover"
         />
       </Link>
       <p className="text-center my-2 line-clamp-2">{post?.title}</p>
