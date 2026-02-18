@@ -79,10 +79,10 @@ export default async function Topfives({ price, deviceType }) {
       ]);
       return a;
     },
-    [`Topfives-${maxPrice}`],
+    [`Topfives-${deviceType}-${maxPrice}`],
     {
       revalidate: CACHE_TIME,
-      tags: [`Topfives-${maxPrice}`, "Topfives", "all"],
+      tags: [`Topfives-${deviceType}-${maxPrice}`, "Topfives", "all"],
     },
   )();
 

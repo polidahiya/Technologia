@@ -106,7 +106,11 @@ export default async function page({ params }) {
     <Pagectxwrapper>
       <div className="min-h-screen py-2 px-2 md:px-0 w-full">
         <div className="max-w-6xl mx-auto space-y-2 w-full">
-          <Herosection product={product} tokenRes={tokenRes} scores={scores} />
+          <Herosection
+            product={product}
+            tokenRes={tokenRes}
+            scores={scores}
+          />
           <ScoreOverview scores={scores} />
 
           <Navbar
@@ -304,10 +308,10 @@ export default async function page({ params }) {
                     id={navitems[9].label}
                     Icon={navitems[9].icon}
                     rows={[
-                      ["Max Settings", g.maxSettings],
-                      ["FPS Drop", g.fpsDrop],
-                      ["Temperature Rise", g.TempratureRaise],
-                      ["AI FPS Generation", g.AiFpsGeneration],
+                      ["Max Settings", g?.maxSettings],
+                      ["FPS Drop", g?.fpsDrop],
+                      ["Temperature Rise", g?.tempratureRaise],
+                      ["Battery Drain", g?.batterydrain],
                     ]}
                   />
                 ))}
@@ -331,7 +335,10 @@ export default async function page({ params }) {
               )}
             </div>
             <div className="w-full md:w-96 flex flex-col gap-2">
-              <Topfives price={product?.price} deviceType={product?.deviceType}/>
+              <Topfives
+                price={product?.price}
+                deviceType={product?.deviceType}
+              />
               {/*  */}
               <div className="w-full rounded-2xl bg-white p-3 shadow space-y-3">
                 <div className="">

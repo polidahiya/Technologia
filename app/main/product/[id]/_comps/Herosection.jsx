@@ -15,8 +15,10 @@ export default function Herosection({
   tokenRes,
   fullmode = true,
   scores,
+  scoretype = "totalscore",
 }) {
   const pricedata = product?.price[0];
+  const selectedscore = scores?.[scoretype] || scores?.totalscore;
 
   return (
     <section className="w-full relative bg-white rounded-2xl shadow p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -25,10 +27,12 @@ export default function Herosection({
         <div className="absolute top-3 left-3">
           <div
             className="flex h-16 w-16 flex-col items-center justify-center rounded-full text-white shadow-lg"
-            style={{ backgroundColor: getScoreColor(scores?.totalscore) }}
+            style={{
+              backgroundColor: getScoreColor(selectedscore),
+            }}
           >
             <span className="text-xl font-bold leading-none">
-              {scores?.totalscore}
+              {selectedscore}
             </span>
             <span className="text-[9px] uppercase tracking-wide opacity-90">
               Score

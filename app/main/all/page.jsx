@@ -148,6 +148,7 @@ async function page({ searchParams }) {
                       tokenRes={tokenRes}
                       fullmode={false}
                       scores={scores}
+                      scoretype={sort}
                     />
                   );
                 })}

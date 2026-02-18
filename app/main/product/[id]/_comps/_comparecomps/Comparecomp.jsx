@@ -15,6 +15,7 @@ function Comparecomp({ title = "", pairs = [] }) {
         {pairs.map(([product1, product2], i) => (
           <Link
             key={i}
+            prefetch={false}
             href={`/main/compare/${product2?._id}/${product1?._id}`}
             className="shadow rounded-2xl p-1 relative bg-bg1"
           >
