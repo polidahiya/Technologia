@@ -4,13 +4,13 @@ import { unstable_cache } from "next/cache";
 import { CACHE_TIME } from "@/lib/data";
 
 export async function CachedProduct(productid) {
-  if (!productid || productid == "undefined") return null;
-  const { ObjectId } = await getcollection();
-  if (!ObjectId.isValid(productid)) return null;
-  
+  if (!productid || productid === "undefined") return null;
+
   return unstable_cache(
     async () => {
       const { Productscollection, ObjectId } = await getcollection();
+
+      if (!ObjectId.isValid(productid)) return null;
 
       const product = await Productscollection.findOne({
         _id: new ObjectId(productid),
@@ -31,45 +31,16 @@ export async function CachedProduct(productid) {
   )();
 }
 
-// export async function CachedAllIds() {
-//   const allIds = await unstable_cache(
-//     async () => {
-//       const { Productscollection } = await getcollection();
-
-//       const productsList = await Productscollection.find(
-//         {},
-//         { projection: { _id: 1 } },
-//       ).toArray();
-
-//       return productsList.map((p) => p._id.toString());
-//     },
-//     ["allids"],
-//     { revalidate: CACHE_TIME, tags: ["allids", "all"] },
-//   )();
-
-//   return allIds;
-// }
-// export async function GetproductsfromIds(ids) {
-//   return await Promise.all(ids.map((id) => CachedProduct(id)));
-// }
-
 export async function Cachedproducts() {
-  const allIds = await unstable_cache(
+  return await unstable_cache(
     async () => {
       const { Productscollection } = await getcollection();
 
-      const productsList = await Productscollection.find(
-        {},
-        { projection: { _id: 1 } },
-      ).toArray();
-
-      return productsList.map((p) => ({
-        _id: p._id.toString(),
-      }));
+      const productsList = await Productscollection.find({}).toArray();
+      productsList.forEach((element) => (element._id = element._id.toString()));
+      return productsList;
     },
     ["allproducts"],
     { revalidate: CACHE_TIME, tags: ["allproducts", "all"] },
   )();
-
-  return await Promise.all(allIds.map((item) => CachedProduct(item._id)));
 }

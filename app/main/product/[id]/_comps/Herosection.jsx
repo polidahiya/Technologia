@@ -62,7 +62,7 @@ export default function Herosection({
         <h1 className="text-3xl font-bold font-tenor">
           {product?.model}{" "}
           {product?.variant && (
-            <span className="text-2xl opacity-50">( {product?.variant} )</span>
+            <span className="text-xl opacity-50 whitespace-nowrap">( {product?.variant} )</span>
           )}
         </h1>
         {tokenRes?.verified && <Admincopyproductdata product={product} />}
