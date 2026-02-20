@@ -19,6 +19,7 @@ import Topfives from "./_comps/Topfives";
 import Link from "next/link";
 import { Getautofillvalues } from "@/lib/autofillvaluesfn";
 import Fallbackreview from "./_comps/Fallbackreview";
+import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 
 export default async function page({ params }) {
   const tokenRes = await Verification();
@@ -38,7 +39,8 @@ export default async function page({ params }) {
   const gamingreview =
     product?.dedicatedCooling ||
     product?.gamingTriggers ||
-    product?.AiFpsGeneration;
+    product?.AiFpsGeneration ||
+    product?.bypasscharging;
 
   //
   const comparisontitle = { label: "Comparisons", icon: icons.compare };
@@ -105,12 +107,8 @@ export default async function page({ params }) {
   return (
     <Pagectxwrapper>
       <div className="min-h-screen py-2 px-2 md:px-0 w-full">
-        <div className="max-w-6xl mx-auto space-y-2 w-full">
-          <Herosection
-            product={product}
-            tokenRes={tokenRes}
-            scores={scores}
-          />
+        <div className="max-w-7xl mx-auto space-y-2 w-full">
+          <Herosection product={product} tokenRes={tokenRes} scores={scores} />
           <ScoreOverview scores={scores} />
 
           <Navbar
@@ -447,7 +445,7 @@ export default async function page({ params }) {
           {seodata ? (
             <div
               className="text mt-10"
-              dangerouslySetInnerHTML={{ __html: html }}
+              dangerouslySetInnerHTML={{ __html: Metakeywordsreplacer(html) }}
             />
           ) : (
             <Fallbackreview product={product} />
@@ -524,9 +522,13 @@ export const generateMetadata = async ({ params }) => {
 
   const ogImage = product?.images[0] || null;
   return {
-    title: seodata?.title || generateMetaTitle(product),
-    description: seodata?.metadesc || generateMetaDescription(product),
-    keywords: seodata?.keywords || generateMetaKeywords(product),
+    title: Metakeywordsreplacer(seodata?.title || generateMetaTitle(product)),
+    description: Metakeywordsreplacer(
+      seodata?.metadesc || generateMetaDescription(product),
+    ),
+    keywords: Metakeywordsreplacer(
+      seodata?.keywords || generateMetaKeywords(product),
+    ),
     openGraph: {
       images: ogImage,
     },

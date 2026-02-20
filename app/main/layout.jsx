@@ -12,7 +12,7 @@ async function layout({ children }) {
   return (
     <div className="bg-bg1">
       <Navbar device={device} tokenres={tokenres} />
-      {children}
+      <div className="max-w-7xl mx-auto md:px-2">{children}</div>
       <Comparemenu device={device} />
       <Variantmenucomp />
       <Footer />

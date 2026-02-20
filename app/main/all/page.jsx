@@ -101,11 +101,11 @@ async function page({ searchParams }) {
   return (
     <Pagectxwrapper>
       <div className="w-full min-h-screen p-2">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="w-full flex gap-2">
             <Filtermenu appliedfilters={appliedfilters} device={device} />
             {device != "desktop" && <Sortmenumobile appliedSort={sort} />}
-            <div className="w-full lg:max-w-[864px] space-y-2">
+            <div className="w-full  space-y-2">
               {device == "desktop" ? (
                 <div className="flex gap-2 ">
                   <Appliedfilters filterArray={filterArray} device={device} />
@@ -159,7 +159,7 @@ async function page({ searchParams }) {
           {/* description */}
           <div
             className="mt-10 text"
-            dangerouslySetInnerHTML={{ __html: html }}
+            dangerouslySetInnerHTML={{ __html: Metakeywordsreplacer(html) }}
           />
           {/* seo form */}
           {tokenRes?.verified && (

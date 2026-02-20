@@ -4,7 +4,7 @@ import Loadingtile from "./Loadingtile";
 function Loadingnav() {
   return (
     <div className="h-16 w-full sticky top-0 left-0 z-50 bg-bg2 border-b">
-      <div className="mx-auto max-w-6xl px-4 lg:px-0">
+      <div className="mx-auto max-w-7xl px-4 lg:px-0">
         <div className="flex h-16 items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="h-9 w-9 rounded bg-primary flex items-center justify-center bg-white">

@@ -60,7 +60,7 @@ async function page({ params }) {
   return (
     <Pagectxwrapper>
       <div className="min-h-screen p-2">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="space-y-2">
             <div className="sticky -top-8 md:-top-16 bg-bg1 rounded-2xl z-10 space-y-2">
               <CompareHeader ids={ids} products={products} />
@@ -455,6 +455,11 @@ async function page({ params }) {
                   {
                     label: "AI FPS Generation",
                     key: "AiFpsGeneration",
+                    type: "boolean",
+                  },
+                  {
+                    label: "Bypass Charging",
+                    key: "bypasscharging",
                     type: "boolean",
                   },
                 ]}

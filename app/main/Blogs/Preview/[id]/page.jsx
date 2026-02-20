@@ -4,6 +4,7 @@ import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import { CACHE_TIME } from "@/lib/data";
 import Nextimage from "@/app/_globalcomps/Nextimage";
+import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 
 const getblogdata = async (id) => {
   return unstable_cache(
@@ -31,7 +32,7 @@ export default async function BlogPage({ params }) {
   const html = converter.convert();
 
   return (
-    <div className="pt-12 px-5 md:px-8 max-w-6xl mx-auto">
+    <div className="pt-12 px-5 md:px-8 max-w-7xl mx-auto">
       <div className="flex items-center gap-2 text-sm">
         <Link href="/main" prefetch={false}>
           Home
@@ -55,7 +56,7 @@ export default async function BlogPage({ params }) {
         className="mt-5 mb-3 w-full max-w-2xl rounded-md object-contain"
       />
       <div
-        dangerouslySetInnerHTML={{ __html: html }}
+        dangerouslySetInnerHTML={{ __html: Metakeywordsreplacer(html) }}
         className="py-10 min-h-96 mt-10 text"
       />
     </div>
@@ -67,9 +68,9 @@ export const generateMetadata = async ({ params }) => {
   let blogdata = (await getblogdata(id)) || {};
 
   return {
-    title: blogdata?.title,
-    description: blogdata?.desc,
-    keywords: blogdata?.keywords,
+    title: Metakeywordsreplacer(blogdata?.title),
+    description: Metakeywordsreplacer(blogdata?.desc),
+    keywords: Metakeywordsreplacer(blogdata?.keywords),
     openGraph: {
       images: blogdata?.images?.[0],
     },

@@ -17,11 +17,15 @@ export default function Navbar({ device, tokenres }) {
 
   return (
     <nav className="h-16 w-full sticky top-0 left-0 z-50 bg-bg2 border-b">
-      <div className="mx-auto max-w-6xl px-4 lg:px-0">
+      <div className="mx-auto max-w-7xl px-4 lg:px-2">
         <div className="flex h-16 items-center gap-4">
           {/* Logo */}
           {!showsearch && (
-            <Link href="/main" className="flex items-center gap-2">
+            <Link
+              href="/main"
+              prefetch={false}
+              className="flex items-center gap-2"
+            >
               <div className="h-9 w-9 rounded bg-primary flex items-center justify-center bg-white">
                 <Nextimage
                   src="/logo.png"
@@ -40,12 +44,12 @@ export default function Navbar({ device, tokenres }) {
           {/* Search */}
           {ismobile ? (
             showsearch && (
-              <div className={`ml-6 flex-1`}>
+              <div className={`ml-6 md:ml-12 flex-1`}>
                 <Searchbar autoFocus={true} />
               </div>
             )
           ) : (
-            <div className={`ml-6 flex-1`}>
+            <div className={`ml-6 md:ml-12 flex-1`}>
               <Searchbar />
             </div>
           )}
@@ -55,6 +59,7 @@ export default function Navbar({ device, tokenres }) {
             <div className="ml-auto flex items-center gap-2">
               {/* CTA */}
               <Link
+                prefetch={false}
                 href="/main/all?ReleaseDate=available"
                 className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:text-theme hover:underline"
               >
@@ -118,6 +123,7 @@ const Loginlinks = ({ tokenres }) => {
       ) : (
         <>
           <Link
+            prefetch={false}
             href="/main/account/login"
             className="text-sm  px-10 lg:px-3 py-1.5 text-gray-300 hover:text-primary"
           >
@@ -125,6 +131,7 @@ const Loginlinks = ({ tokenres }) => {
           </Link>
 
           <Link
+            prefetch={false}
             href="/main/account/signup"
             className="rounded px-10 lg:px-3 py-1.5 text-sm bg-theme text-white"
           >

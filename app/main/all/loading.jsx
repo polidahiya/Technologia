@@ -5,7 +5,7 @@ import Herosectionloading from "@/app/_globalcomps/Loading/Herosectionloading";
 function loading() {
   return (
     <div className="w-full min-h-screen p-2">
-      <div className="w-full flex gap-2 max-w-6xl mx-auto">
+      <div className="w-full flex gap-2 max-w-7xl mx-auto">
         {/*  */}
         <div className="w-72 space-y-2 shrink-0 hidden md:block">
           {new Array(3).fill(null).map((_, i) => (

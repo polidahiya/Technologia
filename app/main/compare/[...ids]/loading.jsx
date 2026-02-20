@@ -5,7 +5,7 @@ import Loadingtile from "@/app/_globalcomps/Loading/Loadingtile";
 function loading() {
   return (
     <div className="min-h-screen p-2">
-      <div className="max-w-6xl mx-auto space-y-2">
+      <div className="max-w-7xl mx-auto space-y-2">
         <div className="sticky -top-8 md:-top-16 bg-bg1 rounded-2xl z-10 space-y-2">
           <div className={`bg-white  transition-all duration-300  h-60`}>
             <div className="sticky top-18 rounded-2xl overflow-hidden shadow bg-white">

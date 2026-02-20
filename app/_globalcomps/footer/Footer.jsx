@@ -42,6 +42,10 @@ export default function Footer() {
             label: "Blogs",
             href: "/main/Blogs",
           },
+          {
+            label: "AnTuTu Score",
+            href: "/main/antutuscore",
+          },
           // {
           //   label: "Viral Tech",
           //   href: "/main/viraltech",
@@ -65,13 +69,13 @@ export default function Footer() {
 
   return (
     <div className="mt-14">
-      <p className="py-5 px-2 max-w-6xl text-sm mx-auto text-center">
+      <p className="py-5 px-2 max-w-7xl text-sm mx-auto text-center">
         Some links on this page are affiliate links. If you purchase through
         them, we may earn a small commission at no extra cost to you.
       </p>
 
       <footer className=" bg-bg2 text-gray-300">
-        <div className="max-w-6xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-4">
+        <div className="max-w-7xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div>
             <h3 className="text-white text-xl font-semibold mb-3">
@@ -104,7 +108,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800">
-          <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-400">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-400">
             <span>
               © {new Date().getFullYear()} Tecknologia. All rights reserved.
             </span>

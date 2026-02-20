@@ -38,7 +38,7 @@ async function page() {
 
   const posts = await getposts();
   return (
-    <div className="pt-12 px-5 md:px-8 max-w-6xl mx-auto">
+    <div className="pt-12 px-5 md:px-8 max-w-7xl mx-auto">
       <div className="flex items-center gap-2 text-sm">
         <Link href={"/main"} prefetch={false}>
           Home

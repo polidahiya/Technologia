@@ -26,6 +26,9 @@ export default async function SortFn(type = "default") {
   if (type === "pricelh" || type === "pricehl") {
     return getPriceSorted(type);
   }
+  if (type === "totalantutu") {
+    return getAntutuSorted();
+  }
 
   if (type in SCORE_SORTS) {
     return getScoreSorted(type, autofillvalues);
@@ -68,6 +71,25 @@ const getPriceSorted = (type) =>
     {
       revalidate: CACHE_TIME,
       tags: [`sort-price-${type}`, "sort-price", "sort", "productsIds", "all"],
+    },
+  )();
+
+const getAntutuSorted = () =>
+  unstable_cache(
+    async () => {
+      const products = await Cachedproducts();
+
+      return [...products].sort((a, b) => {
+        const pa = a.antutuscore;
+        const pb = b.antutuscore;
+
+        return pb - pa;
+      });
+    },
+    [`sort-antutu`],
+    {
+      revalidate: CACHE_TIME,
+      tags: [`sort-antutu`, "sort", "productsIds", "all"],
     },
   )();
 

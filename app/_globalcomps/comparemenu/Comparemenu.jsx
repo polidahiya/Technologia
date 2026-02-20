@@ -29,7 +29,7 @@ function Comparemenu({ device }) {
             y: heightvalue,
             opacity: 0,
           }}
-          className={`fixed -bottom-20 md:-bottom-8 left-1/2 -translate-x-1/2 md:h-48 w-full pt-2 md:pt-0 pb-28 md:pb-0 max-w-6xl bg-white rounded-t-3xl z-10 border border-slate-300`}
+          className={`fixed -bottom-20 md:-bottom-8 left-1/2 -translate-x-1/2 md:h-48 w-full pt-2 md:pt-0 pb-28 md:pb-0 max-w-7xl bg-white rounded-t-3xl z-10 border border-slate-300`}
         >
           {device == "mobile" && (
             <div className="flex justify-between items-center gap-2 p-2 bg-bg2 sticky top-0 rounded-2xl shadow mx-2">

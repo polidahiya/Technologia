@@ -7,7 +7,7 @@ function loading() {
   return (
     <div className="h-screen overflow-hidden bg-bg1">
       <div className="min-h-screen py-2 px-2 md:px-0 w-full">
-        <div className="max-w-6xl mx-auto space-y-2 w-full">
+        <div className="max-w-7xl mx-auto space-y-2 w-full">
           <Herosectionloading fullmode={true} />
           <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
             {/* Overall */}
