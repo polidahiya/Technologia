@@ -35,7 +35,7 @@ function loading() {
           ))}
         </div>
         {/*  */}
-        <div className="w-full lg:max-w-[864px] space-y-2">
+        <div className="w-full space-y-2">
           {/* laptop */}
           <div className="gap-2 hidden md:flex items-stretch">
             <Appliedfilters />

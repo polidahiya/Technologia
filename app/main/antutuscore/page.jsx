@@ -10,6 +10,7 @@ import Seoeditbutton from "@/app/_globalcomps/Addseo/Seoeditbutton";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
+import Nextimage from "@/app/_globalcomps/Nextimage";
 
 export default async function page({ searchParams }) {
   const tokenRes = await Verification();
@@ -76,6 +77,21 @@ export default async function page({ searchParams }) {
                     brandsmap.set(product.brand, brandKey);
                   }
                 }
+
+                const statuscolor = {
+                  Available: "text-green-600",
+                  Upcoming: "text-yellow-400",
+                  Unavailable: "text-red-400",
+                };
+                let status = "Available";
+                if (product?.price.some((item) => item.status == "Available"))
+                  status = "Available";
+                else if (
+                  product?.price.some((item) => item.status == "Upcoming")
+                )
+                  status = "Upcoming";
+                else status = "Unavailable";
+
                 return (
                   <tr key={product?._id} className="text-sm ">
                     {/* Rank */}
@@ -97,9 +113,23 @@ export default async function page({ searchParams }) {
                       <Link
                         href={`/main/product/${product?._id}`}
                         prefetch={false}
-                        className="hover:underline hover:text-theme"
+                        className="hover:text-theme flex gap-1"
                       >
-                        {product?.model}
+                        <Nextimage
+                          src={product?.images[0] || "/uiimages/404.jpg"}
+                          alt={product?.model}
+                          height={40}
+                          width={40}
+                          className="w-10 h-10 object-contain object-center mix-blend-multiply"
+                        ></Nextimage>
+                        <div className="flex flex-col">
+                          <span>{product?.model}</span>
+                          <span
+                            className={`text-[11px] ${statuscolor[status]}`}
+                          >
+                            {status}
+                          </span>
+                        </div>
                       </Link>
                     </td>
 
