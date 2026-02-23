@@ -24,7 +24,7 @@ function Floatingshopbutton({ product, styles = "md:top-20" }) {
         )}
       </h1>
 
-     <VariantPriceList prices={product?.price || []}/>
+      <VariantPriceList prices={product?.price || []} model={product?.model} />
     </div>
   );
 }

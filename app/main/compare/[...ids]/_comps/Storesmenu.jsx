@@ -40,7 +40,10 @@ function Storesmenu() {
 
             {/* Content */}
             <div className="max-h-[70vh] overflow-y-auto rounded-2xl bg-white shadow p-2 mt-2">
-              <VariantPriceList prices={selectedproduct?.price || []} />
+              <VariantPriceList
+                prices={selectedproduct?.price || []}
+                model={selectedproduct?.model}
+              />
             </div>
           </motion.div>
         </motion.div>

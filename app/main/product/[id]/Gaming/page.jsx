@@ -83,7 +83,7 @@ export default async function page({ params }) {
                 price={product?.price}
                 deviceType={product?.deviceType}
               />
-              <Floatingshopbutton product={product}/>
+              <Floatingshopbutton product={product} />
             </div>
           </div>
         </div>
