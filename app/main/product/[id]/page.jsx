@@ -20,6 +20,7 @@ import Link from "next/link";
 import { Getautofillvalues } from "@/lib/autofillvaluesfn";
 import Fallbackreview from "./_comps/Fallbackreview";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
+import Floatingshopbutton from "./_comps/Floatingshopbutton";
 
 export default async function page({ params }) {
   const tokenRes = await Verification();
@@ -117,7 +118,7 @@ export default async function page({ params }) {
             scrolloffset={135}
           />
 
-          <div className="flex flex-col md:flex-row gap-2 w-full">
+          <div className="flex flex-col md:flex-row gap-2 w-full items-stretch">
             <div className="space-y-2 w-full">
               <SpecTable
                 title={navitems[0].label}
@@ -332,7 +333,7 @@ export default async function page({ params }) {
                 </section>
               )}
             </div>
-            <div className="w-full md:w-96 flex flex-col gap-2">
+            <div className="w-full min-h-full md:w-96 flex flex-col gap-2">
               <Topfives
                 price={product?.price}
                 deviceType={product?.deviceType}
@@ -436,13 +437,14 @@ export default async function page({ params }) {
                   ))}
                 </div>
               </div>
+              <Floatingshopbutton product={product} styles="md:top-34"/>
             </div>
           </div>
           <div id={comparisontitle.label}>
             <Comparewith product={product} />
           </div>
           {/* description */}
-          {seodata ? (
+          {html ? (
             <div
               className="text mt-10"
               dangerouslySetInnerHTML={{ __html: Metakeywordsreplacer(html) }}

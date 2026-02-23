@@ -7,18 +7,8 @@ import Card from "./Card";
 import Newbutton from "./Newbutton";
 import Link from "next/link";
 
-async function page() {
-  const tokenres = await Verification();
-  let haveaccess = false;
-  if (
-    tokenres?.verified &&
-    (tokenres.usertype == "admin" ||
-      tokenres.permission.includes("Blogs_permission"))
-  ) {
-    haveaccess = true;
-  }
-
-  const getposts = unstable_cache(
+export async function getblogposts() {
+  return unstable_cache(
     async () => {
       try {
         const { blogscollection } = await getcollection();
@@ -34,9 +24,21 @@ async function page() {
     },
     ["Blogs"],
     { revalidate: CACHE_TIME, tags: ["Blogs", "all"] },
-  );
+  )();
+}
 
-  const posts = await getposts();
+async function page() {
+  const tokenres = await Verification();
+  let haveaccess = false;
+  if (
+    tokenres?.verified &&
+    (tokenres.usertype == "admin" ||
+      tokenres.permission.includes("Blogs_permission"))
+  ) {
+    haveaccess = true;
+  }
+
+  const posts = await getblogposts();
   return (
     <div className="pt-12 px-5 md:px-8 max-w-7xl mx-auto">
       <div className="flex items-center gap-2 text-sm">

@@ -1,6 +1,8 @@
 "use server";
-import { Cachedproducts } from "@/app/_globalcomps/cachedata/cachedProducts";
+import SortFn from "@/app/_hooks/Sortproducts";
+import { getblogposts } from "@/app/main/Blogs/page";
 const baseurl = "https://tecknologia.in";
+
 // Utility functions
 const xmlEscape = (str) =>
   str
@@ -19,19 +21,33 @@ const allProducts = (products) =>
     changefreq: "daily",
     priority: "0.9",
   }));
+
+const Gaminglinks = (products) =>
+  products.map((p) => ({
+    loc: `${baseurl}/main/product/${p?._id}/Gaming`,
+    lastmod: new Date(p?.lastupdated).toISOString() || today,
+    changefreq: "daily",
+    priority: "0.9",
+  }));
+
 const comparisons = (products) => {
   const allcomparisons = [];
-
   return allcomparisons;
 };
+
+const Blogslinks = (blogs) =>
+  blogs.map((p) => ({
+    loc: `${baseurl}/main/Blogs/Preview/${p?._id}`,
+    lastmod: new Date(p?.lastupdated).toISOString() || today,
+    changefreq: "daily",
+    priority: "0.9",
+  }));
 
 export async function GET() {
   try {
     // Fetch data in parallel
-    const [allproducts] = await Promise.all([Cachedproducts()]);
-    const latestproducts = allproducts.sort(
-      (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
-    );
+    const [allproducts] = await Promise.all([SortFn()]);
+    const blogs = await getblogposts();
 
     // Generate all URLs
     const allUrls = [
@@ -41,8 +57,10 @@ export async function GET() {
         changefreq: "daily",
         priority: "1.0",
       },
-      ...allProducts(latestproducts),
-      ...comparisons(latestproducts),
+      ...Gaminglinks(allproducts),
+      ...allProducts(allproducts),
+      ...comparisons(allproducts),
+      ...Blogslinks(blogs),
     ];
 
     // Generate sitemap XML
@@ -66,7 +84,7 @@ export async function GET() {
       </image:image>`
           : ""
       }
-    </url>`
+    </url>`,
     )
     .join("\n")}
 </urlset>`;
@@ -81,7 +99,7 @@ export async function GET() {
     console.error("Sitemap Generation Error:", error);
     return new Response(
       `<error><message>Failed to generate sitemap</message></error>`,
-      { status: 500, headers: { "Content-Type": "application/xml" } }
+      { status: 500, headers: { "Content-Type": "application/xml" } },
     );
   }
 }

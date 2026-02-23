@@ -28,7 +28,7 @@ const ranges = [
   { min: 400000, max: 500000 },
 ];
 
-function getMaxPriceRange(price) {
+export function getMaxPriceRange(price) {
   const range = ranges.find((r) => price > r.min && price <= r.max);
   return range ? range.max : null;
 }
@@ -89,17 +89,26 @@ export default async function Topfives({ price, deviceType }) {
   const sections = [
     {
       title: `Top ${deviceType?.toLowerCase() == "tablet" ? "Tablets" : "Phones"} (Under ${maxPrice})`,
-      data: data[0],
+      data: (data[0]?.products || [])?.map((a) => ({
+        ...a,
+        link: `/main/product/${a?._id}`,
+      })),
       morelink: `/main/all?ReleaseDate=available&Price=1000-${maxPrice}&sort=totalscore`,
     },
     {
       title: `Top Performers (Under ${maxPrice})`,
-      data: data[1],
+      data: (data[0]?.products || [])?.map((a) => ({
+        ...a,
+        link: `/main/product/${a?._id}`,
+      })),
       morelink: `/main/all?ReleaseDate=available&Price=1000-${maxPrice}&sort=performancescore`,
     },
     {
       title: `Top Cameras (Under ${maxPrice})`,
-      data: data[2],
+      data: (data[0]?.products || [])?.map((a) => ({
+        ...a,
+        link: `/main/product/${a?._id}`,
+      })),
       morelink: `/main/all?ReleaseDate=available&Price=1000-${maxPrice}&sort=camerascore`,
     },
   ];
@@ -107,43 +116,46 @@ export default async function Topfives({ price, deviceType }) {
   return (
     <>
       {sections.map((section, i) => (
-        <div
-          key={i}
-          className="w-full rounded-2xl bg-white p-3 shadow space-y-3"
-        >
-          {/* Title */}
-          <h2 className="text-lg font-semibold pl-2">{section.title}</h2>
-
-          {/* Products */}
-          <div className="space-y-2">
-            {(section.data?.products || []).map((product, j) => (
-              <Link
-                key={j}
-                prefetch={false}
-                href={`/main/product/${product?._id}`}
-                className="flex items-center gap-2 text-sm w-full bg-bg1 p-1 rounded-xl lg:hover:text-theme"
-              >
-                <Nextimage
-                  src={product?.images?.[0] || "/uiimages/404.jpg"}
-                  alt={product?.model}
-                  height={40}
-                  width={40}
-                  loading="lazy"
-                  className="w-10 mix-blend-multiply h-10 object-contain object-center"
-                />
-                {product.model}
-              </Link>
-            ))}
-            <Link
-              prefetch={false}
-              href={section?.morelink}
-              className="block w-full px-5 py-2 rounded-xl text-center bg-bg1 lg:hover:text-theme"
-            >
-              View More
-            </Link>
-          </div>
-        </div>
+        <Topfiveui key={i} section={section} i={i} />
       ))}
     </>
+  );
+}
+
+export function Topfiveui({ section, i }) {
+  return (
+    <div key={i} className="w-full rounded-2xl bg-white p-3 shadow space-y-3">
+      {/* Title */}
+      <h2 className="text-lg font-semibold pl-2">{section.title}</h2>
+
+      {/* Products */}
+      <div className="space-y-2">
+        {(section.data || []).map((product, j) => (
+          <Link
+            key={j}
+            prefetch={false}
+            href={product?.link}
+            className="flex items-center gap-2 text-sm w-full bg-bg1 p-1 rounded-xl lg:hover:text-theme"
+          >
+            <Nextimage
+              src={product?.images?.[0] || "/uiimages/404.jpg"}
+              alt={product?.model}
+              height={40}
+              width={40}
+              loading="lazy"
+              className="w-10 mix-blend-multiply h-10 object-contain object-center"
+            />
+            {product.model}
+          </Link>
+        ))}
+        <Link
+          prefetch={false}
+          href={section?.morelink}
+          className="block w-full px-5 py-2 rounded-xl text-center bg-bg1 lg:hover:text-theme"
+        >
+          View More
+        </Link>
+      </div>
+    </div>
   );
 }

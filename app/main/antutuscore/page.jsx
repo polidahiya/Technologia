@@ -11,9 +11,12 @@ import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 import Nextimage from "@/app/_globalcomps/Nextimage";
+import DeviceDetector from "@/app/_globalcomps/Devicedetector";
 
 export default async function page({ searchParams }) {
   const tokenRes = await Verification();
+  const device = await DeviceDetector();
+  const isdesktop = device != "mobile";
   let { pageno = 1 } = await searchParams;
   pageno = Number(pageno);
   // not found check
@@ -43,10 +46,14 @@ export default async function page({ searchParams }) {
           <thead className="bg-gray-100">
             <tr>
               <th className="p-3 text-left">Rank</th>
-              <th className="p-3 text-left">Brand</th>
+              {isdesktop && <th className="p-3 text-left">Brand</th>}
               <th className="p-3 text-left">Model</th>
-              <th className="p-3 text-left">Chipset</th>
-              <th className="p-3 text-left">GPU</th>
+              {isdesktop && (
+                <>
+                  <th className="p-3 text-left">Chipset</th>
+                  <th className="p-3 text-left">GPU</th>
+                </>
+              )}
               <th className="p-3 text-left">AnTuTu Score</th>
             </tr>
           </thead>
@@ -98,15 +105,17 @@ export default async function page({ searchParams }) {
                     <td className="p-3 font-semibold pl-5">{index + 1}</td>
 
                     {/* Brand */}
-                    <td className="p-3">
-                      <Link
-                        href={`/main/all?ReleaseDate=available&Brand=${brandKey}`}
-                        prefetch={false}
-                        className="hover:underline hover:text-theme"
-                      >
-                        {product?.brand}
-                      </Link>
-                    </td>
+                    {isdesktop && (
+                      <td className="p-3">
+                        <Link
+                          href={`/main/all?ReleaseDate=available&Brand=${brandKey}`}
+                          prefetch={false}
+                          className="hover:underline hover:text-theme"
+                        >
+                          {product?.brand}
+                        </Link>
+                      </td>
+                    )}
 
                     {/* Model */}
                     <td className="p-3">
@@ -133,11 +142,14 @@ export default async function page({ searchParams }) {
                       </Link>
                     </td>
 
-                    {/* Chipset */}
-                    <td className="p-3">{product?.chipset}</td>
-
-                    {/* GPU */}
-                    <td className="p-3">{product?.gpu}</td>
+                    {isdesktop && (
+                      <>
+                        {/* Chipset */}
+                        <td className="p-3">{product?.chipset}</td>
+                        {/* GPU */}
+                        <td className="p-3">{product?.gpu}</td>
+                      </>
+                    )}
 
                     {/* Score + Percentage */}
                     <td className="p-3 font-bold">
