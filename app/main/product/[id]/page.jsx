@@ -85,9 +85,9 @@ export default async function page({ params }) {
     offers: {
       "@type": "Offer",
       url: `https://tecknologia.in/main/product/${product?._id}`,
-      priceCurrency: "INR",
+      priceCurrency: product?.price?.[0]?.currency || "INR",
       price: parseInt(product?.price?.[0]?.sp || product?.price?.[0]?.mrp, 10),
-      availability: product?.price?.some((a) => a == "Avaialable")
+      availability: product?.price?.some((a) => a == "Available")
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
       itemCondition: "https://schema.org/NewCondition",
@@ -271,7 +271,7 @@ export default async function page({ params }) {
                   ["Width", `${product?.width} mm`],
                   ["Thickness", `${product?.thickness} mm`],
                   ["Weight", `${product?.weight} g`],
-                  ["IP rating/Water Resistance", product?.waterResistance],
+                  ["IP Rating / Water Resistance", product?.waterResistance],
                   ...(product?.foldable
                     ? [["Foldable", yesNo(product?.foldable)]]
                     : []),
