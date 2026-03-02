@@ -87,7 +87,7 @@ export default async function page({ params }) {
       url: `https://tecknologia.in/main/product/${product?._id}`,
       priceCurrency: product?.price?.[0]?.currency || "INR",
       price: parseInt(product?.price?.[0]?.sp || product?.price?.[0]?.mrp, 10),
-      availability: product?.price?.some((a) => a == "Available")
+      availability: product?.price?.some((a) => a?.status == "Available")
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
       itemCondition: "https://schema.org/NewCondition",
