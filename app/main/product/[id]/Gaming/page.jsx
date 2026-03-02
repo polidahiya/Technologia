@@ -14,6 +14,7 @@ import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 import GamingReview from "./_comps/GamingReview";
 import Seoeditbutton from "@/app/_globalcomps/Addseo/Seoeditbutton";
 import Floatingshopbutton from "../_comps/Floatingshopbutton";
+import Disclaimer from "@/app/main/_comps/Disclaimer";
 
 export default async function page({ params }) {
   const tokenRes = await Verification();
@@ -97,6 +98,7 @@ export default async function page({ params }) {
       ) : (
         <GamingReview product={product} />
       )}
+      <Disclaimer />
       {tokenRes?.verified && (
         <Seoeditbutton editdata={seodata} seokey={seokey} />
       )}

@@ -21,6 +21,7 @@ import { Getautofillvalues } from "@/lib/autofillvaluesfn";
 import Fallbackreview from "./_comps/Fallbackreview";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 import Floatingshopbutton from "./_comps/Floatingshopbutton";
+import Disclaimer from "@/app/main/_comps/Disclaimer";
 
 export default async function page({ params }) {
   const tokenRes = await Verification();
@@ -146,7 +147,7 @@ export default async function page({ params }) {
                   ["Resolution", `${d.pixelx} × ${d.pixely}`],
                   ["PPI", `~ ${d.ppi}`],
                   ["Refresh Rate", `${d.refreshRate} Hz`],
-                  ["HDR", yesNo(d.hdr)],
+                  ["HDR Support", yesNo(d.hdr)],
                   ["Brightness", `${d.Brightness} nits`],
                   ["Screen to Body Ratio", `${d.screenToBodyRatio} %`],
                   ["Protection", d.screenProtection],
@@ -178,7 +179,10 @@ export default async function page({ params }) {
                   ["RAM", `${product?.ram} Gb (${product?.ramType})`],
                   ["Storage", `${product?.storage} (${product?.storageType})`],
                   ["Expandable Storage", yesNo(product?.expandableStorage)],
-                  ["Antutu Score", product?.antutuscore],
+                  [
+                    "Antutu Score",
+                    Number(product?.antutuscore)?.toLocaleString(),
+                  ],
                 ]}
               />
 
@@ -207,14 +211,18 @@ export default async function page({ params }) {
                   [
                     "Wireless Charging",
                     product?.wirelessCharging
-                      ? `${product?.wirelessChargingSpeed} W`
-                      : "No",
+                      ? product?.wirelessChargingSpeed
+                        ? `${product?.wirelessChargingSpeed} W`
+                        : yesNo(product?.wirelessCharging)
+                      : yesNo(product?.wirelessCharging),
                   ],
                   [
                     "Reverse Charging",
                     product?.reverseCharging
-                      ? `${product?.reverseChargingSpeed} W`
-                      : "No",
+                      ? product?.reverseChargingSpeed
+                        ? `${product?.reverseChargingSpeed} W`
+                        : yesNo(product?.reverseCharging)
+                      : yesNo(product?.reverseCharging),
                   ],
                 ]}
               />
@@ -263,7 +271,7 @@ export default async function page({ params }) {
                   ["Width", `${product?.width} mm`],
                   ["Thickness", `${product?.thickness} mm`],
                   ["Weight", `${product?.weight} g`],
-                  ["Water Resistance", product?.waterResistance],
+                  ["IP rating/Water Resistance", product?.waterResistance],
                   ...(product?.foldable
                     ? [["Foldable", yesNo(product?.foldable)]]
                     : []),
@@ -280,7 +288,7 @@ export default async function page({ params }) {
                   ["Face Unlock", yesNo(product?.faceUnlock)],
                   ["Speakers", product?.speakers],
                   ["Stereo Speakers", yesNo(product?.stereoSpeakers)],
-                  ["Headphone Jack", yesNo(product?.headphoneJack)],
+                  ["Headphone Jack (3.5mm)", yesNo(product?.headphoneJack)],
                 ]}
               />
 
@@ -437,7 +445,7 @@ export default async function page({ params }) {
                   ))}
                 </div>
               </div>
-              <Floatingshopbutton product={product} styles="md:top-34"/>
+              <Floatingshopbutton product={product} styles="md:top-34" />
             </div>
           </div>
           <div id={comparisontitle.label}>
@@ -452,6 +460,8 @@ export default async function page({ params }) {
           ) : (
             <Fallbackreview product={product} />
           )}
+          {/* disclaimer */}
+          <Disclaimer />
         </div>
         {tokenRes?.verified && (
           <Seoeditbutton editdata={seodata} seokey={seokey} />

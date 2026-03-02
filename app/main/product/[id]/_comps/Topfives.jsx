@@ -97,7 +97,7 @@ export default async function Topfives({ price, deviceType }) {
     },
     {
       title: `Top Performers (Under ${maxPrice})`,
-      data: (data[0]?.products || [])?.map((a) => ({
+      data: (data[1]?.products || [])?.map((a) => ({
         ...a,
         link: `/main/product/${a?._id}`,
       })),
@@ -105,7 +105,7 @@ export default async function Topfives({ price, deviceType }) {
     },
     {
       title: `Top Cameras (Under ${maxPrice})`,
-      data: (data[0]?.products || [])?.map((a) => ({
+      data: (data[2]?.products || [])?.map((a) => ({
         ...a,
         link: `/main/product/${a?._id}`,
       })),

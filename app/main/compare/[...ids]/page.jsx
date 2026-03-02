@@ -16,6 +16,7 @@ import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { getseodata } from "@/app/_globalcomps/Addseo/Seodata";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 import { Getautofillvalues } from "@/lib/autofillvaluesfn";
+import Disclaimer from "@/app/main/_comps/Disclaimer";
 
 async function page({ params }) {
   const tokenRes = await Verification();
@@ -492,6 +493,7 @@ async function page({ params }) {
             className="mt-10 text"
             dangerouslySetInnerHTML={{ __html: html }}
           />
+          <Disclaimer />
           {/* seo form */}
           {tokenRes?.verified && (
             <div className="mt-5">

@@ -69,11 +69,6 @@ export default function Footer() {
 
   return (
     <div className="mt-14">
-      <p className="py-5 px-2 max-w-7xl text-sm mx-auto text-center">
-        Some links on this page are affiliate links. If you purchase through
-        them, we may earn a small commission at no extra cost to you.
-      </p>
-
       <footer className=" bg-bg2 text-gray-300">
         <div className="max-w-7xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-4">
           {/* Brand */}
