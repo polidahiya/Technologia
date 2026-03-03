@@ -96,6 +96,48 @@ export default async function page({ params }) {
         name: product?.price?.[0]?.platform,
       },
     },
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Processor",
+        value: product?.chipset,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "GPU",
+        value: product?.gpu,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "RAM",
+        value: `${product?.ram}GB ${product?.ramType || ""}`,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Storage",
+        value: `${product?.storage} ${product?.storageType || ""}`,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Display",
+        value: `${product?.display?.[0]?.size}" ${product?.display?.[0]?.type} ${product?.display?.[0]?.refreshRate}Hz`,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Battery",
+        value: `${product?.batteryCapacity}mAh`,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Operating System",
+        value: `${product?.os} ${product?.osVersion}`,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Water Resistance",
+        value: product?.waterResistance,
+      },
+    ],
 
     aggregateRating: {
       "@type": "AggregateRating",
@@ -405,7 +447,7 @@ export default async function page({ params }) {
                     // 🎮 Gaming Focused
                     {
                       label: "Best Gaming Phones Under ₹20,000",
-                      link: "/main/all?ReleaseDate=available&sort=performancescore&Gaming=bestGaming",
+                      link: "/main/all?ReleaseDate=available&sort=performancescore&Gaming=bestGaming&Price=0-20000",
                     },
                     {
                       label: "Best Gaming Phones Under ₹30,000",
@@ -449,7 +491,18 @@ export default async function page({ params }) {
             </div>
           </div>
           <div id={comparisontitle.label}>
-            <Comparewith product={product} />
+            <Comparewith
+              product={product}
+              action={
+                <Link
+                  href={`/main/compare?p1=${id}`}
+                  prefetch={false}
+                  className="text-theme underline"
+                >
+                  More
+                </Link>
+              }
+            />
           </div>
           {/* description */}
           {html ? (

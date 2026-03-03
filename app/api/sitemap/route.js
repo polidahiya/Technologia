@@ -29,6 +29,13 @@ const Gaminglinks = (products) =>
     changefreq: "daily",
     priority: "0.9",
   }));
+const comparehomeslink = (products) =>
+  products.map((p) => ({
+    loc: `${baseurl}/main/compare?p1=${p?._id}`,
+    lastmod: new Date(p?.lastupdated).toISOString() || today,
+    changefreq: "daily",
+    priority: "0.9",
+  }));
 
 const comparisons = (products) => {
   const allcomparisons = [];
@@ -52,13 +59,26 @@ export async function GET() {
     // Generate all URLs
     const allUrls = [
       {
-        loc: baseurl,
+        loc: `${baseurl}/main`,
         lastmod: today,
         changefreq: "daily",
         priority: "1.0",
       },
+      {
+        loc: `${baseurl}/main/compare`,
+        lastmod: today,
+        changefreq: "daily",
+        priority: "0.9",
+      },
+      {
+        loc: `${baseurl}/main/Blogs`,
+        lastmod: today,
+        changefreq: "daily",
+        priority: "0.9",
+      },
       ...Gaminglinks(allproducts),
       ...allProducts(allproducts),
+      ...comparehomeslink(allproducts),
       ...comparisons(allproducts),
       ...Blogslinks(blogs),
     ];

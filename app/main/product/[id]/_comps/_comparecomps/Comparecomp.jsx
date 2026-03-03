@@ -4,13 +4,17 @@ import Nextimage from "@/app/_globalcomps/Nextimage";
 import formatPrice from "@/app/_globalcomps/Formateprice";
 import { icons } from "@/lib/data";
 
-function Comparecomp({ title = "", pairs = [] }) {
+function Comparecomp({ title = "", pairs = [], action }) {
   return (
     <section className="relative bg-white rounded-2xl shadow overflow-hidden scroll-mt-32">
-      <h2 className="relative flex items-center gap-2 px-6 py-4 font-extrabold border-b border-slate-200 font-tenor tracking-wider">
-        {icons.compare} {title}
+      <div className="relative flex justify-between items-center px-6 py-4 border-b border-slate-200">
+        <h2 className=" flex items-center gap-2  font-extrabold  font-tenor tracking-wider">
+          {icons.compare} {title}
+        </h2>
+        <div>{action}</div>
         <span className="block absolute h-1/2 w-1 bg-theme rounded-r-full top-1/2 left-0 -translate-y-1/2" />
-      </h2>
+      </div>
+
       <div className="p-2 grid grid-cols-1 md:grid-cols-3 gap-2">
         {pairs.map(([product1, product2], i) => (
           <Link

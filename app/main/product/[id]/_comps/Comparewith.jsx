@@ -3,11 +3,14 @@ import React from "react";
 import Getproducts from "@/lib/Getproducts";
 import Comparecomp from "./_comparecomps/Comparecomp";
 
-async function Comparewith({ product }) {
+async function Comparewith({
+  product,
+  maxproducts = 10,
+  skipvariant = false,
+  action = <></>,
+}) {
   const price = product?.price?.[0]?.mrp || product?.price?.[0]?.sp;
   const [min, max] = getCompetitorPriceRange(price);
-
-  const numberofproducts = 10;
 
   const comparelist = await Getproducts(
     "",
@@ -20,7 +23,9 @@ async function Comparewith({ product }) {
           Device: product?.deviceType?.toLowerCase(),
         },
     "default",
-    numberofproducts,
+    maxproducts,
+    false,
+    skipvariant,
   );
 
   let products = comparelist?.products || [];
@@ -29,9 +34,11 @@ async function Comparewith({ product }) {
   products = products.filter((p) => p?._id !== product?._id);
 
   // Build array of pairs → [[baseProduct, competitor], ...]
-  const pairs = products.slice(0, 9).map((item) => [product, item]);
+  const pairs = products
+    .slice(0, maxproducts - 1)
+    .map((item) => [product, item]);
 
-  return <Comparecomp title="Compare with" pairs={pairs} />;
+  return <Comparecomp title="Compare with" pairs={pairs} action={action} />;
 }
 
 function getCompetitorPriceRange(price) {

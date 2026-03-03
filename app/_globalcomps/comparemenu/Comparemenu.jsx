@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AppContextfn } from "@/app/Context";
 import { ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,10 +14,6 @@ function Comparemenu({ device }) {
   const { comparelist, setcomparelist } = AppContextfn();
   const [showmenu, setshowmenu] = useState(false);
   const heightvalue = device == "mobile" ? 440 : 160;
-
-  useEffect(() => {
-    setshowmenu(true);
-  }, [comparelist]);
 
   return (
     <AnimatePresence>
@@ -60,13 +56,13 @@ function Comparemenu({ device }) {
                   .filter(Boolean)
                   .map((p) => p?._id)
                   .join("/")}`}
-                className="block text-center py-2 px-10 bg-theme text-white rounded-md"
+                className="w-full block text-center py-2 px-10 bg-theme text-white rounded-md"
                 onClick={() => setshowmenu(false)}
               >
                 Compare
               </Link>
               <button
-                className="flex items-center gap-1 text-center py-2 px-10  text-red-500 rounded-md bg-bg1"
+                className="w-full flex items-center gap-1 text-center justify-center py-2 px-10  text-red-500 rounded-md bg-bg1"
                 onClick={() => setcomparelist([null, null, null])}
               >
                 <AiOutlineDelete /> Clear all
@@ -121,13 +117,23 @@ function Comparemenu({ device }) {
   );
 }
 
-const Slote = ({ comparelist, setcomparelist, item, i }) => {
+export const Slote = ({
+  comparelist,
+  setcomparelist,
+  item,
+  i,
+  suggestionspostion = "bottom-full -translate-y-1",
+}) => {
   return (
     <React.Fragment>
       {item ? (
         <Showproduct item={item} i={i} setcomparelist={setcomparelist} />
       ) : (
-        <Emptyslote setcomparelist={setcomparelist} i={i} />
+        <Emptyslote
+          setcomparelist={setcomparelist}
+          i={i}
+          suggestionspostion={suggestionspostion}
+        />
       )}
       {i != comparelist.length - 1 && (
         <div className="h-8 md:h-full flex items-center justify-center">
@@ -137,6 +143,7 @@ const Slote = ({ comparelist, setcomparelist, item, i }) => {
     </React.Fragment>
   );
 };
+
 const Showproduct = ({ setcomparelist, item, i }) => {
   const { setvariantmenu } = AppContextfn();
   return (
@@ -193,12 +200,12 @@ const Showproduct = ({ setcomparelist, item, i }) => {
   );
 };
 
-const Emptyslote = ({ setcomparelist, i }) => {
+const Emptyslote = ({ setcomparelist, i, suggestionspostion }) => {
   return (
     <div className="relative flex-1 w-full px-2 flex flex-col items-center justify-center min-h-20 md:min-h-auto">
       <div className="h-10 w-full border border-gray-300 rounded-md">
         <Searchbar
-          suggestionspostion="bottom-full -translate-y-1"
+          suggestionspostion={suggestionspostion}
           useaction={true}
           action={(p) => {
             setcomparelist((prev) => {
@@ -214,7 +221,7 @@ const Emptyslote = ({ setcomparelist, i }) => {
 };
 const Vsbox = () => {
   return (
-    <div className="relative h-8 w-8 bg-blue-100 border border-blue-300 rounded-full flex items-center justify-center text-sm">
+    <div className="relative h-8 w-8 bg-black text-white rounded-full flex items-center justify-center text-sm">
       VS
       <div className="absolute left-0 -translate-x-full bottom-1/2 translate-y-1/2 md:left-1/2 md:-translate-x-1/2 md:bottom-full h-0.5 w-20 md:h-12 md:w-0.5 md:translate-y-0 bg-gray-300"></div>
       <div className="absolute left-full top-1/2 -translate-y-1/2 md:left-1/2 md:-translate-x-1/2 md:top-full md:translate-y-0 h-0.5 w-20 md:h-12 md:w-0.5 bg-gray-300"></div>
