@@ -22,10 +22,10 @@ export default async function Scorecalculator(product, autofillvalues) {
 
       //   performance
       const maxPerformanceValues = {
-        antutu: 3932397, // future-proof
-        cpuClock: 4.6, // GHz
+        antutu: 4532397, // future-proof
+        cpuClock: 5, // GHz
         maxcores: 10,
-        ram: 16, // GB
+        ram: 24, // GB
         storage: 4096, // GB
       };
       const pscore = PerformanceScore(

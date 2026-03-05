@@ -6,7 +6,7 @@ export default function CompareSEOContent({ product }) {
   return (
     <div className="compare-seo-content text">
       <h2>
-        Compare {product.model} ({product.variant})
+        Compare {product.model} {product.variant && <>({product.variant})</>}
       </h2>
 
       <p>

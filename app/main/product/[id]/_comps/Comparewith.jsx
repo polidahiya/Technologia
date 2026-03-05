@@ -11,7 +11,6 @@ async function Comparewith({
 }) {
   const price = product?.price?.[0]?.mrp || product?.price?.[0]?.sp;
   const [min, max] = getCompetitorPriceRange(price);
-
   const comparelist = await Getproducts(
     "",
     product.foldable
@@ -49,9 +48,9 @@ function getCompetitorPriceRange(price) {
   else if (price <= 20000) delta = 2500;
   else if (price <= 30000) delta = 3500;
   else if (price <= 40000) delta = 5000;
-  else if (price <= 60000) delta = 10000;
-  else if (price <= 100000) delta = 25000;
-  else delta = 15000;
+  else if (price <= 60000) delta = 20000;
+  else if (price <= 100000) delta = 40000;
+  else delta = 75000;
 
   return [Math.max(0, price - delta), Number(price) + delta];
 }
