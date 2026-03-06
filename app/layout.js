@@ -40,6 +40,11 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         ></script>
         <meta name="google-adsense-account" content={Googleadsid} />
+        {/* pinterest */}
+        <meta
+          name="p:domain_verify"
+          content="9b714f973efbdc946108fcd58a249a9b"
+        />
       </head>
       <body
         className={`${mulish.variable} ${tenor.variable} antialiased w-full max-w-[1920px] mx-auto text-text`}
