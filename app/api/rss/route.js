@@ -16,7 +16,7 @@ export async function GET() {
 
     const posts = allproducts?.products?.map((p) => ({
       title: p?.model,
-      link: `${domain}/main/all/${p?._id}`,
+      link: `${domain}/main/product/${p?._id}`,
       description: `${p?.model} smartphone features a ${p?.display?.[0]?.size}-inch ${p?.display?.[0]?.type} display with ${p?.display?.[0]?.refreshRate}Hz refresh rate and ${p?.display?.[0]?.screenProtection}. Powered by the ${p?.chipset} with ${p?.ram}GB RAM and ${p?.storage} storage, it delivers flagship performance. The ${p?.RearCameramegapixelsDetails.trim()} camera system supports ${p?.RearCameravideoRecording.split(",")[0]}. A ${p?.batteryCapacity}mAh ${p?.batteryType} with ${p?.ChargeSpeed}W fast charging keeps it running all day. With ${p?.waterResistance}, ${p?.wifiVersion}, and Android ${p?.osVersion}, it offers a sleek ${p?.thickness}mm premium design.`,
       pubDate: today.toUTCString(), // Convert to proper date string
       imageUrl: p?.images?.[0],
