@@ -27,13 +27,14 @@ function ScoreBreakdown({ scores }) {
   return (
     <div className="h-full w-full grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
       {items.map(([label, value]) => (
-        <ScoreCircle key={label} title={label} score={value} size="md"/>
+        <ScoreCircle key={label} title={label} score={value} size="md" />
       ))}
     </div>
   );
 }
 
 export function getScoreColor(score) {
+  if (score >= 95) return "#6958ca";
   if (score >= 90) return "#16a34a"; // emerald green
   if (score >= 80) return "#22c55e"; // green
   if (score >= 70) return "#eab308"; // amber
@@ -104,9 +105,7 @@ export function ScoreCircle({ score = 50, title = "", size = "md" }) {
       </div>
 
       {title && (
-        <p className={`font-medium text-gray-600 ${cfg.title}`}>
-          {title}
-        </p>
+        <p className={`font-medium text-gray-600 ${cfg.title}`}>{title}</p>
       )}
     </div>
   );

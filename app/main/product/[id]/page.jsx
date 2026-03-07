@@ -22,6 +22,7 @@ import Fallbackreview from "./_comps/Fallbackreview";
 import Metakeywordsreplacer from "@/app/_hooks/Metakeywordsreplcer";
 import Floatingshopbutton from "./_comps/Floatingshopbutton";
 import Disclaimer from "@/app/main/_comps/Disclaimer";
+import { getBrandKey } from "@/lib/data";
 
 export default async function page({ params }) {
   const tokenRes = await Verification();
@@ -404,8 +405,8 @@ export default async function page({ params }) {
                       link: "/main/all?ReleaseDate=upcomming",
                     },
                     {
-                      label: "New Phones by " + product?.brand,
-                      link: `/main/all?ReleaseDate=available&Brand=${product?.brand}`,
+                      label: "New Phones by " + product?.brand || "Apple",
+                      link: `/main/all?ReleaseDate=available&Brand=${getBrandKey(product?.brand) || "apple"}`,
                     },
                     {
                       label: "Best Phones Under ₹10,000",
