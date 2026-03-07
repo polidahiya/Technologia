@@ -20,9 +20,14 @@ const getBestStoreLink = (priceArray, fallbackLink) => {
   return lowest.link || fallbackLink;
 };
 
-const escapeXml = (str) => {
-  return str.replace(/&/g, "&amp;");
-};
+function escapeXml(str) {
+  return str
+    ?.replace(/&/g, "&amp;")
+    ?.replace(/</g, "&lt;")
+    ?.replace(/>/g, "&gt;")
+    ?.replace(/"/g, "&quot;")
+    ?.replace(/'/g, "&apos;");
+}
 
 export async function GET() {
   try {
@@ -45,7 +50,7 @@ export async function GET() {
         );
         const scores = await Scorecalculator(p, autofillvalues);
         const imageurl = escapeXml(
-          `https://tecknologia.in/api/og?title=${p?.model}&brand=${p?.brand}&chipset=${p?.chipset}&battery=${p?.batteryCapacity}&refresh=${p?.display?.[0]?.refreshRate}&price=${p?.price?.[0]?.sp}&display=${scores?.displayscore}&performance=${scores?.performancescore}&camera=${scores?.camerascore}&batteryScore=${scores?.batteryscore}&connectivity=${scores?.connectionscore}&image=${p?.images[0].replace("/upload/", "/upload/f_png/")}`,
+          `https://tecknologia.in/api/og?title=${encodeURIComponent(p?.model)}&brand=${encodeURIComponent(p?.brand)}&chipset=${encodeURIComponent(p?.chipset)}&battery=${encodeURIComponent(p?.batteryCapacity)}&refresh=${encodeURIComponent(p?.display?.[0]?.refreshRate)}&price=${encodeURIComponent(p?.price?.[0]?.sp)}&display=${encodeURIComponent(scores?.displayscore)}&performance=${encodeURIComponent(scores?.performancescore)}&camera=${encodeURIComponent(scores?.camerascore)}&batteryScore=${encodeURIComponent(scores?.batteryscore)}&connectivity=${encodeURIComponent(scores?.connectionscore)}&image=${encodeURIComponent(p?.images[0].replace("/upload/", "/upload/f_png/"))}`,
         );
 
         return {
@@ -71,13 +76,14 @@ export async function GET() {
           ${posts
             .map(
               (post) => `
-            <item>
-              <title><![CDATA[${post.title}]]></title>
-              <link><![CDATA[${post.link}]]></link>
-              <description><![CDATA[${post.description}]]></description>
-              <pubDate>${post.pubDate}</pubDate>
-              <enclosure url="${post.imageUrl}"/>
-            </item>
+           <item>
+            <title><![CDATA[${post.title}]]></title>
+            <link>${post.link}</link>
+            <guid>${post.link}</guid>
+            <description><![CDATA[${post.description}]]></description>
+            <pubDate>${post.pubDate}</pubDate>
+            <enclosure url="${post.imageUrl}" type="image/png" />
+          </item>
           `,
             )
             .join("")}
